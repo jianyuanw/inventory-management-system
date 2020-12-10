@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<!--/*/ <th:block th:include="fragments/layout.html :: head"/> /*/-->
-	<Title>Main Page</Title>
+<!--/*/ <th:block th:include="fragments/layout.html :: head"/> /*/-->
+<Title>Main Page</Title>
 </head>
 <body>
 	<div th:replace="fragments/layout.html :: navbar"></div>
+
+	<div class="alert alert-warning alert-dismissible fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<strong>Warning!</strong> Better check yourself, you're not looking
+		too good.
+	</div>
+
 	<div th:replace="fragments/layout.html :: footer"></div>
 </body>
 </html>
