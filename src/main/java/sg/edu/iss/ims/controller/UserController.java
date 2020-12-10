@@ -16,11 +16,9 @@ import sg.edu.iss.ims.service.UserInterface;
 @Controller
 public class UserController {
 
-	@Autowired
-	private UserInterface uService;
+	private final UserInterface uService;
 	
-	@Autowired
-	public void setUserImplementation(UserImplementation uImp) {
+	public UserController(UserImplementation uImp) {
 		uService = uImp;
 	}
 
