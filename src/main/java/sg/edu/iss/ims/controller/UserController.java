@@ -48,10 +48,10 @@ public class UserController {
 
 	@PostMapping("/register")
 	public String createAccount(Model model, User user, HttpServletRequest request) {
-		// Note, user is not currently being passed to this action properly
-		if (uService.readUser(user.getUsername()) == null) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("user") == null && uService.readUser(user.getUsername()) == null) {
 			uService.createUser(user);
-			HttpSession session = request.getSession();
+			
 			session.setAttribute("user", user);	
 		}
 		return "redirect:/";
