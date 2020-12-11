@@ -7,9 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,5 +54,6 @@ public class Product {
 		this.reorderQuantity = reorderQuantity;
 		this.shelfLocation = shelfLocation;
 	}
-	
+
+
 }
