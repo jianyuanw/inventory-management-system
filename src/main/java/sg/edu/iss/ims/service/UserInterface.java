@@ -12,7 +12,7 @@ public interface UserInterface {
 	public void updateUser(User user);
 
 	public void deleteUser(User user);
-
+	
 	public boolean authenticate(User user);
 
 	public List<User> getAllUsers();

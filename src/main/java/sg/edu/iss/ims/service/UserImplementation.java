@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import sg.edu.iss.ims.model.User;
 import sg.edu.iss.ims.repo.UserRepository;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class UserImplementation implements UserInterface {
