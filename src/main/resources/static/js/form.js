@@ -3,4 +3,5 @@ function cancel() {
 	for (let i = 0; i < elements.length; i++) {
 		elements[i].value = "";
 	}
+	return false;
 }
