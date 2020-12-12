@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!--/*/ <th:block th:include="fragments/layout.html :: head"/> /*/-->
-<script type="text/javascript" th:src="@{/js/form.js}"></script>
+	<th:block th:replace="fragments/layout.html :: head"/>
+	<script type="text/javascript" th:src="@{/js/form.js}"></script>
 <title>Login</title>
 </head>
 <body>

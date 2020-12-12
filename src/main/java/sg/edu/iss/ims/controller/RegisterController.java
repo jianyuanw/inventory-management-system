@@ -15,30 +15,13 @@ import sg.edu.iss.ims.service.UserImplementation;
 import sg.edu.iss.ims.service.UserInterface;
 
 @Controller
-public class UserController {
+public class RegisterController {
 
 	private final UserInterface uService;
 	
-	public UserController(UserImplementation uImp) {
+	public RegisterController(UserImplementation uImp) {
 		uService = uImp;
 	}
-
-	@GetMapping("/login")
-	public String login(Model model) {
-		model.addAttribute("user", new User());
-		return "login";
-	}
-	
-	@PostMapping("/login")
-	public String loginAccount(Model model, User user, HttpServletRequest request, RedirectAttributes redirAttr) {
-		// Note, user is not currently being passed to this action properly
-		HttpSession session = request.getSession();
-		if (session.getAttribute("user") == null && uService.authenticate(user)) {
-			session.setAttribute("user", user);
-			redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully logged in!"));
-		}
-		return "redirect:/";
-	}	
 	
 	@GetMapping("/register")
 	public String register(Model model) {
@@ -56,10 +39,5 @@ public class UserController {
 		}
 		return "redirect:/";
 	}
-	
-	@GetMapping("/logout")
-	public String logoutAccount(HttpSession session) {
-		session.invalidate();
-		return "redirect:/";
-	}
+
 }
