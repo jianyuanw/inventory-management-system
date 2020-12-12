@@ -1,5 +1,7 @@
 package sg.edu.iss.ims.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +12,10 @@ import sg.edu.iss.ims.repo.UserRepository;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserImplementation implements UserInterface {
 
-	private final UserRepository userRepo;
-	
-	public UserServiceImpl(UserRepository userRepo) {
-		this.userRepo = userRepo;
-	}
+	@Autowired
+	private UserRepository userRepo;
 	
 	@Override
 	public void createUser(User user) {
@@ -46,6 +45,11 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		return userRepo.findAll();
 	}
 
 //	private String hash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {

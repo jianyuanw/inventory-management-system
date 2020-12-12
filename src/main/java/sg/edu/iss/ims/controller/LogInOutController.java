@@ -11,15 +11,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.edu.iss.ims.model.Alert;
 import sg.edu.iss.ims.model.User;
-import sg.edu.iss.ims.service.UserServiceImpl;
-import sg.edu.iss.ims.service.UserService;
+import sg.edu.iss.ims.service.UserImplementation;
+import sg.edu.iss.ims.service.UserInterface;
 
 @Controller
 public class LogInOutController {
 
-	private final UserService uService;
+	private final UserInterface uService;
 	
-	public LogInOutController(UserServiceImpl uImp) {
+	public LogInOutController(UserImplementation uImp) {
 		uService = uImp;
 	}
 
