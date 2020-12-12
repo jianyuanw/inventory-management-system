@@ -10,10 +10,13 @@ import sg.edu.iss.ims.repo.UserRepository;
 
 @Service
 @Transactional
-public class UserImplementation implements UserInterface {
+public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserRepository userRepo;
+	private final UserRepository userRepo;
+	
+	public UserServiceImpl(UserRepository userRepo) {
+		this.userRepo = userRepo;
+	}
 	
 	@Override
 	public void createUser(User user) {

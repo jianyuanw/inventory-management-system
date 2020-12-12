@@ -2,7 +2,7 @@ package sg.edu.iss.ims.service;
 
 import sg.edu.iss.ims.model.User;
 
-public interface UserInterface {
+public interface UserService {
 	public void createUser(User user);
 
 	public User readUser(String username);
