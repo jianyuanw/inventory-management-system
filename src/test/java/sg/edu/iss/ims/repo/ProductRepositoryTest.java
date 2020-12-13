@@ -1,0 +1,36 @@
+package sg.edu.iss.ims.repo;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import sg.edu.iss.ims.model.Product;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+class ProductRepositoryTest {
+
+    @Autowired
+    public ProductRepository prorepo;
+
+    @Test
+    void findByName() {
+        ArrayList<Product> plist;
+        plist = (ArrayList<Product>) prorepo.findByName("Avanza");
+        System.out.println(plist.size());
+        for (Iterator<Product> iterator = plist.iterator(); iterator.hasNext(); ) {
+            Product product = iterator.next();
+            System.out.println(product.toString());
+
+        }
+    }
+
+    @Test
+    void findByShelfLocation(String shelflocation)
+    {
+
+    }
+}
