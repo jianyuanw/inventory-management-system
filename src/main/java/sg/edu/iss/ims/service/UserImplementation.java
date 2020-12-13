@@ -1,5 +1,7 @@
 package sg.edu.iss.ims.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import sg.edu.iss.ims.model.User;
 import sg.edu.iss.ims.repo.UserRepository;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -43,6 +47,11 @@ public class UserImplementation implements UserInterface {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		return userRepo.findAll();
 	}
 
 //	private String hash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {

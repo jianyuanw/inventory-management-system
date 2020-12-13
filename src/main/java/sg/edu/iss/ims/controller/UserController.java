@@ -1,65 +1,59 @@
 package sg.edu.iss.ims.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import sg.edu.iss.ims.model.Alert;
 import sg.edu.iss.ims.model.User;
 import sg.edu.iss.ims.service.UserImplementation;
 import sg.edu.iss.ims.service.UserInterface;
 
+import java.util.List;
+
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
-	private final UserInterface uService;
-	
-	public UserController(UserImplementation uImp) {
-		uService = uImp;
-	}
+    private final UserInterface uService;
 
-	@GetMapping("/login")
-	public String login(Model model) {
-		model.addAttribute("user", new User());
-		return "login";
-	}
-	
-	@PostMapping("/login")
-	public String loginAccount(Model model, User user, HttpServletRequest request, RedirectAttributes redirAttr) {
-		// Note, user is not currently being passed to this action properly
-		HttpSession session = request.getSession();
-		if (session.getAttribute("user") == null && uService.authenticate(user)) {
-			session.setAttribute("user", user);
-			redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully logged in!"));
-		}
-		return "redirect:/";
-	}	
-	
-	@GetMapping("/register")
-	public String register(Model model) {
-		model.addAttribute("user", new User());
-		return "register";
-	}
+    public UserController(UserImplementation uImp) {
+        uService = uImp;
+    }
 
-	@PostMapping("/register")
-	public String createAccount(Model model, User user, HttpServletRequest request, RedirectAttributes redirAttr) {
-		HttpSession session = request.getSession();
-		if (session.getAttribute("user") == null && uService.readUser(user.getUsername()) == null) {
-			uService.createUser(user);
-			session.setAttribute("user", user);
-			redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully registered!"));
-		}
-		return "redirect:/";
-	}
-	
-	@GetMapping("/logout")
-	public String logoutAccount(HttpSession session) {
-		session.invalidate();
-		return "redirect:/";
-	}
+    @GetMapping("/create")
+    public String createUser(Model model) {
+        model.addAttribute("user", new User());
+        return "manage-user/create";
+    }
+
+    @PostMapping("/create")
+    public String createUser(User user, RedirectAttributes redirAttr) {
+        if (uService.readUser(user.getUsername()) == null) {
+            uService.createUser(user);
+            redirAttr.addFlashAttribute("alert",
+                    new Alert("primary", "Successfully created user: " + user.getUsername()));
+            return "redirect:/user/view";
+        } else {
+            redirAttr.addFlashAttribute("alert",
+                    new Alert("primary", "Username already exists: " + user.getUsername()));
+            return "redirect:/user/create";
+        }
+    }
+
+    @GetMapping("/modify")
+    public String modifyUser(Model model) {
+        List<User> users = uService.getAllUsers();
+        model.addAttribute("users", users);
+        return "manage-user/modify";
+    }
+
+    @GetMapping("/view")
+    public String viewUsers(Model model) {
+        List<User> users = uService.getAllUsers();
+        model.addAttribute("users", users);
+        return "manage-user/view";
+    }
 }

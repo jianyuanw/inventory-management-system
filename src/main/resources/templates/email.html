@@ -3,7 +3,7 @@
 <head>
 	<th:block th:replace="fragments/layout.html :: head"/>
 	<script type="text/javascript" th:src="@{/js/form.js}"></script>
-<title>Login</title>
+<title>Email Tester</title>
 </head>
 <body>
 	<div th:replace="fragments/layout.html :: header"></div>
@@ -13,20 +13,26 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<fieldset>
-					<legend>Login</legend>
-					<form class="form-horizontal" method="post" th:action="@{/login}" th:object="${user}">
+					<legend>Email Tester</legend>
+					<form class="form-horizontal" method="post" th:action="@{/email}" th:object="${email}">
 						<div class="control-group">
-							<label class="control-label">Username</label>
+							<label class="control-label">Recipient e-mail address</label>
 							<div class="controls">
-								<input type="text" name="username" id="username required" title="Username" value="" required>
+								<input type="text" name="recipient" id="recipient" title="EmailAddress" value="" required>
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label">Password</label>
+							<label class="control-label">Subject</label>
 							<div class="controls">
-								<input type="password" name="password" id="password required" title="Password" value="" required>
+								<input type="text" name="subject" id="subject" title="Subject" value="" required>
 							</div>
 						</div>
+						<div class="control-group">
+							<label class="control-label">Message</label>
+							<div class="controls">
+								<textarea rows="4" name="message" id="message" title="Message" required></textarea>
+							</div>
+						</div>						
 						<br />
 						<div class="form-actions">
 							<button type="submit" class="btn btn-success">Submit</button>
