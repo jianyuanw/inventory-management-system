@@ -5,17 +5,19 @@ import sg.edu.iss.ims.model.User;
 import java.util.List;
 
 public interface UserService {
-	public void createUser(User user);
+	void createUser(User user);
 
-	public User readUser(String username);
+	User readUser(String username);
 
-	public User readUser(Long id);
+	User readUser(Long id);
 
-	public void updateUser(User user);
+	void updateUser(User user);
 
-	public void deleteUser(User user);
+	void deleteUser(User user);
 	
-	public boolean authenticate(User user);
+//	boolean authenticate(User user);
 
-	public List<User> getAllUsers();
+	List<User> getAllUsers();
+
+	String encode(String rawPassword);
 }

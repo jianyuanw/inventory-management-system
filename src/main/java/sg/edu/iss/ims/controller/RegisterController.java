@@ -33,6 +33,7 @@ public class RegisterController {
 	public String createAccount(Model model, User user, HttpServletRequest request, RedirectAttributes redirAttr) {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") == null && uService.readUser(user.getUsername()) == null) {
+			user.setPassword(uService.encode(user.getPassword()));
 			uService.createUser(user);
 			session.setAttribute("user", user);
 			redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully registered!"));

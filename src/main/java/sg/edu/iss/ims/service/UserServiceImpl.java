@@ -5,6 +5,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import sg.edu.iss.ims.model.User;
@@ -16,7 +18,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
+	@Autowired
+	private PasswordEncoder encoder;
+
 	@Override
 	public void createUser(User user) {
 		userRepo.save(user);
@@ -41,19 +46,24 @@ public class UserServiceImpl implements UserService {
 		userRepo.delete(user);
 	}
 
-	@Override
-	public boolean authenticate(User user) {
-		User dbuser = userRepo.findUserByUsername(user.getUsername());
-		if (user.getUsername().equals(dbuser.getUsername()) && user.getPassword().equals(dbuser.getPassword())) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+//	@Override
+//	public boolean authenticate(User user) {
+//		User dbuser = userRepo.findUserByUsername(user.getUsername());
+//		if (user.getUsername().equals(dbuser.getUsername()) && user.getPassword().equals(dbuser.getPassword())) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
 
 	@Override
 	public List<User> getAllUsers() {
 		return userRepo.findAll();
+	}
+
+	@Override
+	public String encode(String rawPassword) {
+		return encoder.encode(rawPassword);
 	}
 
 //	private String hash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {

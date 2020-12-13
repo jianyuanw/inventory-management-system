@@ -33,6 +33,7 @@ public class UserController {
     @PostMapping("/create")
     public String createUser(User user, RedirectAttributes redirAttr) {
         if (uService.readUser(user.getUsername()) == null) {
+            user.setPassword(uService.encode(user.getPassword()));
             uService.createUser(user);
             redirAttr.addFlashAttribute("alert",
                     new Alert("primary", "Successfully created user: " + user.getUsername()));
@@ -73,7 +74,7 @@ public class UserController {
                 currentUser.setUsername(user.getUsername());
             }
             if (user.getPassword() != "") {
-                currentUser.setPassword(user.getPassword());
+                currentUser.setPassword(uService.encode(user.getPassword()));
             }
             currentUser.setRole(user.getRole());
             uService.updateUser(currentUser);
