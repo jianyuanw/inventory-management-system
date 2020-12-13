@@ -4,7 +4,7 @@ import sg.edu.iss.ims.model.Product;
 
 import java.util.List;
 
-public interface ViewProductInterface {
+public interface ViewProduct {
 
     public List<Product> list();
 
