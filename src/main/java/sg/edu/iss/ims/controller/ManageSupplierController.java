@@ -2,6 +2,8 @@ package sg.edu.iss.ims.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.edu.iss.ims.model.Alert;
-import sg.edu.iss.ims.model.Product;
 import sg.edu.iss.ims.model.Supplier;
-import sg.edu.iss.ims.service.SupplierServiceImpl;
 import sg.edu.iss.ims.service.SupplierService;
+import sg.edu.iss.ims.service.SupplierServiceImpl;
 
 @Controller
 @RequestMapping("/supplier")
@@ -30,16 +31,20 @@ public class ManageSupplierController {
 	}
 	
 	@GetMapping("/add")
-	public String showsupform(Model model) {
+	public String showSupForm(Model model) {
 		model.addAttribute("supplier", new Supplier());
 		return "supplierform";
 	}
 	
-	@PostMapping("/add")
-	public String add(@ModelAttribute("supplier") Supplier supplier, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
+	@GetMapping("/save")
+	public String add(@ModelAttribute("supplier") @Valid Supplier supplier, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
+		if (bindingResult.hasErrors()) 
+		{
+			return "supplierform";
+		}
 		supService.createSupplier(supplier);
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully added supplier!"));
-		return "redirect:/supplier/list";
+		return "forward:/supplier/list";
 	}
 	
 	@GetMapping("/list")
@@ -50,13 +55,13 @@ public class ManageSupplierController {
 	}
 	
 	@GetMapping("/edit/{supid}")
-	public String editsuplist(Model model, @PathVariable("supid") Long id) {
+	public String editSupList(Model model, @PathVariable("supid") Long id) {
 		model.addAttribute("supplier", supService.updateSupplier(id));
 		return "supplierform";
 	}
 	
 	@GetMapping("/delete/{supid}")
-	public String deletesuplist(Model model, @PathVariable("supid") Long id) {
+	public String deleteSupList(Model model, @PathVariable("supid") Long id) {
 		supService.deleteSupplier(id);
 		return "redirect:/supplier/list";
 	}

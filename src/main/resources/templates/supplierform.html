@@ -13,9 +13,10 @@
 			<div class="span12">
 				<fieldset>
 					<legend>Add Supplier</legend>
-					<form class="form-horizontal" method="post" th:action="@{/supplier/add}" th:object="${supplier}">
+					<form class="form-horizontal" action = "" method="get" th:action="@{/supplier/save}" th:object="${supplier}">
 						<div class="control-group">
 							<label class="control-label">Supplier Name</label>
+							<input type="hidden" th:field="*{id}"> 
 							<div class="controls">
 								<input type="text" th:field="*{name}" name="supname" id="supname required" title="Supplier Name" value="" required>
 							</div>
