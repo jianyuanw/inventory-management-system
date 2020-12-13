@@ -7,18 +7,16 @@
 <body>
     <div th:replace="fragments/layout.html :: header"></div>
 
-    <!-- Default form register -->
-    <form class="text-center border border-light p-5" method="post" th:action="@{/user/create}" th:object="${user}">
+    <form class="border border-light p-5" method="post" th:action="@{/user/create}" th:object="${user}">
         <p class="h4 mb-4">Create User</p>
         <input type="text" class="form-control mb-4" placeholder="Username" th:field="*{username}" required>
-        <input type="password" class="form-control" placeholder="Password" th:field="*{password}" required>
-        <br />
+        <input type="password" class="form-control mb-4" placeholder="Password" th:field="*{password}" required>
         <label>Role</label>
         <select class="custom-select" th:field="*{role}">
             <option value="ADMIN_CLERK">Admin Clerk</option>
             <option value="MECHANIC">Mechanic</option>
         </select>
-        <button class="btn btn-info my-4 btn-block" type="submit">Submit</button>
+        <button class="btn btn-info my-4 mx-0" type="submit">Submit</button>
     </form>
 
     <div th:replace="fragments/layout.html :: footer"></div>

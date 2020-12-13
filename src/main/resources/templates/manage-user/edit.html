@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/layout.html :: head"/>
+    <title>Edit User</title>
+</head>
+<body>
+    <div th:replace="fragments/layout.html :: header"></div>
+
+    <form class="border border-light p-5" method="post" th:action="@{/user/edit}">
+        <p class="h4 mb-4">Edit User</p>
+
+        <label for="id">ID</label>
+        <input type="text" class="form-control mb-4" id="id" th:field="${oldUser.id}" readonly>
+
+        <div class="form-row mb-4">
+            <div class="col">
+                <label for="oldUsername">Current Username</label>
+                <input type="text" class="form-control" id="oldUsername" th:value="${oldUser.username}" disabled>
+            </div>
+            <div class="col">
+                <label for="username">New Username (Leave blank to not change)</label>
+                <input type="text" class="form-control" id="username" th:field="${newUser.username}">
+            </div>
+        </div>
+
+        <div class="form-row mb-4">
+            <div class="col">
+                <label for="oldPassword">Current Password</label>
+                <input type="text" class="form-control" id="oldPassword" value="************" disabled>
+            </div>
+            <div class="col">
+                <label for="password">New Password (Leave blank to not change)</label>
+                <input type="text" class="form-control" id="password" th:field="${newUser.password}">
+            </div>
+        </div>
+
+        <div class="form-row mb-4">
+            <div class="col">
+                <label for="oldRole">Current Role</label>
+                <input type="text" class="form-control" id="oldRole"
+                       th:value="${oldUser.role.name()} == 'ADMIN_CLERK' ? 'Admin Clerk' : 'Mechanic'" disabled>
+            </div>
+            <div class="col">
+                <label for="role">New Role</label>
+                <select class="custom-select" id="role" th:field="${newUser.role}">
+                    <option th:value="${oldUser.role}">No change</option>
+                    <option value="ADMIN_CLERK">Admin Clerk</option>
+                    <option value="MECHANIC">Mechanic</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="btn btn-mdb-color my-4 mx-0" type="submit">Submit</button>
+    </form>
+
+    <div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>

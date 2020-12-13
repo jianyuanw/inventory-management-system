@@ -3,13 +3,14 @@ package sg.edu.iss.ims.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sg.edu.iss.ims.model.Alert;
 import sg.edu.iss.ims.model.User;
-import sg.edu.iss.ims.service.UserImplementation;
-import sg.edu.iss.ims.service.UserInterface;
+import sg.edu.iss.ims.service.UserService;
+import sg.edu.iss.ims.service.UserServiceImpl;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserInterface uService;
+    private final UserService uService;
 
-    public UserController(UserImplementation uImp) {
+    public UserController(UserServiceImpl uImp) {
         uService = uImp;
     }
 
@@ -48,6 +49,54 @@ public class UserController {
         List<User> users = uService.getAllUsers();
         model.addAttribute("users", users);
         return "manage-user/modify";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editUser(Model model, @PathVariable Long id) {
+        User oldUser = uService.readUser(id);
+        User newUser = new User();
+        model.addAttribute("oldUser", oldUser);
+        model.addAttribute("newUser", newUser);
+        return "manage-user/edit";
+    }
+
+    @PostMapping("/edit")
+    public String editUser(Model model, User user, RedirectAttributes redirAttr) {
+        User currentUser = uService.readUser(user.getId());
+        if (user.getUsername() == "" && user.getPassword() == "" && user.getRole() == currentUser.getRole()) {
+            redirAttr.addFlashAttribute("alert",
+                    new Alert("primary", "User (" + currentUser.getUsername() +
+                            ") not updated as no changes were detected."));
+            return "redirect:/user/edit/" + currentUser.getId();
+        } else {
+            if (user.getUsername() != "") {
+                currentUser.setUsername(user.getUsername());
+            }
+            if (user.getPassword() != "") {
+                currentUser.setPassword(user.getPassword());
+            }
+            currentUser.setRole(user.getRole());
+            uService.updateUser(currentUser);
+            redirAttr.addFlashAttribute("alert",
+                    new Alert("primary", "Successfully updated user: " + currentUser.getUsername()));
+            return "redirect:/user/view";
+        }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteUser(Model model, @PathVariable Long id) {
+        User user = uService.readUser(id);
+        model.addAttribute("user", user);
+        return "manage-user/delete";
+    }
+
+    @PostMapping("/delete")
+    public String deleteUser(User user, RedirectAttributes redirAttr) {
+        User currentUser = uService.readUser(user.getId());
+        uService.deleteUser(currentUser);
+        redirAttr.addFlashAttribute("alert",
+                new Alert("primary", "Successfully deleted user: " + currentUser.getUsername()));
+        return "redirect:/user/view";
     }
 
     @GetMapping("/view")

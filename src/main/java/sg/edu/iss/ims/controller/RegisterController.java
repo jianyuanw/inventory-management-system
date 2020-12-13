@@ -11,15 +11,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.edu.iss.ims.model.Alert;
 import sg.edu.iss.ims.model.User;
-import sg.edu.iss.ims.service.UserImplementation;
-import sg.edu.iss.ims.service.UserInterface;
+import sg.edu.iss.ims.service.UserServiceImpl;
+import sg.edu.iss.ims.service.UserService;
 
 @Controller
 public class RegisterController {
 
-	private final UserInterface uService;
+	private final UserService uService;
 	
-	public RegisterController(UserImplementation uImp) {
+	public RegisterController(UserServiceImpl uImp) {
 		uService = uImp;
 	}
 	
