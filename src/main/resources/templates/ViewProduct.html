@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <!--link to be update-->
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"-->>
+    <!--/*/ <th:block th:include="fragments/layout.html :: head"/> /*/-->
+    <title>View Products</title>
+</head>
+
+
+<body>
+<!--if failed try th:insert-->
+<header th:replace="fragments/layout.html :: header"></header>
+<h1>Product List</h1>
+<table>
+
+    <tr>
+        <th>ID</th>
+        <th>PART NUMBER</th>
+        <th>NAME</th>
+        <th>DESCRIPTION</th>
+        <th>TYPE</th>
+        <th>COLOR</th>
+        <th>DIMENSION</th>
+        <th>ORIGINAL PRICE</th>
+        <th>WHOLESALE PRICE</th>
+        <th>RETAIL PRICE</th>
+        <th>PARTNER PRICE</th>
+        <th>MANUFACTURER</th>
+        <th>RE ORDER AT</th>
+        <th>RE ORDER QUANTITY</th>
+        <th>SHELF LOCATION</th>
+    </tr>
+<tr th:each="product:${prod}">
+    <td th:text="${product.id}">ID</td>
+    <td th:text="${product.partNumber}">PART NUMBER</td>
+    <td th:text="${product.name}">NAME</td>
+    <td th:text="${product.description}">DESCRIPTION</td>
+    <td th:text="${product.type}">TYPO</td>
+    <td th:text="${product.color}">COLOR</td>
+    <td th:text="${product.dimension}">DIMENSION</td>
+    <td th:text="${product.originalPrice}">ORIGINAL PRICE</td>
+    <td th:text="${product.wholesalePrice}">WHOLESALE PRICE</td>
+    <td th:text="${product.retailPrice}">RETAIL PRICE</td>
+    <td th:text="${product.partnerPrice}">PARTNER PRICE</td>
+    <td th:text="${product.manufacturer}">MANUFACTURER</td>
+    <td th:text="${product.reorderAt}">RE ORDER AT</td>
+    <td th:text="${product.reorderQuantity}">RE ORDER QUANTITY</td>
+    <td th:text="${product.shelfLocation}">SHELF LOCATION</td>
+
+</tr>
+</table>
+
+<div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>
