@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import sg.edu.iss.ims.model.Product;
-import sg.edu.iss.ims.service.ViewProduct;
+import sg.edu.iss.ims.service.ViewProductService;
 
 import java.util.List;
 
@@ -15,12 +15,12 @@ import java.util.List;
 public class ViewProductController {
 
 @Autowired
-public void setViewProduct(ViewProduct view) {
+public void setViewProduct(ViewProductService view) {
     this.viewservice = view;
 }
 
 @Autowired
-private ViewProduct viewservice;
+private ViewProductService viewservice;
 
 @RequestMapping (value ="/list")
     public String list (Model model)

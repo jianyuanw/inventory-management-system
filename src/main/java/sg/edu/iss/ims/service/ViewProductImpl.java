@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class ViewProductImpl implements ViewProduct {
+public class ViewProductImpl implements ViewProductService {
 
 @Autowired
     ProductRepository prepo;

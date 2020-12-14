@@ -7,9 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
