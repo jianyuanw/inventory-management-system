@@ -21,7 +21,4 @@ public class Supplier {
 		super();
 		this.name = name;
 	}
-
-	public Supplier() {	}
-
 }

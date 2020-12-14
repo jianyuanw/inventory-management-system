@@ -28,9 +28,4 @@ public class Category {
 		super();
 		this.name = name;
 	}
-
-	public Category() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 }
