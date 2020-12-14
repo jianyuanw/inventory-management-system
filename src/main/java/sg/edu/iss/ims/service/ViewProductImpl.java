@@ -11,10 +11,12 @@ import java.util.List;
 @Service
 public class ViewProductImpl implements ViewProduct {
 
-@Autowired
-    ProductRepository prepo;
+	@Autowired
+	ProductRepository prepo;
 
-@Transactional
-public List<Product> list (){return prepo.findAll();}
+	@Transactional
+	public List<Product> list() {
+		return prepo.findAll();
+	}
 
 }
