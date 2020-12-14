@@ -13,24 +13,24 @@ import java.util.List;
 public class ItemServiceImpl implements ItemService {
 
     @Autowired
-    private ItemRepository itemrepo;
+    private ItemRepository itemRepo;
 
     @Override
     public void addItem(Item item)
     {
-        itemrepo.save(item);
+        itemRepo.save(item);
 
     }
 
 
     public Item findId (Long id) {
-        return itemrepo.findById(id).get();
+        return itemRepo.findById(id).get();
 
     }
 
     @Override
     public void deleteItem(Long id) {
-        itemrepo.delete(findId(id));
+        itemRepo.delete(findId(id));
 
     }
 
@@ -38,8 +38,7 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public List<Item> list()
     {
-        return itemrepo.findAllByUnits();
-
+        return itemRepo.findAll();
     }
 
 
