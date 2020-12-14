@@ -24,9 +24,9 @@ public class JobServiceImpl implements JobService {
 	}
 
 	@Override
-	public Job readJob(String jobName) {
+	public Job readJob(Long id) {
 		// TODO Auto-generated method stub
-		return jobRepo.findJobByName(jobName);
+		return jobRepo.findJobById(id);
 	}
 
 	@Override

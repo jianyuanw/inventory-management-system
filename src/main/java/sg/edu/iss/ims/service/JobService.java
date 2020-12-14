@@ -5,7 +5,7 @@ import sg.edu.iss.ims.model.Job;
 public interface JobService {
 	public void createJob(Job job);
 	
-	public Job readJob(String jobName);
+	public Job readJob(Long id);
 	
 	public void updateJob(Job job);
 	

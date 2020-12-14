@@ -23,8 +23,6 @@
 								<input type="text" th:field="*{description}" name="proddesc" id="proddesc required" title="Product Description" value="" required>
 								<label class="control-label">Part Number</label>
 								<input type="text" th:field="*{partNumber}" name="prodpn" id="prodpn required" title="Product Part Number" value="" required>
-								<label class="control-label">Product Type</label>
-								<input type="text" th:field="*{type}" name="prodtype" id="prodtype required" title="Product Type" value="" required>
 								<label class="control-label">Product Original Price</label>
 								<input type="text" th:field="*{originalPrice}" name="prodop" id="prodop required" title="Product Original Price" value="" required>
 								<label class="control-label">Product Wholesale Price</label>
@@ -35,16 +33,16 @@
 								<input type="text" th:field="*{partnerPrice}" name="prodpp" id="prodpp required" title="Product Partner Price" value="" required>
 								<label class="control-label">Product Color</label>
 								<input type="text" th:field="*{color}" name="prodcolor" id="prodcolor required" title="Product Color" value="" required>
-								<label class="control-label">Product Dimension</label>
-								<input type="text" th:field="*{dimension}" name="proddimension" id="proddimension required" title="Product Dimension" value="" required>
-								<label class="control-label">Product Manufacturer</label>
-								<input type="text" th:field="*{manufacturer}" name="prodmanufacturer" id="prodmanufacturer required" title="Product Manufacturer" value="" required>
-								<label class="control-label">Product Reorder At</label>
+								<label class="control-label">Product Supplier</label>
+								<select th:field="*{supplier}">
+								    <option th:each="sup : ${suppliers}" th:value="${sup.id}" th:text="${sup.name}"></option>
+								</select>
+								<!-- <label class="control-label">Product Reorder At</label>
 								<input type="text" th:field="*{reorderAt}" name="prodra" id="prodra required" title="Product Reorder At" value="" required>
 								<label class="control-label">Product Reorder Quantity</label>
 								<input type="text" th:field="*{reorderQuantity}" name="prodrq" id="prodrq required" title="Product Reorder Quantity" value="" required>
 								<label class="control-label">Product Shelf Location</label>
-								<input type="text" th:field="*{shelfLocation}" name="prodsl" id="prodsl required" title="Product Shelf Location" value="" required>
+								<input type="text" th:field="*{shelfLocation}" name="prodsl" id="prodsl required" title="Product Shelf Location" value="" required>-->
 							</div>
 						</div>
 						<br />

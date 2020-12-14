@@ -15,33 +15,36 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.edu.iss.ims.model.Alert;
 import sg.edu.iss.ims.model.Product;
-import sg.edu.iss.ims.model.Supplier;
 import sg.edu.iss.ims.service.ProductService;
 import sg.edu.iss.ims.service.ProductServiceImpl;
+import sg.edu.iss.ims.service.SupplierService;
+import sg.edu.iss.ims.service.SupplierServiceImpl;
 
 @Controller
 @RequestMapping("/product")
 public class ManageProductController {
 	
 	private final ProductService prodService;
+	private final SupplierService supplierService;
 	
-	public ManageProductController(ProductServiceImpl supImp) {
-		
+	public ManageProductController(ProductServiceImpl supImp, SupplierServiceImpl supplierImpl) {
+		supplierService = supplierImpl;
 		prodService = supImp;
 	}
 	
 	@GetMapping("/add")
 	public String showSupForm(Model model) {
+		model.addAttribute("suppliers", supplierService.list());
 		model.addAttribute("product", new Product());
-		return "supplierform";
+		return "productform";
 	}
 	
 	@GetMapping("/save")
 	public String add(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
-		if (bindingResult.hasErrors()) 
-		{
-			return "supplierform";
-		}
+//		if (bindingResult.hasErrors()) 
+//		{
+//			return "supplierform";
+//		}
 		prodService.saveProduct(product);
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated product!"));
 		return "forward:/product/list";
