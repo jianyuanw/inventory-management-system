@@ -54,18 +54,18 @@ public class ManageProductController {
 	public String showsuplist(Model model) {
 		List<Product> prodlist = prodService.list();
 		model.addAttribute("prodlist", prodlist);
-		return "supplierlist";
+		return "productlist";
 	}
 	
 	@GetMapping("/edit/{prodid}")
 	public String editSupList(Model model, @PathVariable("prodid") Long id) {
 		model.addAttribute("supplier", prodService.findProductById(id));
-		return "supplierform";
+		return "productform";
 	}
 	
 	@GetMapping("/delete/{prodid}")
 	public String deleteSupList(Model model, @PathVariable("prodid") Long id) {
 		prodService.deleteProduct(id);
-		return "redirect:/supplier/list";
+		return "redirect:/product/list";
 	}
 }
