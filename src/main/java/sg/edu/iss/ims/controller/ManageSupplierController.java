@@ -42,8 +42,8 @@ public class ManageSupplierController {
 		{
 			return "supplierform";
 		}
-		supService.createSupplier(supplier);
-		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully added supplier!"));
+		supService.saveSupplier(supplier);
+		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated supplier!"));
 		return "forward:/supplier/list";
 	}
 	
@@ -56,7 +56,7 @@ public class ManageSupplierController {
 	
 	@GetMapping("/edit/{supid}")
 	public String editSupList(Model model, @PathVariable("supid") Long id) {
-		model.addAttribute("supplier", supService.updateSupplier(id));
+		model.addAttribute("supplier", supService.findSupplierById(id));
 		return "supplierform";
 	}
 	
