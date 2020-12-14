@@ -9,12 +9,14 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class ViewProductImpl implements ViewProduct {
+public class ViewProductImpl implements ViewProductService {
 
-@Autowired
-    ProductRepository prepo;
+	@Autowired
+	ProductRepository prepo;
 
-@Transactional
-public List<Product> list (){return prepo.findAll();}
+	@Transactional
+	public List<Product> list() {
+		return prepo.findAll();
+	}
 
 }
