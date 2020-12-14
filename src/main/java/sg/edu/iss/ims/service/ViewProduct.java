@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface ViewProduct {
 
-    public List<Product> list();
-
+	public List<Product> list();
 
 }

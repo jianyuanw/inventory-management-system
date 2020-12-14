@@ -14,46 +14,48 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Product {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String partNumber;
 	private String name;
 	private String description;
-	private String type;
 	private Double originalPrice;
 	private Double wholesalePrice;
 	private Double retailPrice;
 	private Double partnerPrice;
 	private String color;
-	private String dimension;
-	
-	@OneToOne
-	private Manufacturer manufacturer;
-	
-	private int reorderAt;
-	
-	private int reorderQuantity;
-	
-	private String shelfLocation;
+	private String measurement;
+	private String measurementType;
 
-	public Product(String partNumber, String name, String description, String type, Double originalPrice,
-			Double wholesalePrice, Double retailPrice, Double partnerPrice, String color, String dimension,
-			int reorderAt, int reorderQuantity, String shelfLocation) {
+	@OneToOne
+	private Category category;
+	@OneToOne
+	private Supplier supplier;
+	@OneToOne
+	private Brand brand;
+	@OneToOne
+	private Subcategory subcategory;
+	
+	public Product(String partNumber, String name, String description, Double originalPrice,
+			Double wholesalePrice, Double retailPrice, Double partnerPrice, String color, String measurement,
+			String measurementType, Category category, Subcategory subcategory, 
+			Supplier supplier, Brand brand) {
 		super();
 		this.partNumber = partNumber;
 		this.name = name;
 		this.description = description;
-		this.type = type;
 		this.originalPrice = originalPrice;
 		this.wholesalePrice = wholesalePrice;
 		this.retailPrice = retailPrice;
 		this.partnerPrice = partnerPrice;
 		this.color = color;
-		this.dimension = dimension;
-		this.reorderAt = reorderAt;
-		this.reorderQuantity = reorderQuantity;
-		this.shelfLocation = shelfLocation;
+		this.measurement = measurement;
+		this.measurementType = measurementType;
+		this.category = category;
+		this.subcategory = subcategory;
+		this.supplier = supplier;
+		this.brand = brand;
 	}
-
+	
 
 }

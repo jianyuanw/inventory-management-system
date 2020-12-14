@@ -7,21 +7,24 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Item {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@OneToOne
 	private Product product;
-	@OneToOne
-	private Category category;
-	@OneToOne
-	private Supplier supplier;
-	@OneToOne
-	private Brand brand;
+
 	private int units;
+
+	private int reorderAt;
+
+	private int reorderQuantity;
+
+	private String shelfLocation;
 }

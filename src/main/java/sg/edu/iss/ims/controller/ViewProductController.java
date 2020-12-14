@@ -9,28 +9,23 @@ import sg.edu.iss.ims.service.ViewProduct;
 
 import java.util.List;
 
-
 @Controller
 @RequestMapping("/ViewProduct")
 public class ViewProductController {
 
-@Autowired
-public void setViewProduct(ViewProduct view) {
-    this.viewservice = view;
-}
+	@Autowired
+	public void setViewProduct(ViewProduct view) {
+		this.viewservice = view;
+	}
 
-@Autowired
-private ViewProduct viewservice;
+	@Autowired
+	private ViewProduct viewservice;
 
-@RequestMapping (value ="/list")
-    public String list (Model model)
-{
-    List<Product>prod=viewservice.list();
-    model.addAttribute("prod",prod);
-    return "ViewProduct";
-}
-
-
-
+	@RequestMapping(value = "/list")
+	public String list(Model model) {
+		List<Product> prod = viewservice.list();
+		model.addAttribute("prod", prod);
+		return "ViewProduct";
+	}
 
 }
