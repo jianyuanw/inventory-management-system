@@ -27,4 +27,14 @@ public class Item {
 	private int reorderQuantity;
 
 	private String shelfLocation;
+
+	public Item(Product product, int units, int reorderAt, int reorderQuantity, String shelfLocation) {
+		super();
+		this.product = product;
+		this.units = units;
+		this.reorderAt = reorderAt;
+		this.reorderQuantity = reorderQuantity;
+		this.shelfLocation = shelfLocation;
+	}
+
 }

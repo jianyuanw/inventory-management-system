@@ -26,6 +26,7 @@ public class Product {
 	private String color;
 	private String measurement;
 	private String measurementType;
+	private String image;
 
 	@OneToOne
 	private Category category;
@@ -39,7 +40,7 @@ public class Product {
 	public Product(String partNumber, String name, String description, Double originalPrice,
 			Double wholesalePrice, Double retailPrice, Double partnerPrice, String color, String measurement,
 			String measurementType, Category category, Subcategory subcategory, 
-			Supplier supplier, Brand brand) {
+			Supplier supplier, Brand brand, String image) {
 		super();
 		this.partNumber = partNumber;
 		this.name = name;
@@ -55,6 +56,7 @@ public class Product {
 		this.subcategory = subcategory;
 		this.supplier = supplier;
 		this.brand = brand;
+		this.image = image;
 	}
 	
 

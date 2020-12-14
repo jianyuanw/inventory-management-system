@@ -13,11 +13,13 @@ import org.springframework.stereotype.Component;
 
 import sg.edu.iss.ims.model.Brand;
 import sg.edu.iss.ims.model.Category;
+import sg.edu.iss.ims.model.Item;
 import sg.edu.iss.ims.model.Product;
 import sg.edu.iss.ims.model.Subcategory;
 import sg.edu.iss.ims.model.Supplier;
 import sg.edu.iss.ims.repo.BrandRepository;
 import sg.edu.iss.ims.repo.CategoryRepository;
+import sg.edu.iss.ims.repo.ItemRepository;
 import sg.edu.iss.ims.repo.ProductRepository;
 import sg.edu.iss.ims.repo.SubcategoryRepository;
 import sg.edu.iss.ims.repo.SupplierRepository;
@@ -29,14 +31,16 @@ class DatabaseSeeder implements InitializingBean {
 	private final BrandRepository brandRepo;
 	private final SupplierRepository supplierRepo;
 	private final ProductRepository productRepo;
+	private final ItemRepository itemRepo;
 	
 	public DatabaseSeeder(SubcategoryRepository subcatRepo, CategoryRepository catRepo, BrandRepository brandRepo, 
-						  SupplierRepository supplierRepo, ProductRepository productRepo) {
+						  SupplierRepository supplierRepo, ProductRepository productRepo, ItemRepository itemRepo) {
 		this.subcatRepo = subcatRepo;
 		this.catRepo = catRepo;
 		this.brandRepo = brandRepo;
 		this.supplierRepo = supplierRepo;
 		this.productRepo = productRepo;
+		this.itemRepo = itemRepo;
 	}
 
 	  @Override
@@ -53,8 +57,10 @@ class DatabaseSeeder implements InitializingBean {
 		  String[] brands = {"Volkswagen", "Toyota", "Renault", "Nissan", "Mitsubishi", "Castrol"};
 		  String[] suppliers = {"Volkswagen Group Singapore", "Borneo Motors", "Wearnes Automotive", "Tan Chong Motor Sales", "Cycle & Carriage Mitsubishi", "Gee Boon Enterprises"};
 		  String[] colors = {"red", "blue", "green", "yellow"};
+		  String[] shelves = {"Upper Shelf A", "Upper Shelf B", "Upper Shelf C", "Lower Shelf A", "Lower Shelf B", "Lower Shelf C"};
 		  
 		  if (recreateData) {
+			  itemRepo.deleteAll();
 			  productRepo.deleteAll();
 			  catRepo.deleteAll();
 			  brandRepo.deleteAll();
@@ -98,10 +104,15 @@ class DatabaseSeeder implements InitializingBean {
 						  var description = name + ", supplied by " + supplier.getName();
 						  String color = colors[r.nextInt(colors.length)];
 						  Product p = new Product(partNumber, name, description, price, price + 8, price + 20, price + 5,
-								  				  color, measurement + "mm", "General measurement", c, sc, supplier, brand);
+								  				  color, measurement + "mm", "General measurement", c, sc, supplier, brand, "/fillerlink");
 						  
 						  productRepo.save(p);
 						  
+						  int value = ThreadLocalRandom.current().nextInt(50, 100);
+						  
+						  Item item = new Item(p, value, ThreadLocalRandom.current().nextInt(20, 35),
+								  			value, shelves[r.nextInt(shelves.length)]);
+						  itemRepo.save(item);
 					  }
 				  }
 			  }
