@@ -10,7 +10,7 @@ public interface SupplierService {
 
 	public void saveSupplier(Supplier supplier);
 	
-	public ArrayList<Supplier> findSupplierByName(String supplierName);
+	public Supplier findSupplierByName(String supplierName);
 	
 	public Supplier findSupplierById(Long id);
 	

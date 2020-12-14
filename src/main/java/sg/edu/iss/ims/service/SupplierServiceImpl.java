@@ -25,8 +25,8 @@ public class SupplierServiceImpl implements SupplierService{
 	}
 
 	@Override
-	public ArrayList<Supplier> findSupplierByName(String name) {
-		return supplierRepo.findByName(name);
+	public Supplier findSupplierByName(String name) {
+		return supplierRepo.findSupplierByName(name);
 		
 	}
 
