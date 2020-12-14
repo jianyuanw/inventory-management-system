@@ -1,16 +1,20 @@
 package sg.edu.iss.ims.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import sg.edu.iss.ims.model.Product;
 
 public interface ProductService {
 	
-	public void createProduct(Product product);
+	public void saveProduct(Product product);
 	
-	//To change this to Product when we start implementing
-	public void readProduct(String productName);
+	public ArrayList<Product> findProductByName(String productName);
 	
-	public void updateProduct(Product product);
+	public Product findProductById(Long id);
 	
-	public void deleteProduct(Product product);
+	public void deleteProduct(Long id);
+	
+	public List<Product> list();
 
 }

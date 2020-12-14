@@ -1,5 +1,6 @@
 package sg.edu.iss.ims.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -18,19 +19,19 @@ public class SupplierServiceImpl implements SupplierService{
 	private SupplierRepository supplierRepo;
 
 	@Override
-	public void createSupplier(Supplier supplier) {
+	public void saveSupplier(Supplier supplier) {
 		supplierRepo.save(supplier);
 		
 	}
 
 	@Override
-	public Supplier readSupplier(String name) {
+	public Supplier findSupplierByName(String name) {
 		return supplierRepo.findSupplierByName(name);
 		
 	}
 
 	@Override
-	public Supplier updateSupplier(Long id) {
+	public Supplier findSupplierById(Long id) {
 		//To change the update logic, put as save for now
 		return supplierRepo.findById(id).get();
 		
@@ -38,7 +39,7 @@ public class SupplierServiceImpl implements SupplierService{
 
 	@Override
 	public void deleteSupplier(Long id) {
-		supplierRepo.delete(updateSupplier(id));
+		supplierRepo.delete(findSupplierById(id));
 		
 	}
 	

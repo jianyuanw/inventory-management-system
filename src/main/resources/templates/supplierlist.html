@@ -22,8 +22,8 @@
 			<tr th:each="supplier:${suplist}">
 				<td th:text="${supplier.id}">ID</td>
 				<td th:text="${supplier.name}">ID</td>
-				<td><a href="EditProduct.html" th:href="@{/supplier/edit/}+${supplier.id}" th:utext="#{supplier.page.edit}"> Edit </a></td>
-	      <td><a href="DeleteProduct.html"
+				<td><a href="EditSupplier.html" th:href="@{/supplier/edit/}+${supplier.id}" th:utext="#{supplier.page.edit}"> Edit </a></td>
+	      <td><a href="DeleteSupplier.html"
 		th:href="@{/supplier/delete/}+${supplier.id}" th:utext="#{supplier.page.delete}"> Delete </a></td>
 			</tr>
 		</tbody>
