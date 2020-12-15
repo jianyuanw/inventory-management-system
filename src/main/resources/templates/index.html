@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<th:block th:replace="fragments/layout.html :: head"/>
-	<th:block th:replace="fragments/bundle.html :: mdtable"/>
-	<Title>Main Page</Title>
+<th:block th:replace="fragments/layout.html :: head" />
+<th:block th:replace="fragments/bundle.html :: mdtable" />
+<th:block th:replace="fragments/bundle.html :: bootstrapselect" />
+<Title>Main Page</Title>
 </head>
 <body>
 	<div th:replace="fragments/layout.html :: header"></div>
@@ -151,6 +152,15 @@
 			</tr>
 		</tbody>
 	</table>
+
+
+	<select class="selectpicker" data-live-search="true">
+		<option data-tokens="ketchup mustard">Hot Dog, Fries and a
+			Soda</option>
+		<option data-tokens="mustard">Burger, Shake and a Smile</option>
+		<option data-tokens="frosting">Sugar, Spice and all things
+			nice</option>
+	</select>
 
 	<div th:replace="fragments/layout.html :: footer"></div>
 </body>

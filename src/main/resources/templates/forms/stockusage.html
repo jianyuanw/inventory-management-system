@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<th:block th:replace="fragments/layout.html :: head"/>
+	<th:block th:replace="fragments/bundle.html :: bootstrapselect" />
 	<script type="text/javascript" th:src="@{/js/form.js}"></script>
 <meta charset="ISO-8859-1">
 <title>Add Suppliers</title>
@@ -39,16 +40,20 @@
 					    <table>
 					    	
 						    <tr th:each="row,rowStat : ${itemList.list}">
-						      <td th:text="${rowStat.count}">1</td>
+						      <!-- <td th:text="${rowStat.count}">1</td>-->
 						      <td>
 						      	<input type="number" th:field="${itemList.list[__${rowStat.index}__].units}">
 						      </td>
 						      <td>
-						        <select th:field="${itemList.list[__${rowStat.index}__].id}">
-						          <option th:each="product : ${products}" 
-						                  th:value="${product.id}" 
-						                  th:text="${product.name}">Winter Wheels</option>
-						        </select>
+						        <!--  <select th:field="${itemList.list[__${rowStat.index}__].id}">
+						          <option th:each="item : ${inventory}" 
+						                  th:value="${item.product.id}" 
+						                  th:text="${item.product.name}">Winter Wheels</option>
+						        </select>-->
+						        <select class="selectpicker bootstrapSelect" data-live-search="true">
+						        	<option th:each="item : ${inventory}" th:value="${item.product.id}" th:text="${item.product.name}">Winter Tyres</option>
+								</select>
+						        
 						      </td>
 						      <td>
 						      	<button type="submit" name="addRow" >Add part</button>

@@ -1,5 +1,7 @@
 package sg.edu.iss.ims.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -9,8 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import sg.edu.iss.ims.model.Item;
 import sg.edu.iss.ims.model.ItemList;
 import sg.edu.iss.ims.model.Job;
+import sg.edu.iss.ims.service.ItemService;
+import sg.edu.iss.ims.service.ItemServiceImpl;
 import sg.edu.iss.ims.service.JobService;
 import sg.edu.iss.ims.service.JobServiceImpl;
 import sg.edu.iss.ims.service.ProductService;
@@ -20,17 +25,19 @@ import sg.edu.iss.ims.service.ProductServiceImpl;
 public class JobController {
 	private ProductService productService;
 	private JobService jobService;
+	private ItemService itemService;
 	
-	public JobController(ProductServiceImpl productServiceImpl, JobServiceImpl jobServiceImpl) {
+	public JobController(ProductServiceImpl productServiceImpl, JobServiceImpl jobServiceImpl, ItemServiceImpl itemServiceImpl) {
 		productService = productServiceImpl;
 		jobService = jobServiceImpl;
+		itemService = itemServiceImpl;
 	}
 
 	@GetMapping("/forms/stockusage")
 	public String generateSupplierForm(Model model, @ModelAttribute Job job, ItemList itemList) {
 		itemList.addProduct();
 		model.addAttribute("itemList", itemList);
-		model.addAttribute("products", productService.list());
+		model.addAttribute("inventory", itemService.list());
 		return "forms/stockusage";
 	}
 	
@@ -43,7 +50,7 @@ public class JobController {
 	@RequestMapping(value="/forms/stockusage", params={"addRow"})
 	public String addRow(Model model, Job job, ItemList itemList) {
 	    itemList.addProduct();
-	    model.addAttribute("products", productService.list());
+	    model.addAttribute("inventory", itemService.list());
 	    return "forms/stockusage";
 	}
 
@@ -51,7 +58,7 @@ public class JobController {
 	public String removeRow(Model model, Job job, ItemList itemList, HttpServletRequest req) {
 	    Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
 	    itemList.removeProduct(rowId);
-	    model.addAttribute("products", productService.list());
+	    model.addAttribute("inventory", itemService.list());
 	    return "forms/stockusage";
 	}	
 }

@@ -10,6 +10,7 @@ import sg.edu.iss.ims.model.Job;
 import sg.edu.iss.ims.model.JobTransaction;
 import sg.edu.iss.ims.model.Transaction;
 import sg.edu.iss.ims.model.TransactionType;
+import sg.edu.iss.ims.repo.ItemRepository;
 import sg.edu.iss.ims.repo.JobRepository;
 import sg.edu.iss.ims.repo.JobTransactionRepository;
 import sg.edu.iss.ims.repo.ProductRepository;
@@ -23,12 +24,14 @@ public class JobServiceImpl implements JobService {
 	private final TransactionRepository transactionRepo;
 	private final ProductRepository productRepo;
 	private final JobTransactionRepository jobTransactionRepo;
+	private final ItemRepository itemRepo;
 	
-	public JobServiceImpl(JobRepository jobRepo, TransactionRepository transactionRepo, ProductRepository productRepo, JobTransactionRepository jobTransactionRepo) {
+	public JobServiceImpl(JobRepository jobRepo, TransactionRepository transactionRepo, ProductRepository productRepo, JobTransactionRepository jobTransactionRepo, ItemRepository itemRepo) {
 		this.jobRepo = jobRepo;
 		this.transactionRepo = transactionRepo;
 		this.productRepo = productRepo;
 		this.jobTransactionRepo = jobTransactionRepo;
+		this.itemRepo = itemRepo;
 	}
 	
 	@Override
