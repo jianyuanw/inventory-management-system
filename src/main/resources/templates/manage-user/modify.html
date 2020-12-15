@@ -27,12 +27,12 @@
                     <td class="align-middle" th:text="${user.role.name()} == 'ADMIN_CLERK' ? 'Admin Clerk' : 'Mechanic'"></td>
                     <td>
                         <a th:href="@{/user/edit/} + ${user.id}">
-                            <button type="button" class="btn btn-mdb-color btn-sm">Edit</button>
+                            <button type="button" class="btn btn-mdb-color btn-sm m-0">Edit</button>
                         </a>
                     </td>
                     <td>
                         <a th:href="@{/user/delete/} + ${user.id}">
-                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="button" class="btn btn-danger btn-sm m-0">Delete</button>
                         </a>
                     </td>
                 </tr>
