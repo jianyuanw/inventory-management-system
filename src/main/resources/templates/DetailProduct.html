@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/layout.html :: head"/>
+    <title>Display Product Details</title>
+</head>
+<body>
+<div th:replace="fragments/layout.html :: header"></div>
+
+<div class="border border-dark container-fluid col-md-4 col-md-offset-4">
+    <div class="row-fluid">
+        <div class="span4">
+            <fieldset>
+                <label class="control-label"><b><p style="color:red"> Product Name</p></b></label>
+                        <div class="controls">
+                            <span th:each="product:${prod}">
+                                <span th:text="${product.name}"></span>
+                            </span>
+                        </div>
+                <label class="control-label"><b><p style="color:red">Product Description</p></b></label>
+                        <div class="controls">
+                            <span th:each="product:${prod}">
+                                <span th:text="${product.description}"></span>
+                            </span>
+                        </div>
+                <label class="control-label"><b><p style="color:red">Color</p></b></label>
+                <div class="controls">
+                            <span th:each="product:${prod}">
+                                <span th:text="${product.color}"></span>
+                            </span>
+                </div>
+                <label class="control-label"><b><p style="color:red">Measurement</p></b></label>
+                <div class="controls">
+                            <span th:each="product:${prod}">
+                                <span th:text="${product.measurement}"></span>
+                            </span>
+                </div>
+                <label class="control-label"><b><p style="color:red">Measurement Type</p></b></label>
+                <div class="controls">
+                            <span th:each="product:${prod}">
+                                <span th:text="${product.measurementType}"></span>
+                            </span>
+                </div>
+                <label class="control-label"><b><p style="color:red">Part Number</p></b></label>
+                <div class="controls">
+                            <span th:each="product:${prod}">
+                                <span th:text="${product.partNumber}"></span>
+                            </span>
+                </div>
+                <label class="control-label"><b><p style="color:red">Original Price</p></b></label>
+                <div class="controls">
+                            <span th:each="product:${prod}">
+                                <span th:text="${product.originalPrice}"></span>
+                            </span>
+                </div>
+                <label class="control-label"><b><p style="color:red">Wholesale Price</p></b></label>
+                <div class="controls">
+                            <span th:each="product:${prod}">
+                                <span th:text="${product.wholesalePrice}"></span>
+                            </span>
+                </div>
+                <label class="control-label"><b><p style="color:red">Retail Price</p></b></label>
+                <div class="controls">
+                            <span th:each="product:${prod}">
+                                <span th:text="${product.retailPrice}"></span>
+                            </span>
+                </div>
+                <label class="control-label"><b><p style="color:red">Partner Price</p></b></label>
+                <div class="controls">
+                            <span th:each="product:${prod}">
+                                <span th:text="${product.partnerPrice}"></span>
+                            </span>
+                </div>
+
+
+
+
+
+
+
+
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>

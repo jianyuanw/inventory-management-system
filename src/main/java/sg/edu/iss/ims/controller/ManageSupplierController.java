@@ -29,13 +29,15 @@ public class ManageSupplierController {
 		
 		supService = supImp;
 	}
-	
+
+	/*
 	@GetMapping("/add")
 	public String showSupForm(Model model) {
 		model.addAttribute("supplier", new Supplier());
 		return "supplierform";
 	}
-	
+	*/
+
 	@GetMapping("/save")
 	public String add(@ModelAttribute("supplier") @Valid Supplier supplier, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
 		if (bindingResult.hasErrors()) 
