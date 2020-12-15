@@ -49,11 +49,11 @@
 								</select>
 								<label class="control-label">Product Subcategory</label>
 								<select th:field="*{subcategory}">
-								    <option th:each="subcat : ${subcategories}" th:value="${brand.id}" th:text="${brand.name}"></option>
+								    <option th:each="subcat : ${subcategories}" th:value="${subcat.id}" th:text="${subcat.name}"></option>
 								</select>
 								<label class="control-label">Product Brand</label>
 								<select th:field="*{brand}">
-								    <option th:each="brand : ${brands}" th:value="${subcat.id}" th:text="${subcat.name}"></option>
+								    <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
 								</select>
 								
 							</div>
