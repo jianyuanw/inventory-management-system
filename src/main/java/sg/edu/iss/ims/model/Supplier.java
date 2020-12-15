@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
+
 public class Supplier {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
