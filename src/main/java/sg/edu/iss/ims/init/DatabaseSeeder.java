@@ -20,9 +20,12 @@ import sg.edu.iss.ims.model.Supplier;
 import sg.edu.iss.ims.repo.BrandRepository;
 import sg.edu.iss.ims.repo.CategoryRepository;
 import sg.edu.iss.ims.repo.ItemRepository;
+import sg.edu.iss.ims.repo.JobRepository;
+import sg.edu.iss.ims.repo.JobTransactionRepository;
 import sg.edu.iss.ims.repo.ProductRepository;
 import sg.edu.iss.ims.repo.SubcategoryRepository;
 import sg.edu.iss.ims.repo.SupplierRepository;
+import sg.edu.iss.ims.repo.TransactionRepository;
 
 @Component
 class DatabaseSeeder implements InitializingBean {
@@ -32,15 +35,22 @@ class DatabaseSeeder implements InitializingBean {
 	private final SupplierRepository supplierRepo;
 	private final ProductRepository productRepo;
 	private final ItemRepository itemRepo;
+	private final TransactionRepository transactionRepo;
+	private final JobRepository jobRepo;
+	private final JobTransactionRepository jobTransactionRepo;
 	
 	public DatabaseSeeder(SubcategoryRepository subcatRepo, CategoryRepository catRepo, BrandRepository brandRepo, 
-						  SupplierRepository supplierRepo, ProductRepository productRepo, ItemRepository itemRepo) {
+						  SupplierRepository supplierRepo, ProductRepository productRepo, ItemRepository itemRepo,
+						  TransactionRepository transactionRepo, JobRepository jobRepo, JobTransactionRepository jobTransactionRepo) {
 		this.subcatRepo = subcatRepo;
 		this.catRepo = catRepo;
 		this.brandRepo = brandRepo;
 		this.supplierRepo = supplierRepo;
 		this.productRepo = productRepo;
 		this.itemRepo = itemRepo;
+		this.transactionRepo = transactionRepo;
+		this.jobRepo = jobRepo;
+		this.jobTransactionRepo = jobTransactionRepo;
 	}
 
 	  @Override
@@ -60,6 +70,9 @@ class DatabaseSeeder implements InitializingBean {
 		  String[] shelves = {"Upper Shelf A", "Upper Shelf B", "Upper Shelf C", "Lower Shelf A", "Lower Shelf B", "Lower Shelf C"};
 		  
 		  if (recreateData) {
+			  jobTransactionRepo.deleteAll();
+			  jobRepo.deleteAll();
+			  transactionRepo.deleteAll();
 			  itemRepo.deleteAll();
 			  productRepo.deleteAll();
 			  catRepo.deleteAll();
@@ -97,7 +110,7 @@ class DatabaseSeeder implements InitializingBean {
 				  for (String category : categories) {
 					  var c = catRepo.findCategoryByName(category);
 					  for (Subcategory sc : subcatRepo.findSubcategoriesByCategory(c)) {
-						  double price = ThreadLocalRandom.current().nextDouble(60, 99.99);
+						  double price = Math.round(ThreadLocalRandom.current().nextDouble(60, 99.99) * 100.0) / 100.0;
 						  double measurement = ThreadLocalRandom.current().nextInt(15, 20);
 						  var partNumber = c.getName().substring(0, 2).toUpperCase() + "_" + sc.getName().substring(0, 2).toUpperCase() + "-" + brand.getName().substring(0, 2).toUpperCase() + "-" + supplier.getName().substring(0, 2).toUpperCase();
 						  var name = brand.getName() + " " + sc.getName();
@@ -108,9 +121,9 @@ class DatabaseSeeder implements InitializingBean {
 						  
 						  productRepo.save(p);
 						  
-						  int value = ThreadLocalRandom.current().nextInt(50, 100);
+						  int value = ThreadLocalRandom.current().nextInt(50, 100) / 10 * 10;
 						  
-						  Item item = new Item(p, value, ThreadLocalRandom.current().nextInt(20, 35),
+						  Item item = new Item(p, value, ThreadLocalRandom.current().nextInt(20, 35) / 10 * 10,
 								  			value, shelves[r.nextInt(shelves.length)]);
 						  itemRepo.save(item);
 					  }
