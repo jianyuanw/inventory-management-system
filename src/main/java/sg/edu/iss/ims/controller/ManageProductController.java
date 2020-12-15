@@ -71,6 +71,10 @@ public class ManageProductController {
 	@GetMapping("/edit/{prodid}")
 	public String editProdList(Model model, @PathVariable("prodid") Long id) {
 		model.addAttribute("product", prodService.findProductById(id));
+		model.addAttribute("brands",brandService.list());
+		model.addAttribute("categories", catService.getCategories());
+		model.addAttribute("subcategories", catService.getSubcategories());
+		model.addAttribute("suppliers", supplierService.list());
 		return "productform";
 	}
 	
