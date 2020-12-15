@@ -15,6 +15,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.edu.iss.ims.model.Alert;
 import sg.edu.iss.ims.model.Product;
+import sg.edu.iss.ims.service.BrandService;
+import sg.edu.iss.ims.service.BrandServiceImpl;
+import sg.edu.iss.ims.service.CategoryService;
+import sg.edu.iss.ims.service.CategoryServiceImpl;
 import sg.edu.iss.ims.service.ProductService;
 import sg.edu.iss.ims.service.ProductServiceImpl;
 import sg.edu.iss.ims.service.SupplierService;
@@ -26,21 +30,28 @@ public class ManageProductController {
 	
 	private final ProductService prodService;
 	private final SupplierService supplierService;
+	private final BrandService brandService;
+	private final CategoryService catService;
 	
-	public ManageProductController(ProductServiceImpl supImp, SupplierServiceImpl supplierImpl) {
+	public ManageProductController(ProductServiceImpl supImp, SupplierServiceImpl supplierImpl, BrandServiceImpl brandImpl, CategoryServiceImpl catImpl) {
 		supplierService = supplierImpl;
 		prodService = supImp;
+		brandService = brandImpl;
+		catService = catImpl;
 	}
 	
 	@GetMapping("/add")
-	public String showSupForm(Model model) {
+	public String showProdForm(Model model) {
 		model.addAttribute("suppliers", supplierService.list());
 		model.addAttribute("product", new Product());
+		model.addAttribute("brands",brandService.list());
+		model.addAttribute("categories", catService.getCategories());
+		model.addAttribute("subcategories", catService.getSubcategories());
 		return "productform";
 	}
 	
 	@GetMapping("/save")
-	public String add(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
+	public String saveProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
 //		if (bindingResult.hasErrors()) 
 //		{
 //			return "supplierform";
@@ -51,20 +62,20 @@ public class ManageProductController {
 	}
 	
 	@GetMapping("/list")
-	public String showsuplist(Model model) {
+	public String showProdList(Model model) {
 		List<Product> prodlist = prodService.list();
 		model.addAttribute("prodlist", prodlist);
 		return "productlist";
 	}
 	
 	@GetMapping("/edit/{prodid}")
-	public String editSupList(Model model, @PathVariable("prodid") Long id) {
-		model.addAttribute("supplier", prodService.findProductById(id));
+	public String editProdList(Model model, @PathVariable("prodid") Long id) {
+		model.addAttribute("product", prodService.findProductById(id));
 		return "productform";
 	}
 	
 	@GetMapping("/delete/{prodid}")
-	public String deleteSupList(Model model, @PathVariable("prodid") Long id) {
+	public String deleteProdList(Model model, @PathVariable("prodid") Long id) {
 		prodService.deleteProduct(id);
 		return "redirect:/product/list";
 	}
