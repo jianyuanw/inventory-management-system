@@ -41,7 +41,7 @@
 						    <tr th:each="row,rowStat : ${itemList.list}">
 						      <td th:text="${rowStat.count}">1</td>
 						      <td>
-						      	
+						      	<input type="number" th:field="${itemList.list[__${rowStat.index}__].units}">
 						      </td>
 						      <td>
 						        <select th:field="${itemList.list[__${rowStat.index}__].id}">

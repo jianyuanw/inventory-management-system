@@ -6,9 +6,9 @@
 <Title>Test Form</Title>
 </head>
 <body>
-	<select>
-		<option th:each="product : ${productList.list}" th:value="${product.id}"
-			th:text="${product.id}">Winter Wheels</option>
-	</select>
+	<th:block th:each="product : ${itemList.list}">
+		<p th:text="${product.id}"></p>
+		<p th:text="${product.units}"></p>
+	</th:block>
 </body>
 </html>

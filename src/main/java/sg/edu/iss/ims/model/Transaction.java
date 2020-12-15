@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Transaction {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -27,4 +30,11 @@ public class Transaction {
 	private Integer quantityChange;
 	
 	private Instant transactionTime;
+	
+	public Transaction(Product product, int quantityChange, TransactionType transactionType) {
+		this.product = product;
+		this.transactionType = transactionType;
+		this.quantityChange = quantityChange;
+		this.transactionTime = Instant.now();
+	}
 }

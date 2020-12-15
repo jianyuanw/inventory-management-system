@@ -4,23 +4,46 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import sg.edu.iss.ims.model.Item;
+import sg.edu.iss.ims.model.ItemList;
 import sg.edu.iss.ims.model.Job;
+import sg.edu.iss.ims.model.JobTransaction;
+import sg.edu.iss.ims.model.Transaction;
+import sg.edu.iss.ims.model.TransactionType;
 import sg.edu.iss.ims.repo.JobRepository;
+import sg.edu.iss.ims.repo.JobTransactionRepository;
+import sg.edu.iss.ims.repo.ProductRepository;
+import sg.edu.iss.ims.repo.TransactionRepository;
 
 @Service
 @Transactional
 public class JobServiceImpl implements JobService {
 
 	private final JobRepository jobRepo;
+	private final TransactionRepository transactionRepo;
+	private final ProductRepository productRepo;
+	private final JobTransactionRepository jobTransactionRepo;
 	
-	public JobServiceImpl(JobRepository jobRepo) {
+	public JobServiceImpl(JobRepository jobRepo, TransactionRepository transactionRepo, ProductRepository productRepo, JobTransactionRepository jobTransactionRepo) {
 		this.jobRepo = jobRepo;
+		this.transactionRepo = transactionRepo;
+		this.productRepo = productRepo;
+		this.jobTransactionRepo = jobTransactionRepo;
 	}
 	
 	@Override
-	public void createJob(Job job) {
-		// TODO Auto-generated method stub
+	public void createJob(Job job, ItemList itemList) {
 		jobRepo.save(job);
+		
+		for (Item item : itemList.getList()) {
+			Transaction transaction = new Transaction(productRepo.findProductById(item.getId()), -(item.getUnits()), TransactionType.SELL_STOCK);
+			transactionRepo.save(transaction);
+			JobTransaction jobTransaction = new JobTransaction();
+			jobTransaction.setJob(job);
+			jobTransaction.setTransaction(transaction);
+			jobTransactionRepo.save(jobTransaction);
+		}
+		
 	}
 
 	@Override
