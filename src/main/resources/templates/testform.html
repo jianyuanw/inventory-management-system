@@ -6,9 +6,8 @@
 <Title>Test Form</Title>
 </head>
 <body>
-	<th:block th:each="product : ${itemList.list}">
-		<p th:text="${product.id}"></p>
-		<p th:text="${product.units}"></p>
-	</th:block>
+	<p th:text="${partNumber}"></p>
+	<p th:text="${dateStart}"></p>
+	<p th:text="${dateEnd}"></p>
 </body>
 </html>

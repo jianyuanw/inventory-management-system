@@ -22,43 +22,43 @@ import sg.edu.iss.ims.service.ProductService;
 import sg.edu.iss.ims.service.ProductServiceImpl;
 
 @Controller
-public class JobController {
+public class StockUsageController {
 	private ProductService productService;
 	private JobService jobService;
 	private ItemService itemService;
 	
-	public JobController(ProductServiceImpl productServiceImpl, JobServiceImpl jobServiceImpl, ItemServiceImpl itemServiceImpl) {
+	public StockUsageController(ProductServiceImpl productServiceImpl, JobServiceImpl jobServiceImpl, ItemServiceImpl itemServiceImpl) {
 		productService = productServiceImpl;
 		jobService = jobServiceImpl;
 		itemService = itemServiceImpl;
 	}
 
-	@GetMapping("/forms/stockusage")
+	@GetMapping("/form/stockusage")
 	public String generateSupplierForm(Model model, @ModelAttribute Job job, ItemList itemList) {
 		itemList.addProduct();
 		model.addAttribute("itemList", itemList);
 		model.addAttribute("inventory", itemService.list());
-		return "forms/stockusage";
+		return "form/stockusage";
 	}
 	
-	@PostMapping("/forms/stockusage")
+	@PostMapping("/form/stockusage")
 	public String saveSupplierForm(Job job, ItemList itemList) {
 		jobService.createJob(job, itemList);
 		return "index";
 	}
 	
-	@RequestMapping(value="/forms/stockusage", params={"addRow"})
+	@RequestMapping(value="/form/stockusage", params={"addRow"})
 	public String addRow(Model model, Job job, ItemList itemList) {
 	    itemList.addProduct();
 	    model.addAttribute("inventory", itemService.list());
-	    return "forms/stockusage";
+	    return "form/stockusage";
 	}
 
-	@RequestMapping(value="/forms/stockusage", params={"removeRow"})
+	@RequestMapping(value="/form/stockusage", params={"removeRow"})
 	public String removeRow(Model model, Job job, ItemList itemList, HttpServletRequest req) {
 	    Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
 	    itemList.removeProduct(rowId);
 	    model.addAttribute("inventory", itemService.list());
-	    return "forms/stockusage";
+	    return "form/stockusage";
 	}	
 }
