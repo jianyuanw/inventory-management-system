@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString.Exclude;
 
 @Entity
 @Data
@@ -22,6 +23,7 @@ public class Category {
 	private String name;
 
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Exclude
 	private List<Subcategory> subcategories;
 
 	public Category(String name) {
