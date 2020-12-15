@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments/layout.html :: head" />
+<th:block th:replace="fragments/bundle.html :: mdtable" />
+<Title>Test Form</Title>
+</head>
+<body>
+	<select>
+		<option th:each="product : ${productList.list}" th:value="${product.id}"
+			th:text="${product.id}">Winter Wheels</option>
+	</select>
+</body>
+</html>

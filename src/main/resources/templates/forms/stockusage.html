@@ -3,40 +3,71 @@
 <head>
 	<th:block th:replace="fragments/layout.html :: head"/>
 	<script type="text/javascript" th:src="@{/js/form.js}"></script>
-<title>Stock Usage Form</title>
+<meta charset="ISO-8859-1">
+<title>Add Suppliers</title>
 </head>
 <body>
 	<div th:replace="fragments/layout.html :: header"></div>
-
-	<div
-		class="border border-dark container-fluid col-md-4 col-md-offset-4">
+	<div class="border border-dark container-fluid col-md-4 col-md-offset-4">
 		<div class="row-fluid">
 			<div class="span12">
 				<fieldset>
-					<legend>Login</legend>
-					<form class="form-horizontal" method="post" th:action="@{/login}" th:object="${user}">
+					<legend>Stock Usage Form</legend>
+					<form class="form-horizontal" method="post" th:action="@{/forms/stockusage}">
 						<div class="control-group">
-							<label class="control-label">Username</label>
+							<label class="control-label">Customer Name</label>
+							<input type="hidden" th:field="${job.id}"> 
 							<div class="controls">
-								<input type="text" name="username" id="username required" title="Username" value="" required>
+								<input type="text" th:field="${job.customerName}" name="custname" id="custname required" title="Customer Name" value="">
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label">Password</label>
+							<label class="control-label">Car License Plate</label>
 							<div class="controls">
-								<input type="password" name="password" id="password required" title="Password" value="" required>
+								<input type="text" th:field="${job.carLicensePlate}" name="carLicense" id="carLicense required" title="Car License Plate" value="">
 							</div>
 						</div>
+						<div class="control-group">
+							<label class="control-label">Description</label>
+							<div class="controls">
+								<input type="text" th:field="${job.description}" name="description" id="description required" title="Description" value="">
+							</div>
+						</div>
+						
+					    
+					    <label class="control-label">Parts used</label>
+					    <table>
+					    	
+						    <tr th:each="row,rowStat : ${itemList.list}">
+						      <td th:text="${rowStat.count}">1</td>
+						      <td>
+						      	
+						      </td>
+						      <td>
+						        <select th:field="${itemList.list[__${rowStat.index}__].id}">
+						          <option th:each="product : ${products}" 
+						                  th:value="${product.id}" 
+						                  th:text="${product.name}">Winter Wheels</option>
+						        </select>
+						      </td>
+						      <td>
+						      	<button type="submit" name="addRow" >Add part</button>
+						      </td>
+						      <td>
+						        <button type="submit" name="removeRow" 
+						                th:value="${rowStat.index}" >Remove part</button>
+						      </td>
+					      </table>				
 						<br />
 						<div class="form-actions">
-							<button type="submit" class="btn btn-success">Submit</button>
+							<button type="submit" class="btn btn-success">Add</button>
 							<button type="button" class="btn" onclick="cancel()">Cancel</button>
 						</div>
 					</form>
 				</fieldset>
+				</div>
 			</div>
 		</div>
-	</div>
 
 	<div th:replace="fragments/layout.html :: footer"></div>
 </body>
