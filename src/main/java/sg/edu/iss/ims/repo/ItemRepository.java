@@ -10,4 +10,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     public ArrayList<Item> findAllByUnits(int units);
 
+	public Item findItemById(Long id);
+
 }

@@ -39,7 +39,7 @@ public class JobServiceImpl implements JobService {
 		jobRepo.save(job);
 		
 		for (Item item : itemList.getList()) {
-			Transaction transaction = new Transaction(productRepo.findProductById(item.getId()), -(item.getUnits()), TransactionType.SELL_STOCK);
+			Transaction transaction = new Transaction(itemRepo.findItemById(item.getId()), -(item.getUnits()), TransactionType.SELL_STOCK);
 			transactionRepo.save(transaction);
 			JobTransaction jobTransaction = new JobTransaction();
 			jobTransaction.setJob(job);

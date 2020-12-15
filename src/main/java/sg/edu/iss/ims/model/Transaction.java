@@ -6,9 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,8 +20,8 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne
-	private Product product;
+	@OneToMany
+	private Item item;
 	
 	private TransactionType transactionType;
 	
@@ -31,8 +29,8 @@ public class Transaction {
 	
 	private Instant transactionTime;
 	
-	public Transaction(Product product, int quantityChange, TransactionType transactionType) {
-		this.product = product;
+	public Transaction(Item item, int quantityChange, TransactionType transactionType) {
+		this.item = item;
 		this.transactionType = transactionType;
 		this.quantityChange = quantityChange;
 		this.transactionTime = Instant.now();
