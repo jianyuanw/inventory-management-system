@@ -46,7 +46,7 @@ class DatabaseSeeder implements InitializingBean {
 	  @Override
 	  @Transactional
 	  public void afterPropertiesSet() throws Exception {
-		  boolean recreateData = false;
+		  boolean recreateData = true;
 		  
 		  String[] categories = {"Tyres", "Brake System", "Engine", "Filters", "Oils and Fluids"};
 		  String[] subCategories = {"Winter Tyres, Summer Tyres", 
