@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import sg.edu.iss.ims.model.Item;
 import sg.edu.iss.ims.model.Product;
 import sg.edu.iss.ims.service.ViewProductService;
 
@@ -29,4 +31,16 @@ public class ViewProductController {
 		return "ViewProduct";
 	}
 
+
+	//show product detail
+	@RequestMapping (value ="/showdetail/{id}")
+	public String showdetail (Model model, @PathVariable("id")Long Id){
+		model.addAttribute("prod", viewservice.findProductById(Id));
+		return "DetailProduct";
+	}
 }
+
+
+
+
+

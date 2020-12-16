@@ -8,50 +8,31 @@
 <body>
 <!--if failed try th:insert-->
 <div th:replace="fragments/layout.html :: header"></div>
-
+<h2>Product Catalogue</h2>
+<p>Click the <b> <span style="color: red;"> NAME</span></b> to show product detail</p>
 <table id="dataTable"
        class="table table-striped table-bordered table-sm">
     <thead>
-
     <tr>
-        <th>ID</th>
-        <th>PART NUMBER</th>
         <th>NAME</th>
-        <th>DESCRIPTION</th>
-        <th>TYPE</th>
-        <th>COLOR</th>
-        <th>DIMENSION</th>
-        <th>ORIGINAL PRICE</th>
-        <th>WHOLESALE PRICE</th>
-        <th>RETAIL PRICE</th>
-        <th>PARTNER PRICE</th>
-        <th>MANUFACTURER</th>
-        <!-- <th>RE ORDER AT</th>
-        <th>RE ORDER QUANTITY</th>
-        <th>SHELF LOCATION</th> -->
+        <th>IMAGES</th>
+        <th>DESCRIPTIONS</th>
+
     </tr>
     </thead>
+<tbody>
+    <tr th:each="product:${prod}">
+        <td><a href="DetailProduct.html" th:href="@{/ViewProduct/showdetail/}+ ${product.Id}" th:text="${product.name}"></a></td>
 
-<tr th:each="product:${prod}">
-    <td th:text="${product.id}">ID</td>
-    <td th:text="${product.partNumber}">PART NUMBER</td>
-    <td th:text="${product.name}">NAME</td>
-    <td th:text="${product.description}">DESCRIPTION</td>
-    <td th:text="${product.type}">TYPO</td>
-    <td th:text="${product.color}">COLOR</td>
-    <td th:text="${product.dimension}">DIMENSION</td>
-    <td th:text="${product.originalPrice}">ORIGINAL PRICE</td>
-    <td th:text="${product.wholesalePrice}">WHOLESALE PRICE</td>
-    <td th:text="${product.retailPrice}">RETAIL PRICE</td>
-    <td th:text="${product.partnerPrice}">PARTNER PRICE</td>
-    <td th:text="${product.manufacturer}">MANUFACTURER</td>
-    <!-- <td th:text="${product.reorderAt}">RE ORDER AT</td>
-    <td th:text="${product.reorderQuantity}">RE ORDER QUANTITY</td>
-    <td th:text="${product.shelfLocation}">SHELF LOCATION</td>-->
 
-</tr>
+        <td th:src="@{product.image.jpg}", loading='lazy' >IMAGES</td>
+        <td th:text="${product.description}">DESCRIPTIONS</td>
+
+
+
+    </tr>
+</tbody>
 </table>
-
 <div th:replace="fragments/layout.html :: footer"></div>
 </body>
 </html>
