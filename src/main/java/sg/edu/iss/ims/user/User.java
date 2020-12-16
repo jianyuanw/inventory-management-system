@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="carshopusers")
+@Table(name="imsuser")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,12 @@ public class User {
 	private String username;
 	private String password;
 	private Role role;
-//	private String salt;
+	
+	public User(String username, String password, Role role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}	
 
 }

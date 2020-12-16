@@ -1,58 +1,80 @@
 package sg.edu.iss.ims.item;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sg.edu.iss.ims.product.Product;
-import sg.edu.iss.ims.supplier.Supplier;
-
-import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService {
 
-    @Autowired
-    private ItemRepository itemRepo;
+	@Autowired
+	private ItemRepository itemRepo;
 
-    @Override
-    public void addItem(Item item)
-    {
-        itemRepo.save(item);
+	@Override
+	public void addItem(Item item) {
+		itemRepo.save(item);
 
-    }
+	}
 
+	public Item findId(Long id) {
+		return itemRepo.findById(id).get();
 
-    public Item findId (Long id) {
-        return itemRepo.findById(id).get();
+	}
 
-    }
+	@Override
+	public void deleteItem(Long id) {
+		itemRepo.delete(findId(id));
 
-    @Override
-    public void deleteItem(Long id) {
-        itemRepo.delete(findId(id));
+	}
 
-    }
+	@Transactional
+	public List<Item> list() {
+		return itemRepo.findAll();
+	}
+	
+	public List<Item> listAvailable() {
+		return itemRepo.findAllByUnitsGreaterThan(0);
+	}	
 
+	@Override
+	public Item findItemByProduct(Product product) {
+		return itemRepo.findItemByProduct(product);
+	}
 
-    @Transactional
-    public List<Item> list()
-    {
-        return itemRepo.findAll();
-    }
+	@Override
+	public Item findItemById(Long id) {
+		return itemRepo.findById(id).get();
+	}
 
-    @Override
-    public Item findItemByProduct(Product product) {
-        return itemRepo.findItemByProduct(product);
-    }
+	@Override
+	public void update(Item item) {
+		itemRepo.save(item);
+	}
 
-    @Override
-    public Item findItemById(Long id) {
-        return itemRepo.findById(id).get();
-    }
+	@Override
+	public List<Integer> checkInventory(List<Item> items) {
+		List<Integer> errors = new ArrayList<Integer>();
+		boolean issue = false;
+		for (Item item: items) {
+			Item dbItem = itemRepo.findItemById(item.getId());
+			if (dbItem.getUnits() < item.getUnits()) {
+				issue = true;
+				errors.add(dbItem.getUnits());
+			} else {
+				errors.add(-1);
+			}
+		}
+		
+		if (!issue) {
+			errors = null;
+		}
+		return errors;
+	}
 
-    @Override
-    public void update(Item item) {
-        itemRepo.save(item);
-    }
 }

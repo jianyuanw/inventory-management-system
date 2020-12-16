@@ -3,12 +3,14 @@ package sg.edu.iss.ims.init;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import sg.edu.iss.ims.brand.Brand;
@@ -28,6 +30,9 @@ import sg.edu.iss.ims.product.ProductRepository;
 import sg.edu.iss.ims.supplier.Supplier;
 import sg.edu.iss.ims.supplier.SupplierRepository;
 import sg.edu.iss.ims.transaction.TransactionRepository;
+import sg.edu.iss.ims.user.Role;
+import sg.edu.iss.ims.user.User;
+import sg.edu.iss.ims.user.UserRepository;
 
 @Component
 class DatabaseSeeder implements InitializingBean {
@@ -41,11 +46,13 @@ class DatabaseSeeder implements InitializingBean {
 	private final JobRepository jobRepo;
 	private final JobTransactionRepository jobTransactionRepo;
 	private final ReorderRepository reorderRepo;
+	private final UserRepository userRepo;
+	private PasswordEncoder encoder;
 	
 	public DatabaseSeeder(SubcategoryRepository subcatRepo, CategoryRepository catRepo, BrandRepository brandRepo,
 						  SupplierRepository supplierRepo, ProductRepository productRepo, ItemRepository itemRepo,
 						  TransactionRepository transactionRepo, JobRepository jobRepo, JobTransactionRepository jobTransactionRepo,
-						  ReorderRepository reorderRepo) {
+						  ReorderRepository reorderRepo, UserRepository userRepo, PasswordEncoder encoder) {
 		this.subcatRepo = subcatRepo;
 		this.catRepo = catRepo;
 		this.brandRepo = brandRepo;
@@ -56,6 +63,8 @@ class DatabaseSeeder implements InitializingBean {
 		this.jobRepo = jobRepo;
 		this.jobTransactionRepo = jobTransactionRepo;
 		this.reorderRepo = reorderRepo;
+		this.userRepo = userRepo;
+		this.encoder = encoder;
 	}
 
 	  @Override
@@ -74,6 +83,15 @@ class DatabaseSeeder implements InitializingBean {
 		  String[] colors = {"red", "blue", "green", "yellow"};
 		  String[] shelves = {"Upper Shelf A", "Upper Shelf B", "Upper Shelf C", "Lower Shelf A", "Lower Shelf B", "Lower Shelf C"};
 		  
+		  try {
+			  if (catRepo.findById(1L).get().getName() == "Tyres" &&
+				  subcatRepo.findById(1L).get().getName() == "Winter Tyres" &&
+				  userRepo.findById(1L).get().getUsername() == "admin") {
+				  recreateData = false;
+			  }
+		  } catch (NoSuchElementException e) {			  
+		  }
+		  
 		  if (recreateData) {
 		  	  reorderRepo.deleteAll();
 		  	  jobTransactionRepo.deleteAll();
@@ -84,6 +102,7 @@ class DatabaseSeeder implements InitializingBean {
 			  catRepo.deleteAll();
 			  brandRepo.deleteAll();
 			  supplierRepo.deleteAll();
+			  userRepo.deleteAll();
 
 			  
 			  Map<String, String[]> catList = new HashMap<String, String[]>();
@@ -136,6 +155,8 @@ class DatabaseSeeder implements InitializingBean {
 				  }
 			  }
 			  
+			  userRepo.save(new User("admin", encoder.encode("admin"), Role.ADMIN_CLERK));
+			  userRepo.save(new User("mechanic", encoder.encode("mechanic"), Role.MECHANIC));			  			  
 			  
 		  }
 		  
