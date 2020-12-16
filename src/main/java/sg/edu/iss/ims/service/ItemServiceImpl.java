@@ -3,6 +3,7 @@ package sg.edu.iss.ims.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sg.edu.iss.ims.model.Item;
+import sg.edu.iss.ims.model.Product;
 import sg.edu.iss.ims.model.Supplier;
 import sg.edu.iss.ims.repo.ItemRepository;
 
@@ -41,5 +42,18 @@ public class ItemServiceImpl implements ItemService {
         return itemRepo.findAll();
     }
 
+    @Override
+    public Item findItemByProduct(Product product) {
+        return itemRepo.findItemByProduct(product);
+    }
 
+    @Override
+    public Item findItemById(Long id) {
+        return itemRepo.findById(id).get();
+    }
+
+    @Override
+    public void update(Item item) {
+        itemRepo.save(item);
+    }
 }
