@@ -32,7 +32,6 @@ public class SupplierServiceImpl implements SupplierService{
 
 	@Override
 	public Supplier findSupplierById(Long id) {
-		//To change the update logic, put as save for now
 		return supplierRepo.findById(id).get();
 		
 	}

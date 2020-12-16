@@ -32,14 +32,17 @@ public class ManageProductController {
 	}
 	
 	@GetMapping("/add")
-	public String showSupForm(Model model) {
+	public String showProdForm(Model model) {
 		model.addAttribute("suppliers", supplierService.list());
 		model.addAttribute("product", new Product());
+		model.addAttribute("brands",brandService.list());
+		model.addAttribute("categories", catService.getCategories());
+		model.addAttribute("subcategories", catService.getSubcategories());
 		return "productform";
 	}
 	
 	@GetMapping("/save")
-	public String add(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
+	public String saveProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
 //		if (bindingResult.hasErrors()) 
 //		{
 //			return "supplierform";
@@ -50,22 +53,26 @@ public class ManageProductController {
 	}
 	
 	@GetMapping("/list")
-	public String showsuplist(Model model) {
+	public String showProdList(Model model) {
 		List<Product> prodlist = prodService.list();
 		model.addAttribute("prodlist", prodlist);
-		return "supplierlist";
+		return "productlist";
 	}
 	
 	@GetMapping("/edit/{prodid}")
-	public String editSupList(Model model, @PathVariable("prodid") Long id) {
-		model.addAttribute("supplier", prodService.findProductById(id));
-		return "supplierform";
+	public String editProdList(Model model, @PathVariable("prodid") Long id) {
+		model.addAttribute("product", prodService.findProductById(id));
+		model.addAttribute("brands",brandService.list());
+		model.addAttribute("categories", catService.getCategories());
+		model.addAttribute("subcategories", catService.getSubcategories());
+		model.addAttribute("suppliers", supplierService.list());
+		return "productform";
 	}
 	
 	@GetMapping("/delete/{prodid}")
-	public String deleteSupList(Model model, @PathVariable("prodid") Long id) {
+	public String deleteProdList(Model model, @PathVariable("prodid") Long id) {
 		prodService.deleteProduct(id);
-		return "redirect:/supplier/list";
+		return "redirect:/product/list";
 	}
 
 	@GetMapping("/reorder/{prodId}")

@@ -37,12 +37,25 @@
 								<select th:field="*{supplier}">
 								    <option th:each="sup : ${suppliers}" th:value="${sup.id}" th:text="${sup.name}"></option>
 								</select>
-								<!-- <label class="control-label">Product Reorder At</label>
-								<input type="text" th:field="*{reorderAt}" name="prodra" id="prodra required" title="Product Reorder At" value="" required>
-								<label class="control-label">Product Reorder Quantity</label>
-								<input type="text" th:field="*{reorderQuantity}" name="prodrq" id="prodrq required" title="Product Reorder Quantity" value="" required>
-								<label class="control-label">Product Shelf Location</label>
-								<input type="text" th:field="*{shelfLocation}" name="prodsl" id="prodsl required" title="Product Shelf Location" value="" required>-->
+								<label class="control-label">Product Measurement</label>
+								<input type="text" th:field="*{measurement}" name="prodmeasurement" id="prodmeasurement required" title="Product Measurement" value="" required>
+								<label class="control-label">Product Measurement Type</label>
+								<input type="text" th:field="*{measurementType}" name="prodmt" id="prodmt required" title="Product Measurement Type" value="" required>
+								<label class="control-label">Product Image</label>
+								<input type="text" th:field="*{image}" name="prodimage" id="prodimage required" title="Product Image" value="" required>
+								<label class="control-label">Product Category</label>
+								<select th:field="*{category}">
+								    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+								</select>
+								<label class="control-label">Product Subcategory</label>
+								<select th:field="*{subcategory}">
+								    <option th:each="subcat : ${subcategories}" th:value="${subcat.id}" th:text="${subcat.name}"></option>
+								</select>
+								<label class="control-label">Product Brand</label>
+								<select th:field="*{brand}">
+								    <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+								</select>
+								
 							</div>
 						</div>
 						<br />

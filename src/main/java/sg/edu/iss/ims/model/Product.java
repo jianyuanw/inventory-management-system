@@ -1,5 +1,6 @@
 package sg.edu.iss.ims.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,6 +37,9 @@ public class Product {
 	private Brand brand;
 	@OneToOne
 	private Subcategory subcategory;
+	@OneToOne(mappedBy="product",cascade=CascadeType.ALL)
+	private Item item;
+
 	
 	public Product(String partNumber, String name, String description, Double originalPrice,
 			Double wholesalePrice, Double retailPrice, Double partnerPrice, String color, String measurement,

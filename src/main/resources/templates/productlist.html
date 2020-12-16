@@ -16,17 +16,18 @@
 				<th class="th-sm">Name</th>
 				<th class="th-sm">Description</th>
 				<th class="th-sm">Part Number</th>
-				<th class="th-sm">Type</th>
 				<th class="th-sm">Original Price</th>
 				<th class="th-sm">Wholesale Price</th>
 				<th class="th-sm">Retail Price</th>
 				<th class="th-sm">Partner Price</th>
 				<th class="th-sm">Color</th>
-				<th class="th-sm">Dimension</th>
-				<th class="th-sm">Manufacturer</th>
-				<th class="th-sm">Reorder At</th>
-				<th class="th-sm">Reorder Quantity</th>
-				<th class="th-sm">Shelf Location</th>
+				<th class="th-sm">Supplier</th>
+				<th class="th-sm">Measurement</th>
+				<th class="th-sm">Measurement Type</th>
+				<th class="th-sm">Image</th>
+				<th class="th-sm">Category</th>
+				<th class="th-sm">Subcategory</th>
+				<th class="th-sm">Brand</th>
 				<th class="th-sm"></th>
 				<th class="th-sm"></th>
 			</tr>
@@ -37,17 +38,18 @@
 				<td th:text="${product.name}">ID</td>
 				<td th:text="${product.description}">ID</td>
 				<td th:text="${product.partNumber}">ID</td>
-				<td th:text="${product.type}">ID</td>
 				<td th:text="${product.originalPrice}">ID</td>
 				<td th:text="${product.wholesalePrice}">ID</td>
 				<td th:text="${product.retailPrice}">ID</td>
 				<td th:text="${product.partnerPrice}">ID</td>
 				<td th:text="${product.color}">ID</td>
-				<td th:text="${product.dimension}">ID</td>
-				<td th:text="${product.manufacturer}">ID</td>
-				<td th:text="${product.reorderAt}">ID</td>
-				<td th:text="${product.reorderQuantity}">ID</td>
-				<td th:text="${product.shelfLocation}">ID</td>
+				<td th:text="${product.supplier.name}">ID</td>
+				<td th:text="${product.measurement}">ID</td>
+				<td th:text="${product.measurementType}">ID</td>
+				<td th:text="${product.image}">ID</td>
+				<td th:text="${product.category.name}">ID</td>
+				<td th:text="${product.subcategory.name}">ID</td>
+				<td th:text="${product.brand.name}">ID</td>
 				<td><a href="EditProduct.html" th:href="@{/product/edit/}+${product.id}" th:utext="#{product.page.edit}"> Edit </a></td>
 	      <td><a href="DeleteProduct.html"
 		th:href="@{/product/delete/}+${product.id}" th:utext="#{product.page.delete}"> Delete </a></td>
