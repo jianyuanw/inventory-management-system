@@ -15,7 +15,7 @@ public class Subcategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-//	@ManyToOne
+
 	@ManyToOne
 	private Category category;
 	private String name;

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments/layout.html :: head" />
+<th:block th:replace="fragments/bundle.html :: mdtable" />
+<Title>Test Form</Title>
+</head>
+<body>
+	<th:block th:each="product : ${itemList.list}">
+		<p th:text="${product.id}"></p>
+		<p th:text="${product.units}"></p>
+	</th:block>
+</body>
+</html>
