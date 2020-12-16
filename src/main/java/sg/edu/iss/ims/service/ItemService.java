@@ -15,4 +15,5 @@ public interface ItemService {
 
     public Item findItemByProduct(Product product);
     public Item findItemById(Long id);
+    public void update(Item item);
 }

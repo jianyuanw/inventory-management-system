@@ -11,21 +11,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
-import sg.edu.iss.ims.model.Brand;
-import sg.edu.iss.ims.model.Category;
-import sg.edu.iss.ims.model.Item;
-import sg.edu.iss.ims.model.Product;
-import sg.edu.iss.ims.model.Subcategory;
-import sg.edu.iss.ims.model.Supplier;
-import sg.edu.iss.ims.repo.BrandRepository;
-import sg.edu.iss.ims.repo.CategoryRepository;
-import sg.edu.iss.ims.repo.ItemRepository;
-import sg.edu.iss.ims.repo.JobRepository;
-import sg.edu.iss.ims.repo.JobTransactionRepository;
-import sg.edu.iss.ims.repo.ProductRepository;
-import sg.edu.iss.ims.repo.SubcategoryRepository;
-import sg.edu.iss.ims.repo.SupplierRepository;
-import sg.edu.iss.ims.repo.TransactionRepository;
+import sg.edu.iss.ims.model.*;
+import sg.edu.iss.ims.repo.*;
 
 @Component
 class DatabaseSeeder implements InitializingBean {
@@ -38,10 +25,12 @@ class DatabaseSeeder implements InitializingBean {
 	private final TransactionRepository transactionRepo;
 	private final JobRepository jobRepo;
 	private final JobTransactionRepository jobTransactionRepo;
+	private final ReorderRepository reorderRepo;
 	
-	public DatabaseSeeder(SubcategoryRepository subcatRepo, CategoryRepository catRepo, BrandRepository brandRepo, 
+	public DatabaseSeeder(SubcategoryRepository subcatRepo, CategoryRepository catRepo, BrandRepository brandRepo,
 						  SupplierRepository supplierRepo, ProductRepository productRepo, ItemRepository itemRepo,
-						  TransactionRepository transactionRepo, JobRepository jobRepo, JobTransactionRepository jobTransactionRepo) {
+						  TransactionRepository transactionRepo, JobRepository jobRepo, JobTransactionRepository jobTransactionRepo,
+						  ReorderRepository reorderRepo) {
 		this.subcatRepo = subcatRepo;
 		this.catRepo = catRepo;
 		this.brandRepo = brandRepo;
@@ -51,12 +40,13 @@ class DatabaseSeeder implements InitializingBean {
 		this.transactionRepo = transactionRepo;
 		this.jobRepo = jobRepo;
 		this.jobTransactionRepo = jobTransactionRepo;
+		this.reorderRepo = reorderRepo;
 	}
 
 	  @Override
 	  @Transactional
 	  public void afterPropertiesSet() throws Exception {
-		  boolean recreateData = true;
+		  boolean recreateData = false;
 		  
 		  String[] categories = {"Tyres", "Brake System", "Engine", "Filters", "Oils and Fluids"};
 		  String[] subCategories = {"Winter Tyres, Summer Tyres", 
@@ -70,7 +60,8 @@ class DatabaseSeeder implements InitializingBean {
 		  String[] shelves = {"Upper Shelf A", "Upper Shelf B", "Upper Shelf C", "Lower Shelf A", "Lower Shelf B", "Lower Shelf C"};
 		  
 		  if (recreateData) {
-			  jobTransactionRepo.deleteAll();
+		  	  reorderRepo.deleteAll();
+		  	  jobTransactionRepo.deleteAll();
 			  jobRepo.deleteAll();
 			  transactionRepo.deleteAll();
 			  itemRepo.deleteAll();
@@ -124,7 +115,7 @@ class DatabaseSeeder implements InitializingBean {
 						  int value = ThreadLocalRandom.current().nextInt(50, 100) / 10 * 10;
 						  
 						  Item item = new Item(p, value, ThreadLocalRandom.current().nextInt(20, 35) / 10 * 10,
-								  			value, shelves[r.nextInt(shelves.length)]);
+								  			value, shelves[r.nextInt(shelves.length)], ItemState.IN_STOCK);
 						  itemRepo.save(item);
 					  }
 				  }

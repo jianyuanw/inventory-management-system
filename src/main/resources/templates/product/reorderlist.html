@@ -23,12 +23,16 @@
             </thead>
             <tbody>
                 <tr th:each="reorder : ${reorders}">
-                    <td th:text="${reorder.id}"></td>
-                    <td th:text="${reorder.item.product.name}"></td>
-                    <td th:text="${reorder.quantity}"></td>
-                    <td th:text="${reorder.date}"></td>
-                    <td th:text="${reorder.status.name()} == 'PENDING_DELIVERY' ? 'Pending Delivery' : 'Delivered'"></td>
-                    <td>TODO: Create Stock Entry Button</td>
+                    <td class="align-middle" th:text="${reorder.id}"></td>
+                    <td class="align-middle" th:text="${reorder.item.product.name}"></td>
+                    <td class="align-middle" th:text="${reorder.quantity}"></td>
+                    <td class="align-middle" th:text="${reorder.date}"></td>
+                    <td class="align-middle" th:text="${reorder.status.name()} == 'PENDING_DELIVERY' ? 'Pending Delivery' : 'Delivered'"></td>
+                    <td>
+                        <a href="#">
+                            <button type="button" class="btn btn-dark-green btn-sm m-0">Create Stock Entry</button>
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>

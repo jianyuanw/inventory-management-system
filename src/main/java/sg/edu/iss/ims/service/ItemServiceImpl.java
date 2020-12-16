@@ -51,4 +51,9 @@ public class ItemServiceImpl implements ItemService {
     public Item findItemById(Long id) {
         return itemRepo.findById(id).get();
     }
+
+    @Override
+    public void update(Item item) {
+        itemRepo.save(item);
+    }
 }

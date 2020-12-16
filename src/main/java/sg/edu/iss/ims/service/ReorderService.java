@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface ReorderService {
 
-    void save(Reorder reorder);
+    void create(Reorder reorder);
     List<Reorder> findAllReorders();
+//    List<Reorder> findUndeliveredReorders();
+//    List<Reorder> findDeliveredOrders();
 }

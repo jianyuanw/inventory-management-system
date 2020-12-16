@@ -80,18 +80,28 @@ public class ManageProductController {
 	@PostMapping("/reorder")
 	public String reorder(@RequestParam Long itemId, @RequestParam int qtyToReorder, RedirectAttributes redirAttr) {
 		Item item = itemService.findItemById(itemId);
+
 		Reorder reorder = new Reorder();
 		reorder.setQuantity(qtyToReorder);
 		reorder.setDate(LocalDate.now());
 		reorder.setStatus(ReorderStatus.PENDING_DELIVERY);
 		reorder.setItem(item);
-		reorderService.save(reorder);
+		reorderService.create(reorder);
+
+		item.setState(ItemState.REORDER_PLACED);
+		itemService.update(item);
+
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Reorder Placed!"));
+
 		return "redirect:/product/reorder/list";
 	}
 
 	@GetMapping("/reorder/list")
 	public String reorderList(Model model) {
+//		List<Reorder> undeliveredReorders = reorderService.findUndeliveredReorders();
+//		List<Reorder> deliveredReorders = reorderService.findDeliveredOrders();
+//		model.addAttribute("undeliveredReorders", undeliveredReorders);
+//		model.addAttribute("deliveredReorders", deliveredReorders);
 		List<Reorder> reorders = reorderService.findAllReorders();
 		model.addAttribute("reorders", reorders);
 		return "product/reorderlist";
