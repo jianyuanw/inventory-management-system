@@ -3,7 +3,8 @@ package sg.edu.iss.ims.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import sg.edu.iss.ims.model.User;
+
+import sg.edu.iss.ims.user.User;
 
 import java.util.Arrays;
 import java.util.Collection;

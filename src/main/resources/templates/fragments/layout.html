@@ -62,7 +62,7 @@
 							Reports
 						</a>
 						<div class="dropdown-menu dropdown-default">
-							<a class="dropdown-item" href="@{/report/usage">Usage Report</a>
+							<a class="dropdown-item" th:href="@{/report/usage/query">Usage Report</a>
 							<a class="dropdown-item" href="#">Reorder Report</a>
 						</div>
 					</li>					
@@ -73,8 +73,8 @@
 							Manage Products
 						</a>
 						<div class="dropdown-menu dropdown-default">
-							<a class="dropdown-item" href="@{/product/add}">Add Product</a>
-							<a class="dropdown-item" href="@{/product/list}">Edit / Delete Product</a>
+							<a class="dropdown-item" th:href="@{/product/add}">Add Product</a>
+							<a class="dropdown-item" th:href="@{/product/list}">Edit / Delete Product</a>
 						</div>
 					</li>
 

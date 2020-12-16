@@ -4,8 +4,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import sg.edu.iss.ims.model.User;
-import sg.edu.iss.ims.repo.UserRepository;
+
+import sg.edu.iss.ims.user.User;
+import sg.edu.iss.ims.user.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

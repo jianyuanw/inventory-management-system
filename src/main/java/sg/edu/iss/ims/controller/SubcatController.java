@@ -6,9 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import sg.edu.iss.ims.model.Category;
-import sg.edu.iss.ims.model.Subcategory;
-import sg.edu.iss.ims.repo.SubcategoryRepository;
+import sg.edu.iss.ims.category.Category;
+import sg.edu.iss.ims.category.Subcategory;
+import sg.edu.iss.ims.category.SubcategoryRepository;
 
 @Controller
 public class SubcatController {

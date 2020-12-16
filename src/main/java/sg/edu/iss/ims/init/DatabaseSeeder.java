@@ -11,8 +11,23 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
-import sg.edu.iss.ims.model.*;
-import sg.edu.iss.ims.repo.*;
+import sg.edu.iss.ims.brand.Brand;
+import sg.edu.iss.ims.brand.BrandRepository;
+import sg.edu.iss.ims.category.Category;
+import sg.edu.iss.ims.category.CategoryRepository;
+import sg.edu.iss.ims.category.Subcategory;
+import sg.edu.iss.ims.category.SubcategoryRepository;
+import sg.edu.iss.ims.item.Item;
+import sg.edu.iss.ims.item.ItemRepository;
+import sg.edu.iss.ims.item.ItemState;
+import sg.edu.iss.ims.item.ReorderRepository;
+import sg.edu.iss.ims.job.JobRepository;
+import sg.edu.iss.ims.job.JobTransactionRepository;
+import sg.edu.iss.ims.product.Product;
+import sg.edu.iss.ims.product.ProductRepository;
+import sg.edu.iss.ims.supplier.Supplier;
+import sg.edu.iss.ims.supplier.SupplierRepository;
+import sg.edu.iss.ims.transaction.TransactionRepository;
 
 @Component
 class DatabaseSeeder implements InitializingBean {

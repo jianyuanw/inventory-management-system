@@ -3,7 +3,9 @@ package sg.edu.iss.ims.repo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import sg.edu.iss.ims.model.Product;
+
+import sg.edu.iss.ims.product.Product;
+import sg.edu.iss.ims.product.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
