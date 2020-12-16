@@ -28,13 +28,17 @@ public class Item {
 
 	private String shelfLocation;
 
-	public Item(Product product, int units, int reorderAt, int reorderQuantity, String shelfLocation) {
+	private ItemState state;
+
+	public Item(Product product, int units, int reorderAt, int reorderQuantity, String shelfLocation,
+				ItemState state) {
 		super();
 		this.product = product;
 		this.units = units;
 		this.reorderAt = reorderAt;
 		this.reorderQuantity = reorderQuantity;
 		this.shelfLocation = shelfLocation;
+		this.state = state;
 	}
 
 }
