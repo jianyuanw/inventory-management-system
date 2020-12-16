@@ -14,7 +14,7 @@
 			<div class="span12">
 				<fieldset>
 					<legend>Usage Report Query</legend>
-					<form class="form-horizontal" method="post" th:action="@{/report/usage}">
+					<form class="form-horizontal" method="post" th:action="@{/report/usage/output}">
 						<table>
 							<tr>
 								<td>Search by:</td>
@@ -26,7 +26,7 @@
 									</div>
 								</td>
 								<td>
-									<select class="selectpicker" data-live-search="true" name="partNumber">
+									<select class="selectpicker" data-live-search="true" name="itemId">
 							        	<option th:each="item : ${inventory}" th:value="${item.product.id}" th:text="${item.product.partNumber}"
 							        			th:data-tokens="${item.product.description} + ' ' + ${item.product.partNumber} + ' ' + ${item.product.color} + ' ' + ${item.product.supplier.name}">
 							        			Winter Tyres

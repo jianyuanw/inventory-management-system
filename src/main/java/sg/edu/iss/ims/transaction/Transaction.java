@@ -1,6 +1,7 @@
 package sg.edu.iss.ims.transaction;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,12 +29,12 @@ public class Transaction {
 	
 	private Integer quantityChange;
 	
-	private Instant transactionTime;
+	private LocalDateTime transactionTime;
 	
 	public Transaction(Item item, int quantityChange, TransactionType transactionType) {
 		this.item = item;
 		this.transactionType = transactionType;
 		this.quantityChange = quantityChange;
-		this.transactionTime = Instant.now();
+		this.transactionTime = LocalDateTime.now();
 	}
 }

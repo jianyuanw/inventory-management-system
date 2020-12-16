@@ -7,13 +7,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import sg.edu.iss.ims.transaction.TransactionService;
+import sg.edu.iss.ims.transaction.TransactionServiceImpl;
+
 @Controller
 @RequestMapping("/report/usage")
 public class UsageReportController {
 	private final ItemService itemService;
+	private final TransactionService transactionService;
 	
-	public UsageReportController(ItemServiceImpl itemServiceImpl) {
+	public UsageReportController(ItemServiceImpl itemServiceImpl, TransactionServiceImpl transactionServiceImpl) {
 		itemService = itemServiceImpl;
+		transactionService = transactionServiceImpl;
 	}
 	
 	@GetMapping("/query")
@@ -23,12 +28,11 @@ public class UsageReportController {
 	}
 	
 	@PostMapping("/output")
-	public String generateUsageReport(Model model, @RequestParam String partNumber, @RequestParam String dateStart, @RequestParam String dateEnd) {
-		model.addAttribute("partNumber", partNumber);
-		model.addAttribute("dateStart", dateStart);
-		model.addAttribute("dateEnd", dateEnd);
+	public String generateUsageReport(Model model, @RequestParam Long itemId, @RequestParam String dateStart, @RequestParam String dateEnd) {
+		model.addAttribute("partNumber", itemService.findItemById(itemId).getProduct().getPartNumber());
+		model.addAttribute("transactionList", transactionService.parseUsageReportQuery(itemId, dateStart, dateEnd));
 
-		return "test";
+		return "report/usageoutput";
 	}
 	
 }
