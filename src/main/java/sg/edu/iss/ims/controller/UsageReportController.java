@@ -32,7 +32,8 @@ public class UsageReportController {
 		model.addAttribute("partNumber", partNumber);
 		model.addAttribute("dateStart", dateStart);
 		model.addAttribute("dateEnd", dateEnd);
-		return "testform";
+
+		return "test";
 	}
 	
 }

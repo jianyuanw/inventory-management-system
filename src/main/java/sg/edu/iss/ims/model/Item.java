@@ -1,9 +1,12 @@
 package sg.edu.iss.ims.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
@@ -27,6 +30,9 @@ public class Item {
 	private int reorderQuantity;
 
 	private String shelfLocation;
+	
+	@OneToMany
+	private List<Transaction> transactions;
 
 	public Item(Product product, int units, int reorderAt, int reorderQuantity, String shelfLocation) {
 		super();
