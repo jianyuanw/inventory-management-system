@@ -22,20 +22,25 @@ public class ManageProductController {
 	private final SupplierService supplierService;
 	private final ItemService itemService;
 	private final ReorderService reorderService;
+	private final BrandService brandService;
+	private final CategoryService catService;
 	
 	public ManageProductController(ProductServiceImpl supImp, SupplierServiceImpl supplierImpl,
-								   ItemServiceImpl itemImpl, ReorderServiceImpl reorderImpl) {
+								   ItemServiceImpl itemImpl, ReorderServiceImpl reorderImpl,
+								   BrandServiceImpl brandImpl, CategoryServiceImpl catImpl) {
 		supplierService = supplierImpl;
 		prodService = supImp;
 		itemService = itemImpl;
 		reorderService = reorderImpl;
+		brandService = brandImpl;
+		catService = catImpl;
 	}
 	
 	@GetMapping("/add")
 	public String showProdForm(Model model) {
 		model.addAttribute("suppliers", supplierService.list());
 		model.addAttribute("product", new Product());
-		model.addAttribute("brands",brandService.list());
+		model.addAttribute("brands", brandService.list());
 		model.addAttribute("categories", catService.getCategories());
 		model.addAttribute("subcategories", catService.getSubcategories());
 		return "productform";
