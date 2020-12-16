@@ -50,8 +50,11 @@
 						                  th:value="${item.product.id}" 
 						                  th:text="${item.product.name}">Winter Wheels</option>
 						        </select>-->
-						        <select class="selectpicker bootstrapSelect" data-live-search="true">
-						        	<option th:each="item : ${inventory}" th:value="${item.product.id}" th:text="${item.product.name}">Winter Tyres</option>
+						        <select th:field="${itemList.list[__${rowStat.index}__].id}" class="selectpicker" data-live-search="true">
+						        	<option th:each="item : ${inventory}" th:value="${item.product.id}" th:text="${item.product.name}"
+						        			th:data-tokens="${item.product.description} + ' ' + ${item.product.partNumber} + ' ' + ${item.product.color} + ' ' + ${item.product.supplier.name}">
+						        			Winter Tyres
+						        	</option>
 								</select>
 						        
 						      </td>
@@ -62,6 +65,10 @@
 						        <button type="submit" name="removeRow" 
 						                th:value="${rowStat.index}" >Remove part</button>
 						      </td>
+						      <td>
+						        <button type="submit" name="getTransactions" 
+						                th:value="${itemList.list[__${rowStat.index}__].id}" >Retrieve transactions</button>
+						      </td>						      
 					      </table>				
 						<br />
 						<div class="form-actions">
