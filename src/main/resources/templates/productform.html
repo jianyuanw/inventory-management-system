@@ -52,7 +52,7 @@
 									<datalist id="categories">
 								    	<option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
 									</datalist>
-								<label class="control-label">Product Subcategories</label>
+								<label class="control-label">Product Subcategory</label>
 								<input type="text" th:field="${product.subcategory}" list ="subcategories">
 									<datalist id="subcategories">
 								    	<option th:each="subcat : ${subcategories}" th:value="${subcat.id}" th:text="${subcat.name}"></option>
