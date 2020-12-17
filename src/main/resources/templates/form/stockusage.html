@@ -45,12 +45,12 @@
 		<div class="form-row" th:each="row,rowStat : ${itemList.list}">
 			<!-- <td th:text="${rowStat.count}">1</td>-->
 			<div class="col-2 mt-1">
-				<input class="form-control-lg mb-1" th:id="'units' + ${rowStat.index}" type="number" th:field="${itemList.list[__${rowStat.index}__].units}" min="0">	
+				<input class="form-control-lg mb-1 w-50" th:id="'units' + ${rowStat.index}" type="number" th:field="${itemList.list[__${rowStat.index}__].units}" min="0">	
 			</div>
-			<div class="col">
+			<div class="col-md-4">
 				<select
 					th:field="${itemList.list[__${rowStat.index}__].id}"
-					class="selectpicker" data-live-search="true" data-width="auto"
+					class="selectpicker" data-live-search="true" data-width="fit"
 					onchange="updateUnits(this)" th:id="'select' + ${rowStat.index}">
 						<option th:each="item : ${inventory}" th:value="${item.product.id}"
 							th:text="${item.product.name}" th:attr="data-units=${item.units}"
