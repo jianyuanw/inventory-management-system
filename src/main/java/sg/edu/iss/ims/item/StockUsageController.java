@@ -18,17 +18,13 @@ import sg.edu.iss.ims.job.Job;
 import sg.edu.iss.ims.job.JobService;
 import sg.edu.iss.ims.job.JobServiceImpl;
 import sg.edu.iss.ims.model.Alert;
-import sg.edu.iss.ims.product.ProductService;
-import sg.edu.iss.ims.product.ProductServiceImpl;
 
 @Controller
 public class StockUsageController {
-	private ProductService productService;
 	private JobService jobService;
 	private ItemService itemService;
 	
-	public StockUsageController(ProductServiceImpl productServiceImpl, JobServiceImpl jobServiceImpl, ItemServiceImpl itemServiceImpl) {
-		productService = productServiceImpl;
+	public StockUsageController(JobServiceImpl jobServiceImpl, ItemServiceImpl itemServiceImpl) {
 		jobService = jobServiceImpl;
 		itemService = itemServiceImpl;
 	}
@@ -42,21 +38,19 @@ public class StockUsageController {
 	}
 	
 	@PostMapping("/form/stockusage")
-	public String saveSupplierForm(Model model, @ModelAttribute("job") @Valid Job job, BindingResult bindingResult, ItemList itemList, RedirectAttributes redirAttr) {
+	public String saveSupplierForm(Model model, @Valid @ModelAttribute("job") Job job, BindingResult bindingResult, ItemList itemList, RedirectAttributes redirAttr) {
 		List<Integer> errors = itemService.checkInventory(itemList.getList());
 		model.addAttribute("inventory", itemService.listAvailable());
 		if (bindingResult.hasErrors()) {
 			return "form/stockusage";
+		} else if (errors != null) {
+			redirAttr.addFlashAttribute("alert", new Alert("warning", "Insufficient units of items requested"));	
+			return "redirect:/form/stockusage";
 		} else {
-			
-			if (errors != null) {
-				redirAttr.addFlashAttribute("alert", new Alert("warning", "Insufficient units of items requested"));	
-				return "redirect:/form/stockusage";
-			} else {
-				jobService.createJob(job, itemList);
-				redirAttr.addFlashAttribute("alert", new Alert("primary", "Job successfully added!"));			
-			}
+			jobService.createJob(job, itemList);
+			redirAttr.addFlashAttribute("alert", new Alert("primary", "Job successfully added!"));			
 		}
+
 		
 		return "redirect:/";
 	}

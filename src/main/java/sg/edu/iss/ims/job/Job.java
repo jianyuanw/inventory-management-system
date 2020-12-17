@@ -23,7 +23,7 @@ public class Job {
 	private Long id;
 	
 	@NotEmpty(message = "Description cannot be empty")
-	@Pattern(regexp = "[A-Za-z0-9 ]+", message="Description can only consist of alphanumerical values and spaces")
+	@Pattern(regexp = "[A-Za-z0-9 ]+", message="Description can only consist of spaces and alphanumerical characters")
 	private String description;
 	
 	@NotEmpty(message = "Car license plate cannot be empty")
@@ -31,7 +31,7 @@ public class Job {
 	private String carLicensePlate;
 	
 	@NotEmpty(message = "Customer name cannot be empty")
-	@Pattern(regexp = "[A-Za-z ]+", message="Customer name can only consist of letters and spaces")
+	@Pattern(regexp = "[A-Za-z ]+", message="Customer name can only consist of spaces and alphabetical characters")
 	private String customerName;
 	
 	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
