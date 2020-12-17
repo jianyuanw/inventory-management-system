@@ -1,15 +1,11 @@
-package sg.edu.iss.ims.service;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import sg.edu.iss.ims.model.Reorder;
-import sg.edu.iss.ims.model.Restock;
-import sg.edu.iss.ims.repo.ReorderRepository;
-import sg.edu.iss.ims.repo.RestockRepository;
+package sg.edu.iss.ims.restock;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RestockServiceImpl implements RestockService {

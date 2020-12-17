@@ -8,4 +8,5 @@ public interface ReorderService {
     List<Reorder> findAllReorders();
 //    List<Reorder> findUndeliveredReorders();
 //    List<Reorder> findDeliveredOrders();
+	Reorder findReorderById(Long reorderId);
 }

@@ -1,10 +1,8 @@
-package sg.edu.iss.ims.repo;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import sg.edu.iss.ims.model.Item;
-import sg.edu.iss.ims.model.Restock;
+package sg.edu.iss.ims.restock;
 
 import java.util.ArrayList;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RestockRepository extends JpaRepository<Restock,Long> {
 

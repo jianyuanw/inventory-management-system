@@ -25,6 +25,11 @@ public class ReorderServiceImpl implements ReorderService {
         return rRepo.findAll();
     }
 
+	@Override
+	public Reorder findReorderById(Long reorderId) {
+		return rRepo.findById(reorderId).get();
+	}
+
 //    @Override
 //    public List<Reorder> findUndeliveredReorders() {
 //        return rRepo.findReordersWhereStatusIs(ReorderStatus.PENDING_DELIVERY);

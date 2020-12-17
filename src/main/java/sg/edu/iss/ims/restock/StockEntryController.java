@@ -1,20 +1,28 @@
-package sg.edu.iss.ims.controller;
+package sg.edu.iss.ims.restock;
+
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sg.edu.iss.ims.model.*;
-import sg.edu.iss.ims.service.*;
 
-import java.time.LocalDate;
+import sg.edu.iss.ims.item.ItemService;
+import sg.edu.iss.ims.item.Reorder;
+import sg.edu.iss.ims.item.ReorderService;
+import sg.edu.iss.ims.item.ReorderServiceImpl;
+import sg.edu.iss.ims.model.Alert;
+import sg.edu.iss.ims.product.ProductService;
 
 @Controller
 @RequestMapping("/stockentry")
 public class StockEntryController {
 
-    @Autowired
     private final ReorderService reorderService;
     private final ProductService productService;
     private final ItemService itemservice;
@@ -33,7 +41,7 @@ public class StockEntryController {
   //
         @GetMapping("/add/{reorderId}")
         public String createStock (Model model, @PathVariable Long reorderId){
-	    Reorder reorder = reorderService.findReordersById (reorderId);
+	    Reorder reorder = reorderService.findReorderById(reorderId);
 		model.addAttribute("reorder", reorder);
 
 		Restock restock = new Restock();
@@ -45,8 +53,7 @@ public class StockEntryController {
 // for testing
     @PostMapping("/created")
     public String restock (Model model, @RequestParam Long reorderId, @RequestParam String receiveddate, RedirectAttributes redirAttr) {
-        Reorder reorder = reorderService.findReordersById(reorderId);
-
+        Reorder reorder = reorderService.findReorderById(reorderId);
 
         Restock restock = new Restock();
 
