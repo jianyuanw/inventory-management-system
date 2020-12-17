@@ -2,10 +2,12 @@ package sg.edu.iss.ims.item;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -37,6 +39,9 @@ public class Item {
 	private List<Transaction> transactions;
 
 	private ItemState state;
+	@OneToMany(mappedBy="item", cascade=CascadeType.ALL)
+	private List<Reorder> reorder;
+	
 
 	public Item(Product product, int units, int reorderAt, int reorderQuantity, String shelfLocation,
 				ItemState state) {
