@@ -59,12 +59,11 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String editUser(Model model, User user, RedirectAttributes redirAttr) {
+    public String editUser(User user, RedirectAttributes redirAttr) {
         User currentUser = uService.readUser(user.getId());
-        if (user.getUsername() == "" && user.getPassword() == "" && user.getRole() == currentUser.getRole()) {
-            redirAttr.addFlashAttribute("alert",
-                    new Alert("primary", "User (" + currentUser.getUsername() +
-                            ") not updated as no changes were detected."));
+        if (uService.noChange(user, currentUser)) {
+            redirAttr.addFlashAttribute("alert", new Alert("primary",
+                    "User (" + currentUser.getUsername() + ") not updated as no changes were detected."));
             return "redirect:/user/edit/" + currentUser.getId();
         } else {
             if (user.getUsername() != "") {

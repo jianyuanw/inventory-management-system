@@ -63,7 +63,13 @@ public class UserServiceImpl implements UserService {
 		return encoder.encode(rawPassword);
 	}
 
-//	private String hash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+	@Override
+	public boolean noChange(User newUser, User currentUser) {
+		return newUser.getUsername() == "" && newUser.getPassword() == "" &&
+				newUser.getRole() == currentUser.getRole();
+	}
+
+	//	private String hash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 //		SecureRandom random = new SecureRandom();
 //		byte[] salt = new byte[32];
 //		random.nextBytes(salt);
