@@ -1,92 +1,155 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<th:block th:replace="fragments/layout.html :: head"/>
-	<th:block th:replace="fragments/bundle.html :: bootstrapselect" />
-	<script type="text/javascript" th:src="@{/js/form.js}"></script>
-	<script type="text/javascript" th:src="@{/js/form-update.js}"></script>
+<th:block th:replace="fragments/layout.html :: head" />
+<th:block th:replace="fragments/bundle.html :: bootstrapselect" />
+<script type="text/javascript" th:src="@{/js/form.js}"></script>
+<script type="text/javascript" th:src="@{/js/form-update.js}"></script>
+<script type="text/javascript" th:src="@{/js/form-transaction.js}"></script>
+
 <meta charset="ISO-8859-1">
 <title>Stock Usage Form</title>
 </head>
 <body>
 	<div th:replace="fragments/layout.html :: header"></div>
-	<div class="border border-dark container-fluid col-md-4 col-md-offset-4">
+
+	<form class="border border-light p-5" method="post"
+		th:action="@{/form/stockusage}">
+		<p class="h4 mb-4">Stock Usage Form</p>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="customerName">Customer Name</label> 
+				<input type="text" th:field="${job.customerName}" class="form-control mb-4"	id="customerName" name="customerName">
+				<span class="text-danger" th:if="${#fields.hasErrors('${job.customerName}')}" th:errors="${job.customerName}"></span>
+			</div>
+			<div class="col">
+				<label for="carLicense">Car License Plate</label> <input type="text"
+					th:field="${job.carLicensePlate}" class="form-control mb-4"
+					id="carLicense" name="carLicense">
+				<span class="text-danger" th:if="${#fields.hasErrors('${job.carLicensePlate}')}" th:errors="${job.carLicensePlate}"></span>
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="description">Job Description</label> <input type="text"
+					th:field="${job.description}" class="form-control mb-4"
+					id="description" name="description">
+				<span class="text-danger" th:if="${#fields.hasErrors('${job.description}')}" th:errors="${job.description}"></span>
+			</div>
+		</div>
+
+		<label class="control-label">Parts used</label>
+
+		<div class="form-row" th:each="row,rowStat : ${itemList.list}">
+			<!-- <td th:text="${rowStat.count}">1</td>-->
+			<div class="col-2 mt-1">
+				<input class="form-control-lg mb-1" th:id="'units' + ${rowStat.index}" type="number" th:field="${itemList.list[__${rowStat.index}__].units}" min="0">	
+			</div>
+			<div class="col">
+				<select
+					th:field="${itemList.list[__${rowStat.index}__].id}"
+					class="selectpicker" data-live-search="true" data-width="auto"
+					onchange="updateUnits(this)" th:id="'select' + ${rowStat.index}">
+						<option th:each="item : ${inventory}" th:value="${item.product.id}"
+							th:text="${item.product.name}" th:attr="data-units=${item.units}"
+							th:data-tokens="${item.product.description} + ' ' + ${item.product.partNumber} + ' ' + ${item.product.color} + ' ' + ${item.product.supplier.name}">
+							Winter Tyres</option>
+				</select>
+			</div>
+			<div class="col">
+				<button class="btn" type="submit" name="addRow" onclick="$('form').attr('target', '');">Add part</button>
+			</div>
+			<div class="col">
+				<button class="btn" th:classappend="${rowStat.index == 0} ? ' d-none' : ''" type="submit" name="removeRow" th:value="${rowStat.index}" onclick="$('form').attr('target', '');">Remove part</button>
+			</div>
+			<div class="col">
+				<button th:id="'transaction' + ${rowStat.index}" class="btn" type="submit" name="getTransaction" onclick="$('form').attr('target', '_blank');">Retrieve transactions</button>
+			</div>
+		</div>
+		<button class="btn btn-success mx-0" type="submit" onclick="$('form').attr('target', '');">Submit</button>
+	</form>
+	
+	<!-- 
+	<div
+		class="border border-dark container-fluid col-md-4 col-md-offset-4">
 		<div class="row-fluid">
 			<div class="span12">
 				<fieldset>
 					<legend>Stock Usage Form</legend>
-					<form class="form-horizontal" method="post" th:action="@{/form/stockusage}">
+					<form class="form-horizontal" method="post"
+						th:action="@{/form/stockusage}">
 						<div class="control-group">
-							<label class="control-label">Customer Name</label>
-							<input type="hidden" th:field="${job.id}"> 
+							<label class="control-label">Customer Name</label> <input
+								type="hidden" th:field="${job.id}">
 							<div class="controls">
-								<input type="text" th:field="${job.customerName}" name="custname" id="custname required" title="Customer Name" value="">
+								<input type="text" th:field="${job.customerName}"
+									name="custname" id="custname required" title="Customer Name"
+									value="">
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label">Car License Plate</label>
 							<div class="controls">
-								<input type="text" th:field="${job.carLicensePlate}" name="carLicense" id="carLicense required" title="Car License Plate" value="">
+								<input type="text" th:field="${job.carLicensePlate}"
+									name="carLicense" id="carLicense required"
+									title="Car License Plate" value="">
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label">Description</label>
 							<div class="controls">
-								<input type="text" th:field="${job.description}" name="description" id="description required" title="Description" value="">
+								<input type="text" th:field="${job.description}"
+									name="description" id="description required"
+									title="Description" value="">
 							</div>
-						</div>
-						
-					    
-					    <label class="control-label">Parts used</label>
-					    <table>
-					    	
-						    <tr th:each="row,rowStat : ${itemList.list}">
-						      <!-- <td th:text="${rowStat.count}">1</td>-->
-						      <td>
-						      	<input th:id="'units' + ${rowStat.index}" type="number" th:field="${itemList.list[__${rowStat.index}__].units}">
-						      </td>
-						      <td>
-						        <!--  <select th:field="${itemList.list[__${rowStat.index}__].id}">
+						</div>-->
+
+						<!-- 
+						<label class="control-label">Parts used</label>
+						<table>
+
+							<tr th:each="row,rowStat : ${itemList.list}">
+								<!-- <td th:text="${rowStat.count}">1</td>
+								<td><input th:id="'units' + ${rowStat.index}" type="number"
+									th:field="${itemList.list[__${rowStat.index}__].units}">
+								</td>
+								<td>
+									<!--  <select th:field="${itemList.list[__${rowStat.index}__].id}">
 						          <option th:each="item : ${inventory}" 
 						                  th:value="${item.product.id}" 
 						                  th:text="${item.product.name}">Winter Wheels</option>
-						        </select>-->
-						        
-						        <select th:field="${itemList.list[__${rowStat.index}__].id}" class="selectpicker" data-live-search="true" onchange="updateUnits(this)" th:id="'select' + ${rowStat.index}">
-						        	<option th:each="item : ${inventory}" th:value="${item.product.id}" th:text="${item.product.name}" th:attr="data-units=${item.units}"
-						        			th:data-tokens="${item.product.description} + ' ' + ${item.product.partNumber} + ' ' + ${item.product.color} + ' ' + ${item.product.supplier.name}">
-						        			Winter Tyres
-						        	</option>
+						        </select> <select
+									th:field="${itemList.list[__${rowStat.index}__].id}"
+									class="selectpicker" data-live-search="true"
+									onchange="updateUnits(this)"
+									th:id="'select' + ${rowStat.index}">
+										<option th:each="item : ${inventory}"
+											th:value="${item.product.id}" th:text="${item.product.name}"
+											th:attr="data-units=${item.units}"
+											th:data-tokens="${item.product.description} + ' ' + ${item.product.partNumber} + ' ' + ${item.product.color} + ' ' + ${item.product.supplier.name}">
+											Winter Tyres</option>
 								</select>
-						        
-						      </td>
-						      <td>
-						      	<button type="submit" name="addRow" >Add part</button>
-						      </td>
-						      <td>
-						        <button type="submit" name="removeRow" 
-						                th:value="${rowStat.index}" >Remove part</button>
-						      </td>
-						      <td>
-						        <button type="submit" name="getTransactions" 
-						                th:value="${itemList.list[__${rowStat.index}__].id}" >Retrieve transactions</button>
-						      </td>						      
-						      </tr>
-						      <tr>
-						      		<td>
-	     								<div class="form-actions">
-											<button type="submit" class="btn btn-success">Add</button>
-											<button type="button" class="btn" onclick="cancel()">Cancel</button>
-										</div>
-									</td>
-					      </table>				
+
+								</td>
+
+							</tr>
+							<tr>
+								<td>
+									<div class="form-actions">
+										<button type="submit" class="btn btn-success">Add</button>
+										<button type="button" class="btn" onclick="cancel()">Cancel</button>
+									</div>
+								</td>
+						</table>
 						<br />
 
 					</form>
 				</fieldset>
-				</div>
 			</div>
 		</div>
+	</div>-->
 
 	<div th:replace="fragments/layout.html :: footer"></div>
 </body>
