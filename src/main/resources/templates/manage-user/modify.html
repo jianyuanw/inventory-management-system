@@ -24,7 +24,7 @@
                 <tr th:each="user : ${users}">
                     <td class="align-middle" th:text="${user.id}"></td>
                     <td class="align-middle" th:text="${user.username}"></td>
-                    <td class="align-middle" th:text="${user.role.name()} == 'ADMIN_CLERK' ? 'Admin Clerk' : 'Mechanic'"></td>
+                    <td class="align-middle" th:text="${user.role.displayValue}"></td>
                     <td>
                         <a th:href="@{/user/edit/} + ${user.id}">
                             <button type="button" class="btn btn-mdb-color btn-sm m-0">Edit</button>

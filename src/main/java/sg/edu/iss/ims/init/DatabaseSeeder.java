@@ -79,7 +79,7 @@ class DatabaseSeeder implements InitializingBean {
 				  					"Oil filter, Air filter, Pollen filter, Fuel filter", 
 				  					"Engine oil, Brake fluid, Gearbox oil, Antifreeze"};
 		  String[] brands = {"Volkswagen", "Toyota", "Renault", "Nissan", "Mitsubishi", "Castrol"};
-		  String[] suppliers = {"Volkswagen Group Singapore", "Borneo Motors", "Wearnes Automotive", "Tan Chong Motor Sales", "Cycle & Carriage Mitsubishi", "Gee Boon Enterprises"};
+		  String[] suppliers = {"Volkswagen Group Singapore", "Borneo Motors", "Wearnes Automotive", "Tan Chong Motor Sales", "Cycle and Carriage Mitsubishi", "Gee Boon Enterprises"};
 		  String[] colors = {"red", "blue", "green", "yellow"};
 		  String[] shelves = {"Upper Shelf A", "Upper Shelf B", "Upper Shelf C", "Lower Shelf A", "Lower Shelf B", "Lower Shelf C"};
 		  

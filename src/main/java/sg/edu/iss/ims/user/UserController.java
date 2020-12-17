@@ -1,15 +1,19 @@
 package sg.edu.iss.ims.user;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sg.edu.iss.ims.model.Alert;
 
-import java.util.List;
+import sg.edu.iss.ims.model.Alert;
 
 @Controller
 @RequestMapping("/user")
@@ -28,8 +32,10 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String createUser(User user, RedirectAttributes redirAttr) {
-        if (uService.readUser(user.getUsername()) == null) {
+    public String createUser(@Valid User user, BindingResult bindingResult, RedirectAttributes redirAttr) {
+    	if (bindingResult.hasErrors()) {
+    		return "manage-user/create";
+    	} else if (uService.readUser(user.getUsername()) == null) {
             user.setPassword(uService.encode(user.getPassword()));
             uService.createUser(user);
             redirAttr.addFlashAttribute("alert",
@@ -37,7 +43,7 @@ public class UserController {
             return "redirect:/user/view";
         } else {
             redirAttr.addFlashAttribute("alert",
-                    new Alert("primary", "Username already exists: " + user.getUsername()));
+                    new Alert("warning", "Username already exists: " + user.getUsername()));
             return "redirect:/user/create";
         }
     }
