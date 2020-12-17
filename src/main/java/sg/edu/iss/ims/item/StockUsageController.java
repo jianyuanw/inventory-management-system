@@ -3,9 +3,11 @@ package sg.edu.iss.ims.item;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,14 +42,20 @@ public class StockUsageController {
 	}
 	
 	@PostMapping("/form/stockusage")
-	public String saveSupplierForm(Model model, Job job, ItemList itemList, RedirectAttributes redirAttr) {
+	public String saveSupplierForm(Model model, @ModelAttribute("job") @Valid Job job, BindingResult bindingResult, ItemList itemList, RedirectAttributes redirAttr) {
 		List<Integer> errors = itemService.checkInventory(itemList.getList());
-		if (errors != null) {
-			redirAttr.addFlashAttribute("alert", new Alert("warning", "Insufficient units of items requested"));	
-			return "redirect:/form/stockusage";
+		model.addAttribute("inventory", itemService.listAvailable());
+		if (bindingResult.hasErrors()) {
+			return "form/stockusage";
 		} else {
-			jobService.createJob(job, itemList);
-			redirAttr.addFlashAttribute("alert", new Alert("primary", "Job successfully added!"));			
+			
+			if (errors != null) {
+				redirAttr.addFlashAttribute("alert", new Alert("warning", "Insufficient units of items requested"));	
+				return "redirect:/form/stockusage";
+			} else {
+				jobService.createJob(job, itemList);
+				redirAttr.addFlashAttribute("alert", new Alert("primary", "Job successfully added!"));			
+			}
 		}
 		
 		return "redirect:/";
@@ -67,4 +75,13 @@ public class StockUsageController {
 	    model.addAttribute("inventory", itemService.listAvailable());
 	    return "form/stockusage";
 	}	
+	
+	@RequestMapping(value="/form/stockusage", params={"getTransaction"})
+	public String  getTransaction(Model model, Job job, ItemList itemList, HttpServletRequest req, RedirectAttributes redirAttr) {
+		Long itemId = Long.valueOf(req.getParameter("getTransaction"));
+	    redirAttr.addAttribute("itemId", itemId);
+	    redirAttr.addAttribute("fromDate", "");
+	    redirAttr.addAttribute("toDate", "");
+	    return "redirect:/report/usage/output";
+	}		
 }

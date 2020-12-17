@@ -9,7 +9,7 @@
 <body>
 	<div th:replace="fragments/layout.html :: header"></div>
 	
-    <form class="border border-light p-5" method="post" th:action="@{/report/usage/output}">
+    <form class="border border-light p-5" method="get" th:action="@{/report/usage/output}">
         <p class="h4 mb-4">Usage Report Query</p>
 
         <label for="part-number">Part Number</label>
