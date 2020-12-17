@@ -18,14 +18,12 @@ public class JobServiceImpl implements JobService {
 
 	private final JobRepository jobRepo;
 	private final TransactionRepository transactionRepo;
-	private final ProductRepository productRepo;
 	private final JobTransactionRepository jobTransactionRepo;
 	private final ItemRepository itemRepo;
 	
 	public JobServiceImpl(JobRepository jobRepo, TransactionRepository transactionRepo, ProductRepository productRepo, JobTransactionRepository jobTransactionRepo, ItemRepository itemRepo) {
 		this.jobRepo = jobRepo;
 		this.transactionRepo = transactionRepo;
-		this.productRepo = productRepo;
 		this.jobTransactionRepo = jobTransactionRepo;
 		this.itemRepo = itemRepo;
 	}
@@ -35,7 +33,9 @@ public class JobServiceImpl implements JobService {
 		jobRepo.save(job);
 		
 		for (Item item : itemList.getList()) {
-			Transaction transaction = new Transaction(itemRepo.findItemById(item.getId()), -(item.getUnits()), TransactionType.SELL_STOCK);
+			Item dbItem = itemRepo.findItemById(item.getId());
+			dbItem.setUnits(dbItem.getUnits() - item.getUnits());
+			Transaction transaction = new Transaction(dbItem, -(item.getUnits()), TransactionType.SELL_STOCK);
 			transactionRepo.save(transaction);
 			JobTransaction jobTransaction = new JobTransaction();
 			jobTransaction.setJob(job);

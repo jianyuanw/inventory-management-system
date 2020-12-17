@@ -3,6 +3,7 @@ package sg.edu.iss.ims.user;
 import java.util.List;
 
 public interface UserService {
+
 	void createUser(User user);
 
 	User readUser(String username);
@@ -18,4 +19,6 @@ public interface UserService {
 	List<User> getAllUsers();
 
 	String encode(String rawPassword);
+
+	boolean noChange(User newUser, User currentUser);
 }
