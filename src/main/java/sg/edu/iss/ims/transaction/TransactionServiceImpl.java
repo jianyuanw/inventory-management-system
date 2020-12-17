@@ -28,7 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
 	public List<Transaction> findByItem_Id(Long itemId) {
 		return transactionRepo.findAllByItem_Id(itemId);
 	}
-
+	
 	@Override
 	public List<Transaction> parseUsageReportQuery(Long itemId, String dateStart, String dateEnd) {
 		LocalDateTime ldtStart = dateStart != "" ? LocalDate.parse(dateStart, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay() : null;

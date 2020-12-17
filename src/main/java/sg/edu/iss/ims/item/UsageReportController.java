@@ -28,9 +28,9 @@ public class UsageReportController {
 	}
 	
 	@PostMapping("/output")
-	public String generateUsageReport(Model model, @RequestParam Long itemId, @RequestParam String dateStart, @RequestParam String dateEnd) {
+	public String generateUsageReport(Model model, @RequestParam Long itemId, @RequestParam String fromDate, @RequestParam String toDate) {
 		model.addAttribute("partNumber", itemService.findItemById(itemId).getProduct().getPartNumber());
-		model.addAttribute("transactionList", transactionService.parseUsageReportQuery(itemId, dateStart, dateEnd));
+		model.addAttribute("transactionList", transactionService.parseUsageReportQuery(itemId, fromDate, toDate));
 
 		return "report/usageoutput";
 	}
