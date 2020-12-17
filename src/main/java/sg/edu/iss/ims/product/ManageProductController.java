@@ -58,6 +58,7 @@ public class ManageProductController {
 	public String showProdForm(Model model) {
 		model.addAttribute("suppliers", supplierService.list());
 		model.addAttribute("product", new Product());
+		model.addAttribute("item", new Item());
 		model.addAttribute("brands", brandService.list());
 		model.addAttribute("categories", catService.getCategories());
 		model.addAttribute("subcategories", catService.getSubcategories());
@@ -65,12 +66,15 @@ public class ManageProductController {
 	}
 	
 	@GetMapping("/save")
-	public String saveProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
+	public String saveProduct(@ModelAttribute("product") @Valid Product product,@ModelAttribute("item") @Valid Item item, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
 //		if (bindingResult.hasErrors()) 
 //		{
 //			return "supplierform";
 //		}
 		prodService.saveProduct(product);
+		item.setState(ItemState.BELOW_REORDER_LEVEL);
+		item.setProduct(product);
+		itemService.addItem(item);
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated product!"));
 		return "forward:/product/list";
 	}
@@ -85,6 +89,7 @@ public class ManageProductController {
 	@GetMapping("/edit/{prodid}")
 	public String editProdList(Model model, @PathVariable("prodid") Long id) {
 		model.addAttribute("product", prodService.findProductById(id));
+		model.addAttribute("item",itemService.findItemByProduct(prodService.findProductById(id)));
 		model.addAttribute("brands",brandService.list());
 		model.addAttribute("categories", catService.getCategories());
 		model.addAttribute("subcategories", catService.getSubcategories());

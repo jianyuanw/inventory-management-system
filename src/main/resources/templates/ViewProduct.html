@@ -6,33 +6,44 @@
     <title>Product List</title>
 </head>
 <body>
-<!--if failed try th:insert-->
-<div th:replace="fragments/layout.html :: header"></div>
-<h2>Product Catalogue</h2>
-<p>Click the <b> <span style="color: red;"> NAME</span></b> to show product detail</p>
-<table id="dataTable"
-       class="table table-striped table-bordered table-sm">
-    <thead>
-    <tr>
-        <th>NAME</th>
-        <th>IMAGES</th>
-        <th>DESCRIPTIONS</th>
+    <div th:replace="fragments/layout.html :: header"></div>
 
-    </tr>
-    </thead>
-<tbody>
-    <tr th:each="product:${prod}">
-        <td><a href="DetailProduct.html" th:href="@{/ViewProduct/showdetail/}+ ${product.Id}" th:text="${product.name}"></a></td>
+    <div class="px-5 py-4">
+        <h2>Product Catalog</h2>
+        <p>Click the <b><span style="color: blue">NAME</span></b> to show product detail</p>
+        <table id="dataTable"
+               class="table table-striped table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>IMAGE</th>
+                    <th>DESCRIPTION</th>
+                    <th>QUANTITY ON HAND</th>
+                    <th>STOCK STATUS</th>
+                    <th>REORDER</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item:${items}">
+                    <td>
+                        <a href="DetailProduct.html" th:href="@{/ViewProduct/showdetail/} + ${item.product.id}">
+                            <span th:text="${item.product.name}" style="color: blue"></span>
+                        </a>
+                    </td>
+                    <td class="align-middle" th:src="@{item.product.image}" loading='lazy'>IMAGE</td>
+                    <td class="align-middle" th:text="${item.product.description}">DESCRIPTION</td>
+                    <td class="align-middle" th:text="${item.units}"></td>
+                    <td class="align-middle" th:text="${item.state.getDisplayValue()}"></td>
+                    <td>
+                        <a th:href="@{|/product/reorder/${item.product.id}|}">
+                            <button class="btn btn-dark-green btn-sm m-0">Reorder Product</button>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-
-        <td th:src="@{product.image.jpg}", loading='lazy' >IMAGES</td>
-        <td th:text="${product.description}">DESCRIPTIONS</td>
-
-
-
-    </tr>
-</tbody>
-</table>
-<div th:replace="fragments/layout.html :: footer"></div>
+    <div th:replace="fragments/layout.html :: footer"></div>
 </body>
 </html>

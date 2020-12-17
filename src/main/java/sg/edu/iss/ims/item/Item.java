@@ -48,5 +48,11 @@ public class Item {
 		this.shelfLocation = shelfLocation;
 		this.state = state;
 	}
+	
+	public Item(Product product, ItemState state) {
+		super();
+		this.product = product;
+		this.state = state;
+	}
 
 }

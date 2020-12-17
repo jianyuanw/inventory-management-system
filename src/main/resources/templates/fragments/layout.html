@@ -48,7 +48,7 @@
 					</li>
 					
 					<li class="nav-item" th:classappend="${#request.requestURI.startsWith('/ViewProduct')  ? 'active' : ''}">
-						<a class="nav-link" th:href="@{/ViewProduct/list}" th:text="#{navbar.catalog}">Browse catalog</a>
+						<a class="nav-link" th:href="@{/ViewProduct/list}" th:text="#{navbar.catalog}">Browse Catalog</a>
 					</li>					
 					<li class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/form') ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
@@ -68,7 +68,7 @@
 						</a>
 						<div class="dropdown-menu dropdown-default">
 							<a class="dropdown-item" th:href="@{/report/usage/query}">Usage Report</a>
-							<a class="dropdown-item" href="#">Reorder Report</a>
+							<a class="dropdown-item" th:href="@{/report/reorder/query}">Reorder Report</a>
 						</div>
 					</li>					
 					
