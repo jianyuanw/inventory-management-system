@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/layout.html :: head"/>
+    <title>Stock Entry Form</title>
+</head>
+
+<body>
+<div th:replace="fragments/layout.html :: header"></div>
+<h2>Stock Entry Form</h2>
+
+<form class="border border-light p-5" method="post" th:action="@{/stockentry/created}">
+    <p class="h4 mb-4">Product Restock Form</p>
+
+    <label for="productName">Product Name</label>
+    <input type="text" class="form-control mb-4" id="productName" th:value="${reorder.item.product.name}" disabled>
+
+
+    <label for="reorderLevel">Quantity Reorder</label>
+    <input type="text" class="form-control mb-4" id="reorderLevel" th:value="${reorder.quantity}" disabled>
+
+    <label for="reorderLevel">Reorder Date</label>
+    <input type="text" class="form-control mb-4" id="reorderDate" th:value="${reorder.date}" disabled>
+
+
+    <label for="deliveryDate">Delivery Date</label>
+    <input type="date" class="form-control mb-4" id="deliveryDate" name="deliveryDate"
+           placeholder="Enter Date of Delivery" th:value="${restock.receivedDate}">
+
+    <input type="hidden" name="reorderId" th:value="${reorder.id}">
+
+    <button class="btn btn-dark-green my-4 mx-0" type="submit">Submit Restock</button>
+</form>
+<div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>
+
+
+
