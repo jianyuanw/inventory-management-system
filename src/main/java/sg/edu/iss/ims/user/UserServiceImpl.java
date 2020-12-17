@@ -43,16 +43,6 @@ public class UserServiceImpl implements UserService {
 		userRepo.delete(user);
 	}
 
-//	@Override
-//	public boolean authenticate(User user) {
-//		User dbuser = userRepo.findUserByUsername(user.getUsername());
-//		if (user.getUsername().equals(dbuser.getUsername()) && user.getPassword().equals(dbuser.getPassword())) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
-
 	@Override
 	public List<User> getAllUsers() {
 		return userRepo.findAll();
@@ -69,14 +59,4 @@ public class UserServiceImpl implements UserService {
 				newUser.getRole() == currentUser.getRole();
 	}
 
-	//	private String hash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
-//		SecureRandom random = new SecureRandom();
-//		byte[] salt = new byte[32];
-//		random.nextBytes(salt);
-//
-//		KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
-//		SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-//
-//		return factory.generateSecret(spec).getEncoded().toString();
-//	}
 }

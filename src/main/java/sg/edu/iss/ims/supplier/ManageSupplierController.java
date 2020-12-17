@@ -29,18 +29,17 @@ public class ManageSupplierController {
 
 	
 	@GetMapping("/add")
-	public String showSupForm(Model model) {
-		model.addAttribute("supplier", new Supplier());
-		return "supplierform";
+	public String showSupForm(@ModelAttribute Supplier supplier) {
+		return "manage-supplier/create";
 	}
 	
 
-	@GetMapping("/save")
-	public String add(@ModelAttribute("supplier") @Valid Supplier supplier, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
+	@PostMapping("/save")
+	public String add(@Valid @ModelAttribute("supplier") Supplier supplier, BindingResult bindingResult, RedirectAttributes redirAttr) {
 		if (bindingResult.hasErrors()) 
 		{
-			return "supplierform";
-		}
+			return "manage-supplier/create";
+		} 
 		supService.saveSupplier(supplier);
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated supplier!"));
 		return "forward:/supplier/list";
@@ -50,13 +49,13 @@ public class ManageSupplierController {
 	public String showsuplist(Model model) {
 		List<Supplier> suplist = supService.list();
 		model.addAttribute("suplist", suplist);
-		return "supplierlist";
+		return "manage-supplier/modify";
 	}
 	
 	@GetMapping("/edit/{supid}")
 	public String editSupList(Model model, @PathVariable("supid") Long id) {
 		model.addAttribute("supplier", supService.findSupplierById(id));
-		return "supplierform";
+		return "manage-supplier/create";
 	}
 	
 	@GetMapping("/delete/{supid}")
