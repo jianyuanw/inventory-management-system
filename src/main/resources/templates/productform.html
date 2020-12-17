@@ -3,6 +3,9 @@
 <head>
 	<th:block th:replace="fragments/layout.html :: head"/>
 	<script type="text/javascript" th:src="@{/js/form.js}"></script>
+	<style>input::-webkit-calendar-picker-indicator {
+              opacity: 100;
+           }</style>
 <meta charset="ISO-8859-1">
 <title>Add Suppliers</title>
 </head>
@@ -34,9 +37,10 @@
 								<label class="control-label">Product Color</label>
 								<input type="text" th:field="${product.color}" name="prodcolor" id="prodcolor required" title="Product Color" value="" required>
 								<label class="control-label">Product Supplier</label>
-								<select th:field="${product.supplier}">
-								    <option th:each="sup : ${suppliers}" th:value="${sup.id}" th:text="${sup.name}"></option>
-								</select>
+								<input type="text" th:field="${product.supplier}" list ="suppliers">
+									<datalist id="suppliers">
+								    	<option th:each="sup : ${suppliers}" th:value="${sup.id}" th:text="${sup.name}"></option>
+									</datalist>
 								<label class="control-label">Product Measurement</label>
 								<input type="text" th:field="${product.measurement}" name="prodmeasurement" id="prodmeasurement required" title="Product Measurement" value="" required>
 								<label class="control-label">Product Measurement Type</label>
@@ -44,17 +48,20 @@
 								<label class="control-label">Product Image</label>
 								<input type="text" th:field="${product.image}" name="prodimage" id="prodimage required" title="Product Image" value="" required>
 								<label class="control-label">Product Category</label>
-								<select th:field="${product.category}">
-								    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
-								</select>
+								<input type="text" th:field="${product.category}" list ="categories">
+									<datalist id="categories">
+								    	<option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+									</datalist>
 								<label class="control-label">Product Subcategory</label>
-								<select th:field="${product.subcategory}">
-								    <option th:each="subcat : ${subcategories}" th:value="${subcat.id}" th:text="${subcat.name}"></option>
-								</select>
+								<input type="text" th:field="${product.subcategory}" list ="subcategories">
+									<datalist id="subcategories">
+								    	<option th:each="subcat : ${subcategories}" th:value="${subcat.id}" th:text="${subcat.name}"></option>
+									</datalist>
 								<label class="control-label">Product Brand</label>
-								<select th:field="${product.brand}">
-								    <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
-								</select>
+								<input type="text" th:field="${product.brand}" list ="brands">
+									<datalist id="brands">
+								    	<option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+									</datalist>
 								<input type="hidden" th:field="${item.id}">
 								<label class="control-label">Item Reorder At</label>
 								<input type="text" th:field="${item.reorderAt}" name="itemra" id="itemra required" title="Item Reorder At" value="" required>
