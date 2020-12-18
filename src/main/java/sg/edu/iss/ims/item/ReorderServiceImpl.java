@@ -42,11 +42,11 @@ public class ReorderServiceImpl implements ReorderService {
 //    public List<Reorder> findUndeliveredReorders() {
 //        return rRepo.findReordersWhereStatusIs(ReorderStatus.PENDING_DELIVERY);
 //    }
-//
-//    @Override
-//    public List<Reorder> findDeliveredOrders() {
-//        return rRepo.findReordersWhereStatusIs(ReorderStatus.DELIVERED);
-//    }
+
+    @Override
+    public List<Reorder> findDeliveredOrders() {
+        return rRepo.findReordersWhereStatusIs(ReorderStatus.DELIVERED);
+    }
 
     @Override
     public List<Reorder> findReordersByDateRange(Long supplierId, LocalDate fromDate, LocalDate toDate) {
@@ -60,7 +60,7 @@ public class ReorderServiceImpl implements ReorderService {
 
         List<Reorder> reorders = new ArrayList<>();
         for (Item item : items) {
-            List<Reorder> reordersByItem = rRepo.findAllByItemAndDateBetween(item, fromDate, toDate);
+            List<Reorder> reordersByItem = rRepo.findAllByItemAndOrderDateBetween(item, fromDate, toDate);
             reorders.addAll(reordersByItem);
         }
 
@@ -80,4 +80,18 @@ public class ReorderServiceImpl implements ReorderService {
         }
         return sum;
     }
+
+    @Override
+    public void updateItemQty(Item item, int reorderQty) {
+        item.setUnits(item.getUnits() + reorderQty);
+    }
+
+    @Override
+    public void updateItemState(Item item) {
+        if (item.getUnits() >= item.getReorderAt()) {
+            item.setState(ItemState.IN_STOCK);
+        }
+    }
+
+
 }

@@ -49,5 +49,9 @@ public class TransactionServiceImpl implements TransactionService {
 		return results;
 
 	}
-	
+
+	@Override
+	public void save(Transaction transaction) {
+		transactionRepo.save(transaction);
+	}
 }
