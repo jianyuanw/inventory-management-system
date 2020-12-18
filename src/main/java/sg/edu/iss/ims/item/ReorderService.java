@@ -10,6 +10,7 @@ public interface ReorderService {
 //    List<Reorder> findUndeliveredReorders();
 //    List<Reorder> findDeliveredOrders();
 	Reorder findReorderById(Long reorderId);
-	List<Reorder> findReordersByDateRange(Long productId, LocalDate fromDate, LocalDate toDate);
+	List<Reorder> findReordersByDateRange(Long supplierId, LocalDate fromDate, LocalDate toDate);
 	LocalDate convertToDate(String date);
+	double sumPrice(List<Reorder> reorders);
 }
