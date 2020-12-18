@@ -8,3 +8,7 @@ function createSelect(element) {
 	}
 
 }
+
+function roundData(element) {
+	element.value = Number(element.value).toFixed(2);
+}
