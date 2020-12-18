@@ -6,6 +6,7 @@ import sg.edu.iss.ims.product.Product;
 import sg.edu.iss.ims.product.ProductRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,17 +42,28 @@ public class ReorderServiceImpl implements ReorderService {
 //    public List<Reorder> findUndeliveredReorders() {
 //        return rRepo.findReordersWhereStatusIs(ReorderStatus.PENDING_DELIVERY);
 //    }
-//
-//    @Override
-//    public List<Reorder> findDeliveredOrders() {
-//        return rRepo.findReordersWhereStatusIs(ReorderStatus.DELIVERED);
-//    }
 
     @Override
-    public List<Reorder> findReordersByDateRange(Long productId, LocalDate fromDate, LocalDate toDate) {
-        Product product = pRepo.findById(productId).get();
-        Item item = iRepo.findItemByProduct(product);
-        List<Reorder> reorders = rRepo.findAllByItemAndDateBetween(item, fromDate, toDate);
+    public List<Reorder> findDeliveredOrders() {
+        return rRepo.findReordersWhereStatusIs(ReorderStatus.DELIVERED);
+    }
+
+    @Override
+    public List<Reorder> findReordersByDateRange(Long supplierId, LocalDate fromDate, LocalDate toDate) {
+        List<Product> products = pRepo.findProductsBySupplierId(supplierId);
+
+        List<Item> items = new ArrayList<>();
+        for (Product product : products) {
+            Item item = iRepo.findItemByProduct(product);
+            items.add(item);
+        }
+
+        List<Reorder> reorders = new ArrayList<>();
+        for (Item item : items) {
+            List<Reorder> reordersByItem = rRepo.findAllByItemAndOrderDateBetween(item, fromDate, toDate);
+            reorders.addAll(reordersByItem);
+        }
+
         return reorders;
     }
 
@@ -59,4 +71,27 @@ public class ReorderServiceImpl implements ReorderService {
     public LocalDate convertToDate(String date) {
         return LocalDate.parse(date);
     }
+
+    @Override
+    public double sumPrice(List<Reorder> reorders) {
+        double sum = 0;
+        for (Reorder reorder : reorders) {
+            sum += reorder.getItem().getProduct().getOriginalPrice() * reorder.getQuantity();
+        }
+        return sum;
+    }
+
+    @Override
+    public void updateItemQty(Item item, int reorderQty) {
+        item.setUnits(item.getUnits() + reorderQty);
+    }
+
+    @Override
+    public void updateItemState(Item item) {
+        if (item.getUnits() >= item.getReorderAt()) {
+            item.setState(ItemState.IN_STOCK);
+        }
+    }
+
+
 }

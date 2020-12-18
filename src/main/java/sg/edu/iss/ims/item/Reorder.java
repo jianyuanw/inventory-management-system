@@ -2,6 +2,7 @@ package sg.edu.iss.ims.item;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sg.edu.iss.ims.transaction.Transaction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,7 +21,12 @@ public class Reorder {
 
     private int quantity;
 
-    private LocalDate date;
+    private LocalDate orderDate;
 
     private ReorderStatus status;
+
+    private LocalDate receivedDate;
+
+    @OneToOne
+    private Transaction transaction;
 }

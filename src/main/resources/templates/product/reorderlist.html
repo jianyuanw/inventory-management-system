@@ -26,10 +26,10 @@
                     <td class="align-middle" th:text="${reorder.id}"></td>
                     <td class="align-middle" th:text="${reorder.item.product.name}"></td>
                     <td class="align-middle" th:text="${reorder.quantity}"></td>
-                    <td class="align-middle" th:text="${reorder.date}"></td>
+                    <td class="align-middle" th:text="${reorder.orderDate}"></td>
                     <td class="align-middle" th:text="${reorder.status.name()} == 'PENDING_DELIVERY' ? 'Pending Delivery' : 'Delivered'"></td>
                     <td>
-                        <a href="#">
+                        <a th:if="${reorder.status.name()} == 'PENDING_DELIVERY'" th:href="|/stockentry/add/${reorder.id}|">
                             <button type="button" class="btn btn-dark-green btn-sm m-0">Create Stock Entry</button>
                         </a>
                     </td>

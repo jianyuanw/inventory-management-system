@@ -118,7 +118,7 @@ public class ManageProductController {
 
 		Reorder reorder = new Reorder();
 		reorder.setQuantity(qtyToReorder);
-		reorder.setDate(LocalDate.now());
+		reorder.setOrderDate(LocalDate.now());
 		reorder.setStatus(ReorderStatus.PENDING_DELIVERY);
 		reorder.setItem(item);
 		reorderService.create(reorder);

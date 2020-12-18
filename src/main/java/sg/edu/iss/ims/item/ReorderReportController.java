@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import sg.edu.iss.ims.product.Product;
 import sg.edu.iss.ims.product.ProductService;
 import sg.edu.iss.ims.product.ProductServiceImpl;
+import sg.edu.iss.ims.supplier.Supplier;
+import sg.edu.iss.ims.supplier.SupplierService;
+import sg.edu.iss.ims.supplier.SupplierServiceImpl;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,30 +20,32 @@ import java.util.List;
 @RequestMapping("/report/reorder")
 public class ReorderReportController {
 
-    private final ProductService pService;
+    private final SupplierService sService;
     private final ReorderService rService;
 
-    public ReorderReportController(ProductServiceImpl pImpl, ReorderServiceImpl rImpl) {
-        pService = pImpl;
+    public ReorderReportController(SupplierServiceImpl sImpl, ReorderServiceImpl rImpl) {
+        sService = sImpl;
         rService = rImpl;
     }
 
     @GetMapping("/query")
     public String reorderReportQuery(Model model) {
-        List<Product> products = pService.list();
-        model.addAttribute("products", products);
+        List<Supplier> suppliers = sService.list();
+        model.addAttribute("suppliers", suppliers);
         return "report/reorderquery";
     }
 
     @PostMapping("/processor")
-    public String reorderReportProcessor(@RequestParam Long productId, @RequestParam String fromDate,
+    public String reorderReportProcessor(@RequestParam Long supplierId, @RequestParam String fromDate,
                                          @RequestParam String toDate, Model model) {
         LocalDate parsedFromDate = rService.convertToDate(fromDate);
         LocalDate parsedToDate = rService.convertToDate(toDate);
-        List<Reorder> reorders = rService.findReordersByDateRange(productId, parsedFromDate, parsedToDate);
-        Product product = pService.findProductById(productId);
+        List<Reorder> reorders = rService.findReordersByDateRange(supplierId, parsedFromDate, parsedToDate);
+        Supplier supplier = sService.findSupplierById(supplierId);
+        double totalPrice = rService.sumPrice(reorders);
         model.addAttribute("reorders", reorders);
-        model.addAttribute("product", product);
+        model.addAttribute("supplier", supplier);
+        model.addAttribute("totalPrice", totalPrice);
         return "report/reorderoutput";
     }
 }
