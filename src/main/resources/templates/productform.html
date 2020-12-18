@@ -15,11 +15,13 @@
 	
 	<div class="border border-light p-5">
 		<p class="h4 mb-4">Add Product</p>
+		<form class="form-horizontal" method="get" th:action="@{/product/save}">
 	
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Product Name</label>
 				<input type="text" class="form-control mb-4" th:field="${product.name}" name="prodname" id="prodname" title="Product Name" value="" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.name}')}" th:errors="${product.name}"></span>
 			</div>
 			<div class="col">
 				<label class="control-label">Part Number</label>
@@ -143,6 +145,7 @@
 				<button class="btn btn-info my-4 mx-0" type="submit">Submit</button>
 			</div>		
 		</div>
+		</form>
 	</div>
 		<!--  
 			<div class="span12">
