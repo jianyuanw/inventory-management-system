@@ -10,7 +10,9 @@
 	<div th:replace="fragments/layout.html :: header"></div>
 	
 	<form class="border border-light p-5" method="post" th:action="@{/supplier/save}" th:object="${supplier}">
-		<p class="h4 mb-4">Create supplier</p>
+		<div class="form-row">
+			<p class="h4 mb-4">Create supplier</p>
+		</div>
 		<div class="form-row">
 			<input type="hidden" th:field="*{id}"> 
 			<label>Supplier Name</label>

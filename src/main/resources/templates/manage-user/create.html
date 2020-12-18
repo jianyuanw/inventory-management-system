@@ -8,7 +8,9 @@
 	<div th:replace="fragments/layout.html :: header"></div>
 
 	<form class="border border-light p-5" method="post" th:action="@{/user/create}" th:object="${user}">
-		<p class="h4 mb-4">Create User</p>
+		<div class="form-row">
+			<p class="h4 mb-4">Create User</p>
+		</div>
 		<div class="form-row">
 			<label>Username</label>
 		</div>
