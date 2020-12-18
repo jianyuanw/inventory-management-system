@@ -66,8 +66,8 @@ public class ManageProductController {
 	}
 	
 	@GetMapping("/save")
-	public String saveProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, @ModelAttribute("item") @Valid Item item, Model model, RedirectAttributes redirAttr) {
-		if (bindingResult.hasErrors()) 
+	public String saveProduct(@ModelAttribute("product") @Valid Product product, BindingResult productBinding, @ModelAttribute("item") @Valid Item item, BindingResult itemBinding, Model model, RedirectAttributes redirAttr) {
+		if (productBinding.hasErrors() || itemBinding.hasErrors()) 
 		{
 			return "productform";
 		}

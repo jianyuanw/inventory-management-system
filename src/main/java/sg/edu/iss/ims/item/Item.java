@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,12 +29,20 @@ public class Item {
 	@OneToOne
 	private Product product;
 
+	@NotNull(message = "Units must not be null")
+	@Min(value = 0, message = "Units must not be negative")
 	private int units;
 
+	@NotNull(message = "Units must not be null")
+	@Min(value = 0, message = "Reorder at value must not be negative")
 	private int reorderAt;
 
+	@NotNull(message = "Units must not be null")
+	@Min(value = 1, message = "Minimum reorder quantity must be more than 0")
 	private int reorderQuantity;
 
+	@NotNull(message = "Units must not be null")
+	@NotEmpty(message = "Shelf location must not be empty")
 	private String shelfLocation;
 	
 	@OneToMany
