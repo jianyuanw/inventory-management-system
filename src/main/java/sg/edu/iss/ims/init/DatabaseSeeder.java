@@ -128,6 +128,8 @@ class DatabaseSeeder implements InitializingBean {
 			  
 			  Random r = new Random();
 			  
+			  Map<String, Integer> usedCategories = new HashMap<String, Integer>();
+			  
 			  for (int i = 0; i < brands.length; i++) {
 				  var brand = brandRepo.findBrandByName(brands[i]);
 				  var supplier = supplierRepo.findSupplierByName(suppliers[i]);
@@ -137,7 +139,14 @@ class DatabaseSeeder implements InitializingBean {
 						  double price = ThreadLocalRandom.current().nextInt(6000, 9999) / 100.0;
 						  price = (double) ((int) (price * 100) / 100.0); 
 						  double measurement = ThreadLocalRandom.current().nextInt(15, 20);
-						  var partNumber = c.getName().substring(0, 2).toUpperCase() + "_" + sc.getName().substring(0, 2).toUpperCase() + "-" + brand.getName().substring(0, 2).toUpperCase() + "-" + supplier.getName().substring(0, 2).toUpperCase() + "1";
+						  var partNumber = c.getName().substring(0, 2).toUpperCase() + "_" + sc.getName().substring(0, 2).toUpperCase() + "-" + brand.getName().substring(0, 2).toUpperCase() + "_" + supplier.getName().substring(0, 2).toUpperCase();
+						  if (usedCategories.containsKey(partNumber)) {
+							  usedCategories.put(partNumber, usedCategories.get(partNumber) + 1);
+							  partNumber += usedCategories.get(partNumber);							  
+						  } else {
+							  usedCategories.put(partNumber, 1);
+							  partNumber += 1;						  
+						  }
 						  var name = brand.getName() + " " + sc.getName();
 						  var description = name + ", supplied by " + supplier.getName();
 						  String color = colors[r.nextInt(colors.length)];
