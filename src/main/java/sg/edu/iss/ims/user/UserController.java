@@ -40,7 +40,7 @@ public class UserController {
             uService.createUser(user);
             redirAttr.addFlashAttribute("alert",
                     new Alert("primary", "Successfully created user: " + user.getUsername()));
-            return "redirect:/user/view";
+            return "redirect:/user/modify";
         } else {
             redirAttr.addFlashAttribute("alert",
                     new Alert("warning", "Username already exists: " + user.getUsername()));
@@ -82,7 +82,7 @@ public class UserController {
             uService.updateUser(currentUser);
             redirAttr.addFlashAttribute("alert",
                     new Alert("primary", "Successfully updated user: " + currentUser.getUsername()));
-            return "redirect:/user/view";
+            return "redirect:/user/modify";
         }
     }
 
@@ -99,13 +99,6 @@ public class UserController {
         uService.deleteUser(currentUser);
         redirAttr.addFlashAttribute("alert",
                 new Alert("primary", "Successfully deleted user: " + currentUser.getUsername()));
-        return "redirect:/user/view";
-    }
-
-    @GetMapping("/view")
-    public String viewUsers(Model model) {
-        List<User> users = uService.getAllUsers();
-        model.addAttribute("users", users);
-        return "manage-user/view";
+        return "redirect:/user/modify";
     }
 }

@@ -54,10 +54,11 @@ public class StockEntryController {
         Item item = reorder.getItem();
         reorderService.updateItemQty(item, reorderQty);
         reorderService.updateItemState(item);
-        itemService.update(item);
+//        itemService.update(item);
 
         Transaction transaction = new Transaction(item, reorderQty, TransactionType.RECEIVE_STOCK);
         transactionService.save(transaction);
+        reorder.setTransaction(transaction);
 
         redirAttr.addFlashAttribute("alert",
                 new Alert("success", "Stock entry form submitted!"));
