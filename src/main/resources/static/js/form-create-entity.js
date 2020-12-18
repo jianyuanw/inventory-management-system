@@ -8,8 +8,3 @@ function createSelect(element) {
 	}
 
 }
-
-function updateSelect(element) {
-	let prefix = element.id.substring(0, element.id.length - 3);
-	document.getElementById(prefix + "Select").value = element.value;
-}
