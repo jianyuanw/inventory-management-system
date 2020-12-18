@@ -6,6 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,14 +27,34 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String partNumber;
+	
+	@NotEmpty(message = "Product name must not be empty")
+	@Pattern(regexp = "[A-Za-z ]+", message="Product name can only consist of spaces and alphabetical characters")
 	private String name;
+	
+	@NotEmpty(message = "Description must not be empty")
+	@Pattern(regexp = "[A-Za-z0-9, ]+", message="Description can only consist of spaces, commas and alphanumerical characters")	
 	private String description;
+	
+	@NotNull(message = "Price must not be null")	
 	private Double originalPrice;
-	private Double wholesalePrice;
-	private Double retailPrice;
+	
+	@NotNull(message = "Price must not be null")
 	private Double partnerPrice;
+	
+	@NotNull(message = "Price must not be null")
+	private Double wholesalePrice;
+	
+	@NotNull(message = "Price must not be null")
+	private Double retailPrice;
+	
+	@NotEmpty(message = "Color must not be empty")
 	private String color;
+	
+	@NotEmpty(message = "Measurement must not be empty")
 	private String measurement;
+	
+	@NotEmpty(message = "Measurement type must not be empty")
 	private String measurementType;
 	private String image;
 

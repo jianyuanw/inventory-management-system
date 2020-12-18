@@ -3,6 +3,7 @@
 <head>
 	<th:block th:replace="fragments/layout.html :: head"/>
 	<script type="text/javascript" th:src="@{/js/form.js}"></script>
+	<script type="text/javascript" th:src="@{/js/form-create-entity.js}"></script>
 	<style>input::-webkit-calendar-picker-indicator {
               opacity: 100;
            }</style>
@@ -11,42 +12,161 @@
 </head>
 <body>
 	<div th:replace="fragments/layout.html :: header"></div>
-	<div class="border border-dark container-fluid col-md-4 col-md-offset-4">
-		<div class="row-fluid">
+	
+	<div class="border border-light p-5">
+		<p class="h4 mb-4">Add Product</p>
+		<form class="form-horizontal" method="get" th:action="@{/product/save}">
+	
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Product Name</label>
+				<input type="text" class="form-control mb-4" th:field="${product.name}" name="prodname" id="prodname" title="Product Name" value="" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.name}')}" th:errors="${product.name}"></span>
+			</div>
+			<div class="col">
+				<label class="control-label">Part Number</label>
+				<input type="text" class="form-control mb-4" th:field="${product.partNumber}" name="prodpn" id="prodpn" title="Product Part Number" value="" data-type="required">
+			</div>			
+		</div>
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Product Description</label>
+				<input type="text" class="form-control mb-4" th:field="${product.description}" name="proddesc" id="proddesc" title="Product Description" value="" data-type="required">
+			</div>		
+		</div>
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Original Price</label>
+				<input type="text" class="form-control mb-4" th:field="${product.originalPrice}" name="prodop" id="prodop" title="Product Original Price" value="" data-type="required">
+			</div>	
+			<div class="col">
+				<label class="control-label">Partner Price</label>
+				<input type="text" class="form-control mb-4" th:field="${product.partnerPrice}" name="prodpp" id="prodpp" title="Product Partner Price" value="" data-type="required">
+			</div>					
+			<div class="col">
+				<label class="control-label">Wholesale Price</label>
+				<input type="text" class="form-control mb-4" th:field="${product.wholesalePrice}" name="prodwp" id="prodwp" title="Product Wholesale Price" value="" data-type="required">
+			</div>
+			<div class="col">
+				<label class="control-label">Retail Price</label>
+				<input type="text" class="form-control mb-4" th:field="${product.retailPrice}" name="prodrp" id="prodrp" title="Product Retail Price" value="" data-type="required">
+			</div>											
+		</div>
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Product Color</label>
+				<input type="text" class="form-control mb-4" th:field="${product.color}" name="prodcolor" id="prodcolor" title="Product Color" value="" data-type="required">		
+			</div>
+			<div class="col">
+				<label class="control-label">Product Supplier</label>
+				<select id="supplierSelect" th:field="${product.supplier}" class="custom-select mb-4" onchange="createSelect(this)">
+				     <option th:each="supplier : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.Name}"></option>
+				     <option th:value="create">Create New</option>
+				</select>		
+			</div>
+			<div class="col">
+				<label class="control-label"></label>
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="supplierNew" value="" placeholder="New supplier name" data-type="required">		
+			</div>				
+		</div>
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Product Measurement</label>
+				<input type="text" class="form-control mb-4" th:field="${product.measurement}" name="prodmeasurement" id="prodmeasurement" title="Product Measurement" value="" data-type="required">		
+			</div>
+			<div class="col">
+				<label class="control-label">Product Measurement Type</label>
+				<input type="text" class="form-control mb-4" th:field="${product.measurementType}" name="prodmt" id="prodmt" title="Product Measurement Type" value="" data-type="required">	
+			</div>				
+		</div>		
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Product Image</label>
+				<input type="text" class="form-control mb-4" th:field="${product.image}" name="prodimage" id="prodimage" title="Product Image" value="" data-type="required">		
+			</div>
+			<div class="col">
+				<label class="control-label">Product Brand</label>
+				<select id="brandSelect" class="custom-select mb-4" onchange="createSelect(this)">
+				     <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.Name}"></option>
+				     <option th:value="create">Create New</option>
+				</select>
+			</div>
+			<div class="col">
+				<label class="control-label"></label>
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="brandNew" placeholder="New brand name" onchange="" data-type="required">		
+			</div>					
+		</div>
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Product Category</label>
+				<select id="categorySelect" class="custom-select mb-4" onchange="createSelect(this)">
+				     <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.Name}"></option>
+				     <option th:value="create">Create New</option>
+				</select>				
+			</div>
+			<div class="col">
+				<label class="control-label"></label>
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="categoryNew" placeholder="New category name" data-type="required">		
+			</div>					
+			<div class="col">
+				<label class="control-label">Product Subcategory</label>
+				<select id="subcategorySelect" class="custom-select mb-4" onchange="createSelect(this)">
+				     <option th:each="subcategory : ${subcategories}" th:value="${subcategory.id}" th:text="${subcategory.Name}"></option>
+				     <option th:value="create">Create New</option>
+				</select>
+			</div>
+			<div class="col">
+				<label class="control-label"></label>
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="subcategoryNew" placeholder="New subcategory name" data-type="required">		
+			</div>							
+		</div>
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Item Units</label>
+				<input type="text" class="form-control mb-4" th:field="${item.units}" name="itemunits" id="itemunits" title="Item Units" value="0" data-type="required">
+			</div>		
+			<div class="col">
+				<label class="control-label">Item Shelf Location</label>
+				<input type="text" class="form-control mb-4" th:field="${item.shelfLocation}" name="itemsl" id="itemsl" title="Item Shelf Location" value="" data-type="required">				
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Item Reorder At</label>
+				<input type="text" class="form-control mb-4" th:field="${item.reorderAt}" name="itemra" id="itemra" title="Item Reorder At" value="" data-type="required">
+			</div>		
+			<div class="col">
+				<label class="control-label">Minimum Reorder Quantity</label>
+				<input type="text" class="form-control mb-4" th:field="${item.reorderQuantity}" name="itemrq" id="itemrq" title="Item Reorder Quantity" value="" data-type="required">				
+			</div>
+		</div>			
+		<div class="form-row">
+			<div class="col">
+				<button class="btn btn-info my-4 mx-0" type="submit">Submit</button>
+			</div>		
+		</div>
+		</form>
+	</div>
+		<!--  
 			<div class="span12">
 				<fieldset>
-					<legend>Add Product</legend>
-					<form class="form-horizontal" action = "" method="get" th:action="@{/product/save}">
+					<form class="form-horizontal" action= "" method="get" th:action="@{/product/save}">
 						<div class="control-group">
 							<input type="hidden" th:field="${product.id}"> 
 							<div class="controls">
-								<label class="control-label">Product Name</label>
-								<input type="text" th:field="${product.name}" name="prodname" id="prodname required" title="Product Name" value="" required>
-								<label class="control-label">Product Description</label>
-								<input type="text" th:field="${product.description}" name="proddesc" id="proddesc required" title="Product Description" value="" required>
-								<label class="control-label">Part Number</label>
-								<input type="text" th:field="${product.partNumber}" name="prodpn" id="prodpn required" title="Product Part Number" value="" required>
-								<label class="control-label">Product Original Price</label>
-								<input type="text" th:field="${product.originalPrice}" name="prodop" id="prodop required" title="Product Original Price" value="" required>
-								<label class="control-label">Product Wholesale Price</label>
-								<input type="text" th:field="${product.wholesalePrice}" name="prodwp" id="prodwp required" title="Product Wholesale Price" value="" required>
-								<label class="control-label">Product Retail Price</label>
-								<input type="text" th:field="${product.retailPrice}" name="prodrp" id="prodrp required" title="Product Retail Price" value="" required>
-								<label class="control-label">Product Partner Price</label>
-								<input type="text" th:field="${product.partnerPrice}" name="prodpp" id="prodpp required" title="Product Partner Price" value="" required>
 								<label class="control-label">Product Color</label>
-								<input type="text" th:field="${product.color}" name="prodcolor" id="prodcolor required" title="Product Color" value="" required>
+								<input type="text" th:field="${product.color}" name="prodcolor" id="prodcolor data-type="required"" title="Product Color" value="" data-type="required">
 								<label class="control-label">Product Supplier</label>
 								<input type="text" th:field="${product.supplier}" list ="suppliers">
 									<datalist id="suppliers">
 								    	<option th:each="sup : ${suppliers}" th:value="${sup.id}" th:text="${sup.name}"></option>
 									</datalist>
 								<label class="control-label">Product Measurement</label>
-								<input type="text" th:field="${product.measurement}" name="prodmeasurement" id="prodmeasurement required" title="Product Measurement" value="" required>
+								<input type="text" th:field="${product.measurement}" name="prodmeasurement" id="prodmeasurement data-type="required"" title="Product Measurement" value="" data-type="required">
 								<label class="control-label">Product Measurement Type</label>
-								<input type="text" th:field="${product.measurementType}" name="prodmt" id="prodmt required" title="Product Measurement Type" value="" required>
+								<input type="text" th:field="${product.measurementType}" name="prodmt" id="prodmt data-type="required"" title="Product Measurement Type" value="" data-type="required">
 								<label class="control-label">Product Image</label>
-								<input type="text" th:field="${product.image}" name="prodimage" id="prodimage required" title="Product Image" value="" required>
+								<input type="text" th:field="${product.image}" name="prodimage" id="prodimage data-type="required"" title="Product Image" value="" data-type="required">
 								<label class="control-label">Product Category</label>
 								<input type="text" th:field="${product.category}" list ="categories">
 									<datalist id="categories">
@@ -64,13 +184,13 @@
 									</datalist>
 								<input type="hidden" th:field="${item.id}">
 								<label class="control-label">Item Reorder At</label>
-								<input type="text" th:field="${item.reorderAt}" name="itemra" id="itemra required" title="Item Reorder At" value="" required>
+								<input type="text" th:field="${item.reorderAt}" name="itemra" id="itemra data-type="required"" title="Item Reorder At" value="" data-type="required">
 								<label class="control-label">Item Reorder At</label>
-								<input type="text" th:field="${item.reorderQuantity}" name="itemrq" id="itemrq required" title="Item Reorder Quantity" value="" required>
+								<input type="text" th:field="${item.reorderQuantity}" name="itemrq" id="itemrq data-type="required"" title="Item Reorder Quantity" value="" data-type="required">
 								<label class="control-label">Item Shelf Location</label>
-								<input type="text" th:field="${item.shelfLocation}" name="itemsl" id="itemsl required" title="Item Shelf Location" value="" required>
+								<input type="text" th:field="${item.shelfLocation}" name="itemsl" id="itemsl data-type="required"" title="Item Shelf Location" value="" data-type="required">
 								<label class="control-label">Item Units</label>
-								<input type="text" th:field="${item.units}" name="itemunits" id="itemunits required" title="Item Units" value="0" required>
+								<input type="text" th:field="${item.units}" name="itemunits" id="itemunits data-type="required"" title="Item Units" value="0" data-type="required">
 							</div>
 						</div>
 						<br />
@@ -82,7 +202,7 @@
 				</fieldset>
 				</div>
 			</div>
-		</div>
+		</div>-->
 
 	<div th:replace="fragments/layout.html :: footer"></div>
 </body>

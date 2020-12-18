@@ -61,7 +61,7 @@
 				<button class="btn" type="submit" name="addRow" onclick="$('form').attr('target', '');">Add part</button>
 			</div>
 			<div class="col">
-				<button class="btn" th:classappend="${rowStat.index == 0} ? ' d-none' : ''" type="submit" name="removeRow" th:value="${rowStat.index}" onclick="$('form').attr('target', '');">Remove part</button>
+				<button th:if="${rowStat.index > 0}" class="btn" type="submit" name="removeRow" th:value="${rowStat.index}" onclick="$('form').attr('target', '');">Remove part</button>
 			</div>
 			<div class="col">
 				<button th:id="'transaction' + ${rowStat.index}" class="btn" type="submit" name="getTransaction" onclick="$('form').attr('target', '_blank');">Retrieve transactions</button>

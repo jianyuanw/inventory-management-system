@@ -66,11 +66,11 @@ public class ManageProductController {
 	}
 	
 	@GetMapping("/save")
-	public String saveProduct(@ModelAttribute("product") @Valid Product product,@ModelAttribute("item") @Valid Item item, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
-//		if (bindingResult.hasErrors()) 
-//		{
-//			return "supplierform";
-//		}
+	public String saveProduct(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult, @ModelAttribute("item") @Valid Item item, Model model, RedirectAttributes redirAttr) {
+		if (bindingResult.hasErrors()) 
+		{
+			return "productform";
+		}
 		prodService.saveProduct(product);
 		item.setState(ItemState.BELOW_REORDER_LEVEL);
 		item.setProduct(product);

@@ -22,17 +22,17 @@ public class Job {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty(message = "Description cannot be empty")
-	@Pattern(regexp = "[A-Za-z0-9 ]+", message="Description can only consist of spaces and alphanumerical characters")
-	private String description;
-	
-	@NotEmpty(message = "Car license plate cannot be empty")
+	@NotEmpty(message = "Car license plate must not be empty")
 	@Pattern(regexp = "S[A-HJ-NP-Z]{2}[0-9]{1,4}[A-EGHJ-MPR-UX-Z]?", message="Invalid car license plate")
 	private String carLicensePlate;
 	
-	@NotEmpty(message = "Customer name cannot be empty")
+	@NotEmpty(message = "Customer name must not be empty")
 	@Pattern(regexp = "[A-Za-z ]+", message="Customer name can only consist of spaces and alphabetical characters")
 	private String customerName;
+	
+	@NotEmpty(message = "Description must not be empty")
+	@Pattern(regexp = "[A-Za-z0-9, ]+", message="Description can only consist of spaces, commas and alphanumerical characters")
+	private String description;	
 	
 	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
 	private List<JobTransaction> jobTransactions;

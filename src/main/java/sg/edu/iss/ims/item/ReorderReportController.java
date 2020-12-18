@@ -18,9 +18,11 @@ import java.util.List;
 public class ReorderReportController {
 
     private final ProductService pService;
+    private final ReorderService rService;
 
-    public ReorderReportController(ProductServiceImpl pImpl) {
+    public ReorderReportController(ProductServiceImpl pImpl, ReorderServiceImpl rImpl) {
         pService = pImpl;
+        rService = rImpl;
     }
 
     @GetMapping("/query")
@@ -31,9 +33,14 @@ public class ReorderReportController {
     }
 
     @PostMapping("/processor")
-    public String reorderReportProcessor(@RequestParam Long productId, @RequestParam LocalDate fromDate,
-                                         @RequestParam LocalDate toDate) {
-//        TODO: Logic
-        return "";
+    public String reorderReportProcessor(@RequestParam Long productId, @RequestParam String fromDate,
+                                         @RequestParam String toDate, Model model) {
+        LocalDate parsedFromDate = rService.convertToDate(fromDate);
+        LocalDate parsedToDate = rService.convertToDate(toDate);
+        List<Reorder> reorders = rService.findReordersByDateRange(productId, parsedFromDate, parsedToDate);
+        Product product = pService.findProductById(productId);
+        model.addAttribute("reorders", reorders);
+        model.addAttribute("product", product);
+        return "report/reorderoutput";
     }
 }
