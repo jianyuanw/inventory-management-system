@@ -3,7 +3,7 @@
 <head>
 	<th:block th:replace="fragments/layout.html :: head"/>
 	<script type="text/javascript" th:src="@{/js/form.js}"></script>
-	<script type="text/javascript" th:src="@{/js/form-create-entity.js}"></script>
+	<script type="text/javascript" th:src="@{/js/product-form.js}"></script>
 	<style>input::-webkit-calendar-picker-indicator {
               opacity: 100;
            }</style>
@@ -37,19 +37,19 @@
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Original Price</label>
-				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.originalPrice}" name="prodop" id="prodop" title="Product Original Price"  data-type="required">
+				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.originalPrice}" name="prodop" id="prodop" title="Product Original Price" onchange="roundData(this)" data-type="required">
 			</div>	
 			<div class="col">
 				<label class="control-label">Partner Price</label>
-				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.partnerPrice}" name="prodpp" id="prodpp" title="Product Partner Price" data-type="required">
+				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.partnerPrice}" name="prodpp" id="prodpp" title="Product Partner Price" onchange="roundData(this)" data-type="required">
 			</div>					
 			<div class="col">
 				<label class="control-label">Wholesale Price</label>
-				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.wholesalePrice}" name="prodwp" id="prodwp" title="Product Wholesale Price"data-type="required">
+				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.wholesalePrice}" name="prodwp" id="prodwp" title="Product Wholesale Price" onchange="roundData(this)" data-type="required">
 			</div>
 			<div class="col">
 				<label class="control-label">Retail Price</label>
-				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.retailPrice}" name="prodrp" id="prodrp" title="Product Retail Price" data-type="required">
+				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.retailPrice}" name="prodrp" id="prodrp" title="Product Retail Price" onchange="roundData(this)" data-type="required">
 			</div>											
 		</div>
 		<div class="form-row">
@@ -128,7 +128,8 @@
 			</div>		
 			<div class="col">
 				<label class="control-label">Item Shelf Location</label>
-				<input type="text" class="form-control mb-4" th:field="${item.shelfLocation}" name="itemsl" id="itemsl" title="Item Shelf Location" value="" data-type="required">				
+				<input type="text" class="form-control mb-4" th:field="${item.shelfLocation}" name="itemsl" id="itemsl" title="Item Shelf Location" value="" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${item.shelfLocation}')}" th:errors="${item.shelfLocation}"></span>			
 			</div>
 		</div>
 		<div class="form-row">

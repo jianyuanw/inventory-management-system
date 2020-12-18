@@ -29,7 +29,7 @@ public class ViewProductController {
 
 	@RequestMapping("/{id}")
 	public String showdetail(Model model, @PathVariable("id") Long id) {
-		model.addAttribute("prod", viewService.findProductById(id));
+		model.addAttribute("product", viewService.findProductById(id));
 		return "catalog/productdetails";
 	}
 }

@@ -41,7 +41,6 @@ public class Item {
 	@Min(value = 1, message = "Minimum reorder quantity must be more than 0")
 	private int reorderQuantity;
 
-	@NotNull(message = "Units must not be null")
 	@NotEmpty(message = "Shelf location must not be empty")
 	private String shelfLocation;
 	
