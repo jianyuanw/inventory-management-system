@@ -72,14 +72,13 @@ class DatabaseSeeder implements InitializingBean {
 	  public void afterPropertiesSet() throws Exception {
 		  boolean recreateData = true;
 		  
-		  String[] categories = {"Tyres", "Brake System", "Engine", "Filters", "Oils and Fluids"};
+		  String[] categories = {"Tyres", "Brake System", "Engine", "Filters"};
 		  String[] subCategories = {"Winter Tyres, Summer Tyres", 
 				  					"Brake discs, Brake pads, Brake hose, Brake shoes", 
 				  					"Head gasket, Engine mount, Thermostat, Ignition coil", 
-				  					"Oil filter, Air filter, Pollen filter, Fuel filter", 
-				  					"Engine oil, Brake fluid, Gearbox oil, Antifreeze"};
-		  String[] brands = {"Volkswagen", "Toyota", "Renault", "Nissan", "Mitsubishi", "Castrol"};
-		  String[] suppliers = {"Volkswagen Group Singapore", "Borneo Motors", "Wearnes Automotive", "Tan Chong Motor Sales", "Cycle and Carriage Mitsubishi", "Gee Boon Enterprises"};
+				  					"Oil filter, Air filter, Pollen filter, Fuel filter",};
+		  String[] brands = {"Volkswagen", "Toyota", "Renault", "Nissan", "Mitsubishi"};
+		  String[] suppliers = {"Volkswagen Group Singapore", "Borneo Motors", "Wearnes Automotive", "Tan Chong Motor Sales", "Cycle and Carriage Mitsubishi"};
 		  String[] colors = {"red", "blue", "green", "yellow"};
 		  String[] shelves = {"Upper Shelf A", "Upper Shelf B", "Upper Shelf C", "Lower Shelf A", "Lower Shelf B", "Lower Shelf C"};
 		  
@@ -129,20 +128,21 @@ class DatabaseSeeder implements InitializingBean {
 			  
 			  Random r = new Random();
 			  
-			  for (int i = 0; i < brands.length - 1; i++) {
+			  for (int i = 0; i < brands.length; i++) {
 				  var brand = brandRepo.findBrandByName(brands[i]);
 				  var supplier = supplierRepo.findSupplierByName(suppliers[i]);
 				  for (String category : categories) {
 					  var c = catRepo.findCategoryByName(category);
 					  for (Subcategory sc : subcatRepo.findSubcategoriesByCategory(c)) {
-						  double price = Math.round(ThreadLocalRandom.current().nextDouble(60, 99.99) * 100.0) / 100.0;
+						  double price = ThreadLocalRandom.current().nextInt(6000, 9999) / 100.0;
+						  price = (double) ((int) (price * 100) / 100.0); 
 						  double measurement = ThreadLocalRandom.current().nextInt(15, 20);
 						  var partNumber = c.getName().substring(0, 2).toUpperCase() + "_" + sc.getName().substring(0, 2).toUpperCase() + "-" + brand.getName().substring(0, 2).toUpperCase() + "-" + supplier.getName().substring(0, 2).toUpperCase();
 						  var name = brand.getName() + " " + sc.getName();
 						  var description = name + ", supplied by " + supplier.getName();
 						  String color = colors[r.nextInt(colors.length)];
 						  Product p = new Product(partNumber, name, description, price, price + 8, price + 20, price + 5,
-								  				  color, measurement + "mm", "General measurement", c, sc, supplier, brand, "/fillerlink");
+								  				  color, measurement + "mm", "General measurement", c, sc, supplier, brand, "/img/" + name.toLowerCase().replace(' ', '_') + ".jpg");
 						  
 						  productRepo.save(p);
 						  

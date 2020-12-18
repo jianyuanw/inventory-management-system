@@ -24,6 +24,7 @@ public class LogInOutController {
 	@GetMapping("/login")
 	public String login(Model model) {
 		model.addAttribute("user", new User());
+		model.addAttribute("imglink", "img/mitsubishi_air_filter.jpg");
 		return "login";
 	}
 
