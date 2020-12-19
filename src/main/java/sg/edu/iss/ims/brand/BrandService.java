@@ -11,5 +11,7 @@ public interface BrandService {
 	public List<Brand> list();
 
 	public Brand createBrand(String brandName);
+	
+	public void deleteBrand(Brand brand);
 
 }
