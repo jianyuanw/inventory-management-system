@@ -18,7 +18,7 @@ public class Supplier {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty(message = "Supplier name cannot be empty")
+	@NotEmpty(message = "Supplier name must not be empty")
 	@Pattern(regexp = "[A-Za-z ]+", message="Supplier name can only consist of spaces and alphabetical characters")
 	private String name;
 

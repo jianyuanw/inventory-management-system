@@ -3,80 +3,90 @@
 <head>
 	<th:block th:replace="fragments/layout.html :: head"/>
 	<script type="text/javascript" th:src="@{/js/form.js}"></script>
-	<script type="text/javascript" th:src="@{/js/form-create-entity.js}"></script>
+	<script type="text/javascript" th:src="@{/js/create-product.js}"></script>
 	<style>input::-webkit-calendar-picker-indicator {
               opacity: 100;
            }</style>
 <meta charset="ISO-8859-1">
-<title>Add Suppliers</title>
+<title>Add Product</title>
 </head>
 <body>
 	<div th:replace="fragments/layout.html :: header"></div>
 	
 	<div class="border border-light p-5">
 		<p class="h4 mb-4">Add Product</p>
-		<form class="form-horizontal" method="get" th:action="@{/product/save}">
+		<form class="form-horizontal" method="post" th:action="@{/product/save}">
 	
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Product Name</label>
 				<input type="text" class="form-control mb-4" th:field="${product.name}" name="prodname" id="prodname" title="Product Name" value="" data-type="required">
-				<span class="text-danger" th:if="${#fields.hasErrors('${product.name}')}" th:errors="${product.name}"></span>
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.name}')}" th:errors="${product.name}"></span> 
 			</div>
 			<div class="col">
 				<label class="control-label">Part Number</label>
 				<input type="text" class="form-control mb-4" th:field="${product.partNumber}" name="prodpn" id="prodpn" title="Product Part Number" value="" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.partNumber}')}" th:errors="${product.partNumber}"></span>
 			</div>			
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Product Description</label>
 				<input type="text" class="form-control mb-4" th:field="${product.description}" name="proddesc" id="proddesc" title="Product Description" value="" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.description}')}" th:errors="${product.description}"></span>
 			</div>		
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Original Price</label>
 				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.originalPrice}" name="prodop" id="prodop" title="Product Original Price"  data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.originalPrice}')}" th:errors="${product.originalPrice}"></span>
 			</div>	
 			<div class="col">
 				<label class="control-label">Partner Price</label>
 				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.partnerPrice}" name="prodpp" id="prodpp" title="Product Partner Price" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.partnerPrice}')}" th:errors="${product.partnerPrice}"></span>
 			</div>					
 			<div class="col">
 				<label class="control-label">Wholesale Price</label>
 				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.wholesalePrice}" name="prodwp" id="prodwp" title="Product Wholesale Price"data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.wholesalePrice}')}" th:errors="${product.wholesalePrice}"></span>
 			</div>
 			<div class="col">
 				<label class="control-label">Retail Price</label>
 				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.retailPrice}" name="prodrp" id="prodrp" title="Product Retail Price" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.retailPrice}')}" th:errors="${product.retailPrice}"></span>
 			</div>											
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Product Color</label>
-				<input type="text" class="form-control mb-4" th:field="${product.color}" name="prodcolor" id="prodcolor" title="Product Color" value="" data-type="required">		
+				<input type="text" class="form-control mb-4" th:field="${product.color}" name="prodcolor" id="prodcolor" title="Product Color" value="" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.color}')}" th:errors="${product.color}"></span>		
 			</div>
 			<div class="col">
 				<label class="control-label">Product Supplier</label>
 				<select id="supplierSelect" th:field="${product.supplier}" class="custom-select mb-4" onchange="createSelect(this)">
-				     <option th:each="supplier : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.Name}"></option>
+				     <option th:each="supplier : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.name}"></option>
 				     <option th:value="0">Create New</option>
 				</select>		
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="supplierNew" name="supplierNew" placeholder="New supplier name" data-type="required">		
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="supplierNew" name="newSupplier" placeholder="New supplier name" data-type="required">
+				<span class="text-danger" th:if="${errors.containsKey('newSupplier')}" th:text="${errors.get('newSupplier')}"></span>		
 			</div>				
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Product Measurement</label>
-				<input type="text" class="form-control mb-4" th:field="${product.measurement}" name="prodmeasurement" id="prodmeasurement" title="Product Measurement"data-type="required">		
+				<input type="text" class="form-control mb-4" th:field="${product.measurement}" name="prodmeasurement" id="prodmeasurement" title="Product Measurement"data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.measurement}')}" th:errors="${product.measurement}"></span>						
 			</div>
 			<div class="col">
 				<label class="control-label">Product Measurement Type</label>
-				<input type="text" class="form-control mb-4" th:field="${product.measurementType}" name="prodmt" id="prodmt" title="Product Measurement Type" data-type="required">	
+				<input type="text" class="form-control mb-4" th:field="${product.measurementType}" name="prodmt" id="prodmt" title="Product Measurement Type" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${product.measurementType}')}" th:errors="${product.measurementType}"></span>	
 			</div>				
 		</div>		
 		<div class="form-row">
@@ -86,38 +96,41 @@
 			</div>
 			<div class="col">
 				<label class="control-label">Product Brand</label>
-				<select id="brandSelect" class="custom-select mb-4" onchange="createSelect(this)">
+				<select id="brandSelect" th:field="${product.brand}" class="custom-select mb-4" onchange="createSelect(this)">
 				     <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.Name}"></option>
 				     <option th:value="0">Create New</option>
 				</select>
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="brandNew" name="brandNew" placeholder="New brand name" onchange="" data-type="required">		
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="brandNew" name="newBrand" placeholder="New brand name" onchange="" data-type="required">
+				<span class="text-danger" th:if="${errors.containsKey('newBrand')}" th:text="${errors.get('newBrand')}"></span>		
 			</div>					
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Product Category</label>
-				<select id="categorySelect" class="custom-select mb-4" onchange="createSelect(this)">
+				<select id="categorySelect" th:field="${product.category}" class="custom-select mb-4" onchange="createSelect(this)">
 				     <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.Name}"></option>
 				     <option th:value="0">Create New</option>
 				</select>				
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="categoryNew" name="categoryNew" placeholder="New category name" data-type="required">		
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="categoryNew" name="newCategory" placeholder="New category name" data-type="required">
+				<span class="text-danger" th:if="${errors.containsKey('newCategory')}" th:text="${errors.get('newCategory')}"></span>	
 			</div>					
 			<div class="col">
 				<label class="control-label">Product Subcategory</label>
-				<select id="subcategorySelect" class="custom-select mb-4" onchange="createSelect(this)">
+				<select id="subcategorySelect" th:field="${product.subcategory}" class="custom-select mb-4" onchange="createSelect(this)">
 				     <option th:each="subcategory : ${subcategories}" th:value="${subcategory.id}" th:text="${subcategory.Name}"></option>
 				     <option th:value="0">Create New</option>
 				</select>
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="subcategoryNew" name="subcategoryNew" placeholder="New subcategory name" data-type="required">		
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="subcategoryNew" name="newSubcategory" placeholder="New subcategory name" data-type="required">
+				<span class="text-danger" th:if="${errors.containsKey('newSubcategory')}" th:text="${errors.get('newSubcategory')}"></span>		
 			</div>							
 		</div>
 		<div class="form-row">
@@ -128,17 +141,20 @@
 			</div>		
 			<div class="col">
 				<label class="control-label">Item Shelf Location</label>
-				<input type="text" class="form-control mb-4" th:field="${item.shelfLocation}" name="itemsl" id="itemsl" title="Item Shelf Location" value="" data-type="required">				
+				<input type="text" class="form-control mb-4" th:field="${item.shelfLocation}" name="itemsl" id="itemsl" title="Item Shelf Location" value="" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${item.shelfLocation}')}" th:errors="${item.shelfLocation}"></span>				
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Item Reorder At</label>
 				<input type="number" class="form-control mb-4" th:field="${item.reorderAt}" name="itemra" id="itemra" title="Item Reorder At" value="" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${item.reorderAt}')}" th:errors="${item.reorderAt}"></span>
 			</div>		
 			<div class="col">
 				<label class="control-label">Minimum Reorder Quantity</label>
-				<input type="number" class="form-control mb-4" th:field="${item.reorderQuantity}" name="itemrq" id="itemrq" title="Item Reorder Quantity" value="" data-type="required">				
+				<input type="number" class="form-control mb-4" th:field="${item.reorderQuantity}" name="itemrq" id="itemrq" title="Item Reorder Quantity" value="" data-type="required">
+				<span class="text-danger" th:if="${#fields.hasErrors('${item.reorderQuantity}')}" th:errors="${item.reorderQuantity}"></span>				
 			</div>
 		</div>			
 		<div class="form-row">

@@ -15,8 +15,8 @@ public class BrandServiceImpl implements BrandService {
 	private BrandRepository brandRepo;
 
 	@Override
-	public Brand findBrandByName(String BrandName) {
-		return brandRepo.findBrandByName(BrandName);
+	public Brand findBrandByName(String brandName) {
+		return brandRepo.findBrandByName(brandName);
 	}
 
 	@Override
@@ -27,6 +27,13 @@ public class BrandServiceImpl implements BrandService {
 	@Override
 	public List<Brand> list() {
 		return brandRepo.findAll();
+	}
+	
+	@Override
+	public Brand createBrand(String brandName) {
+		Brand brand = new Brand(brandName);
+		brandRepo.save(brand);
+		return brand;
 	}
 
 }

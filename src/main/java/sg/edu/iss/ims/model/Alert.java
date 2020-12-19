@@ -9,7 +9,7 @@ public class Alert {
 	public Alert(String type, String message) {
 		String[] validTypes = {"primary", "secondary", "success", "danger", "warning", "info", "light", "dark"};
 		if (! Arrays.stream(validTypes).anyMatch(type::equals)) {
-			System.out.println("Your alert type is invalid");
+			throw new Error("Alert type does not exist");
 		} else {
 			this.type = type;
 			this.message = message;

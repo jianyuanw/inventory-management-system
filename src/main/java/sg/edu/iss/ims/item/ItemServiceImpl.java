@@ -13,11 +13,25 @@ import sg.edu.iss.ims.product.Product;
 @Service
 public class ItemServiceImpl implements ItemService {
 
-	@Autowired
 	private ItemRepository itemRepo;
+	
+	public ItemServiceImpl(ItemRepository itemRepo) {
+		this.itemRepo = itemRepo;
+	}
 
 	@Override
-	public void addItem(Item item) {
+	public void createItem(Product product, Item item) {
+		item.setProduct(product);
+		if (item.getUnits() > item.getReorderAt()) {
+			item.setState(ItemState.IN_STOCK);
+		} else {
+			item.setState(ItemState.BELOW_REORDER_LEVEL);
+		}
+		itemRepo.save(item);
+	}
+	
+	@Override
+	public void saveItem(Item item) {
 		itemRepo.save(item);
 
 	}

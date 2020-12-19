@@ -114,9 +114,7 @@ class DatabaseSeeder implements InitializingBean {
 				  catRepo.save(c);
 				  for (String subcategory : catList.get(category)) {
 					  if (subcategory != "") {
-						  var sc = new Subcategory();
-						  sc.setCategory(c);
-						  sc.setName(subcategory);
+						  var sc = new Subcategory(c, subcategory);
 						  subcatRepo.save(sc);
 					  }
 				  }				  

@@ -10,4 +10,6 @@ public interface BrandService {
 		
 	public List<Brand> list();
 
+	public Brand createBrand(String brandName);
+
 }

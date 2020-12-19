@@ -6,7 +6,7 @@ import sg.edu.iss.ims.product.Product;
 
 public interface ItemService {
 
-	public void addItem(Item item);
+	public void saveItem(Item item);
 
 	public void deleteItem(Long Id);
 
@@ -21,4 +21,6 @@ public interface ItemService {
 	public List<Integer> checkInventory(List<Item> items);
 
 	public List<Item> listAvailable();
+
+	public void createItem(Product product, Item item);
 }

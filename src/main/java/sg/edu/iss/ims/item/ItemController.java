@@ -33,7 +33,7 @@ public class ItemController {
 
     @PostMapping("/add")
     public String add(@ModelAttribute("item") Item item, BindingResult bindingResult, Model model, RedirectAttributes redirAttr) {
-        itemService.addItem(item);
+        itemService.saveItem(item);
         redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully added item!"));
         return "redirect:/Stock_Entry/list";
     }

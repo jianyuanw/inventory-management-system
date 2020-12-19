@@ -1,6 +1,7 @@
 package sg.edu.iss.ims.product;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import sg.edu.iss.ims.brand.Brand;
 import sg.edu.iss.ims.brand.BrandService;
 import sg.edu.iss.ims.brand.BrandServiceImpl;
+import sg.edu.iss.ims.category.Category;
 import sg.edu.iss.ims.category.CategoryService;
 import sg.edu.iss.ims.category.CategoryServiceImpl;
+import sg.edu.iss.ims.category.Subcategory;
 import sg.edu.iss.ims.item.Item;
 import sg.edu.iss.ims.item.ItemService;
 import sg.edu.iss.ims.item.ItemServiceImpl;
@@ -29,6 +33,7 @@ import sg.edu.iss.ims.item.ReorderService;
 import sg.edu.iss.ims.item.ReorderServiceImpl;
 import sg.edu.iss.ims.item.ReorderStatus;
 import sg.edu.iss.ims.model.Alert;
+import sg.edu.iss.ims.supplier.Supplier;
 import sg.edu.iss.ims.supplier.SupplierService;
 import sg.edu.iss.ims.supplier.SupplierServiceImpl;
 
@@ -43,11 +48,11 @@ public class ManageProductController {
 	private final BrandService brandService;
 	private final CategoryService catService;
 	
-	public ManageProductController(ProductServiceImpl supImp, SupplierServiceImpl supplierImpl,
+	public ManageProductController(ProductServiceImpl productImpl, SupplierServiceImpl supplierImpl,
 								   ItemServiceImpl itemImpl, ReorderServiceImpl reorderImpl,
 								   BrandServiceImpl brandImpl, CategoryServiceImpl catImpl) {
 		supplierService = supplierImpl;
-		prodService = supImp;
+		prodService = productImpl;
 		itemService = itemImpl;
 		reorderService = reorderImpl;
 		brandService = brandImpl;
@@ -56,27 +61,81 @@ public class ManageProductController {
 	
 	@GetMapping("/add")
 	public String showProdForm(Model model) {
-		model.addAttribute("suppliers", supplierService.list());
 		model.addAttribute("product", new Product());
 		model.addAttribute("item", new Item());
+		model.addAttribute("errors", new HashMap<String, String>());
+		model.addAttribute("suppliers", supplierService.list());
 		model.addAttribute("brands", brandService.list());
 		model.addAttribute("categories", catService.getCategories());
 		model.addAttribute("subcategories", catService.getSubcategories());
 		return "productform";
 	}
 	
-	@GetMapping("/save")
-	public String saveProduct(@ModelAttribute("product") @Valid Product product, BindingResult productBinding, @ModelAttribute("item") @Valid Item item, BindingResult itemBinding, Model model, RedirectAttributes redirAttr) {
-		if (productBinding.hasErrors() || itemBinding.hasErrors()) 
+	@PostMapping("/save")
+	public String saveProduct(@ModelAttribute @Valid Product product, BindingResult productBinding, @ModelAttribute @Valid Item item, BindingResult itemBinding,
+							  String newSupplier, String newBrand, String newCategory, String newSubcategory, 
+							  Model model, RedirectAttributes redirAttr) {
+		HashMap<String, String> errors = new HashMap<String, String>();
+		model.addAttribute("errors", errors);
+		model.addAttribute("suppliers", supplierService.list());
+		model.addAttribute("brands", brandService.list());
+		model.addAttribute("categories", catService.getCategories());
+		model.addAttribute("subcategories", catService.getSubcategories());		
+		if (productBinding.hasErrors() || itemBinding.hasErrors())
 		{
 			return "productform";
+		} else {
+			if (product.getSupplier() == null) {
+				if (newSupplier == "") {
+					errors.put("newSupplier", "New supplier name must not be empty");
+				} else if (supplierService.findSupplierByName(newSupplier) != null) {
+					errors.put("newSupplier", "New supplier name already exists");
+				} else {
+					Supplier supplier = supplierService.createSupplier(newSupplier);
+					product.setSupplier(supplier);
+				}
+			}
+			if (product.getBrand() == null) {
+				if (newBrand == "") {
+					errors.put("newBrand", "New brand name must not be empty");
+				} else if (brandService.findBrandByName(newBrand) != null) {
+					errors.put("newBrand", "New brand name already exists");
+				} else {
+					Brand brand = brandService.createBrand(newBrand);
+					product.setBrand(brand);
+				}
+			}
+			if (product.getCategory() == null) {
+				if (newCategory == "") {
+					errors.put("newCategory", "New category name must not be empty");
+				} else if (catService.findCategoryByName(newCategory) != null) {
+					errors.put("newCategory", "New category name already exists");
+				} else {
+					Category category = catService.createCategory(newCategory);
+					product.setCategory(category);
+				}
+			}
+			if (product.getSubcategory() == null) {
+				if (newSubcategory == "") {
+					errors.put("newSubcategory", "New subcategory name must not be empty");
+				} else if (catService.findSubcategoryByName(newSubcategory) != null) {
+					errors.put("newSubcategory", "New subcategory name already exists");
+				} else if (product.getCategory() != null){
+					Subcategory subcategory = catService.createSubcategory(product.getCategory(), newSubcategory);
+					product.setSubcategory(subcategory);
+				}			
+			}
+			if (!errors.isEmpty()) {
+				model.addAttribute("errors", errors);
+				return "productform";				
+			}
+			
+			prodService.saveProduct(product);
+			itemService.createItem(product, item);			
+			redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated product!"));
+			return "redirect:/product/list";
 		}
-		prodService.saveProduct(product);
-		item.setState(ItemState.BELOW_REORDER_LEVEL);
-		item.setProduct(product);
-		itemService.addItem(item);
-		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated product!"));
-		return "forward:/product/list";
+
 	}
 	
 	@GetMapping("/list")
@@ -96,7 +155,7 @@ public class ManageProductController {
 		model.addAttribute("suppliers", supplierService.list());
 		return "productform";
 	}
-	
+
 	@GetMapping("/delete/{prodid}")
 	public String deleteProdList(Model model, @PathVariable("prodid") Long id) {
 		prodService.deleteProduct(id);

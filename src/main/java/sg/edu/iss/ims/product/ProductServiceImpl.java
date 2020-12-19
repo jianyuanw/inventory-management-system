@@ -12,9 +12,12 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class ProductServiceImpl implements ProductService {
 	
-	@Autowired
 	private ProductRepository productRepo;
-
+	
+	public ProductServiceImpl(ProductRepository productRepo) {
+		this.productRepo = productRepo;
+	}
+	
 	@Override
 	public void saveProduct(Product product) {
 		productRepo.save(product);
@@ -39,7 +42,6 @@ public class ProductServiceImpl implements ProductService {
 		
 	}
 	
-	@Transactional
 	public List<Product> list(){
 		return productRepo.findAll();
 	}

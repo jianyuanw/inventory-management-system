@@ -10,9 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
-	@Autowired
+	
 	private CategoryRepository catRepo;
-	@Autowired
 	private SubcategoryRepository subcatRepo;
 	
 	public CategoryServiceImpl(CategoryRepository catRepo, SubcategoryRepository subcatRepo) {
@@ -21,30 +20,45 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
-	public void createCategory(Category category) {
+	public Category createCategory(String name) {
+		Category category = new Category(name);
+		catRepo.save(category);
+		return category;
+	}
+	
+	@Override
+	public void saveCategory(Category category) {
 		catRepo.save(category);
 	}
 
 	@Override
-	public void readCategory(Long categoryId) {
-		// TODO Auto-generated method stub
+	public Category readCategory(Long categoryId) {
+		return catRepo.getOne(categoryId);
 
 	}
 
 	@Override
 	public void updateCategory(Category category) {
-		// TODO Auto-generated method stub
+		catRepo.save(category);
 
 	}
 
 	@Override
 	public void deleteCategory(Category category) {
-		// TODO Auto-generated method stub
+		catRepo.delete(category);
 
 	}
 	
-	public void createSubcategory(Subcategory subcategory) {
+	@Override
+	public void saveSubcategory(Subcategory subcategory) {
 		subcatRepo.save(subcategory);
+	}
+	
+	@Override
+	public Subcategory createSubcategory(Category category, String name) {
+		Subcategory subcategory = new Subcategory(category, name);
+		subcatRepo.save(subcategory);
+		return subcategory;
 	}
 	
 	@Override
@@ -55,6 +69,16 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> getCategories(){
 		return catRepo.findAll();
+	}
+	
+	@Override
+	public Category findCategoryByName(String category) {
+		return catRepo.findCategoryByName(category);
+	}
+	
+	@Override 
+	public Subcategory findSubcategoryByName(String subcategory) {
+		return subcatRepo.findSubcategoryByName(subcategory);
 	}
 
 }

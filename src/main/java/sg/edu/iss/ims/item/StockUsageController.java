@@ -50,7 +50,6 @@ public class StockUsageController {
 			jobService.createJob(job, itemList);
 			redirAttr.addFlashAttribute("alert", new Alert("primary", "Job successfully added!"));			
 		}
-
 		
 		return "redirect:/";
 	}

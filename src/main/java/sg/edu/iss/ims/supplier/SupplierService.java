@@ -15,4 +15,6 @@ public interface SupplierService {
 	public void deleteSupplier(Long id);
 	
 	public List<Supplier> list();
+
+	public Supplier createSupplier(String name);
 }

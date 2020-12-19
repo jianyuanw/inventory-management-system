@@ -20,6 +20,13 @@ public class SupplierServiceImpl implements SupplierService{
 		supplierRepo.save(supplier);
 		
 	}
+	
+	@Override
+	public Supplier createSupplier(String name) {
+		Supplier supplier = new Supplier(name);
+		supplierRepo.save(supplier);
+		return supplier;
+	}	
 
 	@Override
 	public Supplier findSupplierByName(String name) {
