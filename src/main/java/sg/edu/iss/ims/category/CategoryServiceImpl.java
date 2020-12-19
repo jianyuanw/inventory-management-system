@@ -85,4 +85,14 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category findCategoryById(Long id) {
 		return catRepo.findById(id).get();
 	}
+	
+	@Override
+	public Subcategory findSubcategoryById(Long id) {
+		return subcatRepo.findById(id).get();
+	}
+	
+	@Override
+	public void deleteSubcategory(Subcategory subcategory) {
+		subcatRepo.delete(subcategory);
+	}
 }
