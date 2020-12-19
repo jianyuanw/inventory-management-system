@@ -21,4 +21,6 @@ public interface UserService {
 	String encode(String rawPassword);
 
 	boolean noChange(User newUser, User currentUser);
+
+	void invalidateSessions(User user);
 }
