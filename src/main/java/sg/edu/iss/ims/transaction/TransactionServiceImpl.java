@@ -51,7 +51,14 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public void save(Transaction transaction) {
-		transactionRepo.save(transaction);
+	public boolean save(Transaction transaction) {
+		try {
+			transactionRepo.save(transaction);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
+		
 	}
 }

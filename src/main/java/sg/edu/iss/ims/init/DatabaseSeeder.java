@@ -164,8 +164,8 @@ class DatabaseSeeder implements InitializingBean {
 				  }
 			  }
 			  
-			  userRepo.save(new User("admin", encoder.encode("admin"), Role.ADMIN_CLERK));
-			  userRepo.save(new User("mechanic", encoder.encode("mechanic"), Role.MECHANIC));			  			  
+			  userRepo.save(new User("admin", encoder.encode("admin"), Role.ADMIN_CLERK, "caiylderek@gmail.com"));
+			  userRepo.save(new User("mechanic", encoder.encode("mechanic"), Role.MECHANIC, "caiylderek@gmail.com"));			  			  
 			  
 		  }
 		  
