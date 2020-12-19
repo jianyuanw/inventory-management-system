@@ -35,5 +35,10 @@ public class BrandServiceImpl implements BrandService {
 		brandRepo.save(brand);
 		return brand;
 	}
+	
+	@Override
+	public void deleteBrand(Brand brand) {
+		brandRepo.delete(brand);
+	}
 
 }
