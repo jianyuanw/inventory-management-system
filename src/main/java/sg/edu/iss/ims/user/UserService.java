@@ -13,8 +13,6 @@ public interface UserService {
 	void updateUser(User user);
 
 	void deleteUser(User user);
-	
-//	boolean authenticate(User user);
 
 	List<User> getAllUsers();
 
@@ -22,5 +20,5 @@ public interface UserService {
 
 	boolean noChange(User newUser, User currentUser);
 
-	void invalidateSessions(User user);
+	void invalidateSessions(String username);
 }

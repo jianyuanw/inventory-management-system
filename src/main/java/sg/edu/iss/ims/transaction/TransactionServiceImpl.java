@@ -32,7 +32,7 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public List<Transaction> parseUsageReportQuery(Long itemId, String dateStart, String dateEnd) {
 		LocalDateTime ldtStart = dateStart != "" ? LocalDate.parse(dateStart, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay() : null;
-		LocalDateTime ldtEnd = dateStart != "" ? LocalDate.parse(dateEnd, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(23, 59, 59) : null;		
+		LocalDateTime ldtEnd = dateEnd != "" ? LocalDate.parse(dateEnd, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atTime(23, 59, 59) : null;		
 		
 		List<Transaction> results = null;
 		

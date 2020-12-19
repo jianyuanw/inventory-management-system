@@ -67,12 +67,12 @@ public class UserServiceImpl implements UserService {
 
 	// Invalidate session if deleted user was logged in at the point of edit/deletion
 	@Override
-	public void invalidateSessions(User user) {
+	public void invalidateSessions(String username) {
 		List<Object> principals = sessionRegistry.getAllPrincipals();
 		for (Object principal : principals) {
 			if (principal instanceof MyUserDetails) {
 				MyUserDetails loggedInUser = (MyUserDetails) principal;
-				if (user.getUsername().equals(loggedInUser.getUsername())) {
+				if (username.equals(loggedInUser.getUsername())) {
 					List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(principal, false );
 					for (SessionInformation sessionInfo : sessionsInfo) {
 						sessionInfo.expireNow();

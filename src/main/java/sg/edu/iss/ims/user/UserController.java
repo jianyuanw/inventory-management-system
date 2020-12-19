@@ -71,12 +71,15 @@ public class UserController {
     @PostMapping("/edit")
     public String editUser(User user, RedirectAttributes redirAttr) {
         User currentUser = uService.readUser(user.getId());
+        
         if (uService.noChange(user, currentUser)) {
             redirAttr.addFlashAttribute("alert", new Alert("primary",
                     "User (" + currentUser.getUsername() + ") not updated as no changes were detected."));
             return "redirect:/user/edit/" + currentUser.getId();
         } else {
+        	String originalName = "";
             if (user.getUsername() != "") {
+            	originalName = currentUser.getUsername();
                 currentUser.setUsername(user.getUsername());
             }
             if (user.getPassword() != "") {
@@ -85,7 +88,11 @@ public class UserController {
             currentUser.setRole(user.getRole());
             uService.updateUser(currentUser);
 
-            uService.invalidateSessions(currentUser);
+            if (originalName != "") {
+            	uService.invalidateSessions(originalName);
+            }
+            uService.invalidateSessions(currentUser.getUsername());
+            
 
             redirAttr.addFlashAttribute("alert",
                     new Alert("primary", "Successfully updated user: " + currentUser.getUsername()));
@@ -105,7 +112,7 @@ public class UserController {
         User currentUser = uService.readUser(user.getId());
         uService.deleteUser(currentUser);
 
-        uService.invalidateSessions(currentUser);
+        uService.invalidateSessions(currentUser.getUsername());
 
         redirAttr.addFlashAttribute("alert",
                 new Alert("primary", "Successfully deleted user: " + currentUser.getUsername()));
