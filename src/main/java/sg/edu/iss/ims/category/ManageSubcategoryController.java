@@ -35,7 +35,7 @@ public class ManageSubcategoryController {
 	}
 	
 
-	@GetMapping("/save")
+	@PostMapping("/save")
 	public String add(@Valid @ModelAttribute("subcategory") Subcategory subcategory, BindingResult bindingResult, RedirectAttributes redirAttr) {
 		if (bindingResult.hasErrors()) 
 		{
