@@ -1,5 +1,7 @@
 package sg.edu.iss.ims.item;
 
+import sg.edu.iss.ims.supplier.Supplier;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,4 +17,5 @@ public interface ReorderService {
 	double sumPrice(List<Reorder> reorders);
 	void updateItemQty(Item item, int reorderQty);
 	void updateItemState(Item item);
+	String generateReport(List<Reorder> reorders, Supplier supplier, double totalPrice);
 }
