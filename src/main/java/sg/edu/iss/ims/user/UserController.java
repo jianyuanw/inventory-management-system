@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.edu.iss.ims.model.Alert;
+import sg.edu.iss.ims.security.MyUserDetails;
 
 @Controller
 @RequestMapping("/user")
@@ -80,6 +84,9 @@ public class UserController {
             }
             currentUser.setRole(user.getRole());
             uService.updateUser(currentUser);
+
+            uService.invalidateSessions(currentUser);
+
             redirAttr.addFlashAttribute("alert",
                     new Alert("primary", "Successfully updated user: " + currentUser.getUsername()));
             return "redirect:/user/modify";
@@ -97,6 +104,9 @@ public class UserController {
     public String deleteUser(User user, RedirectAttributes redirAttr) {
         User currentUser = uService.readUser(user.getId());
         uService.deleteUser(currentUser);
+
+        uService.invalidateSessions(currentUser);
+
         redirAttr.addFlashAttribute("alert",
                 new Alert("primary", "Successfully deleted user: " + currentUser.getUsername()));
         return "redirect:/user/modify";
