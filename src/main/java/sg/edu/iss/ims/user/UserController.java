@@ -79,8 +79,15 @@ public class UserController {
         } else {
         	String originalName = "";
             if (user.getUsername() != "") {
-            	originalName = currentUser.getUsername();
-                currentUser.setUsername(user.getUsername());
+            	if (uService.readUser(user.getUsername()) != null) {
+                    redirAttr.addFlashAttribute("alert",
+                            new Alert("warning", "Username already exists: " + user.getUsername()));
+                    return "redirect:/user/edit/" + user.getId();            		
+            	} else {
+                	originalName = currentUser.getUsername();
+                    currentUser.setUsername(user.getUsername());            		
+            	}
+
             }
             if (user.getPassword() != "") {
                 currentUser.setPassword(uService.encode(user.getPassword()));
