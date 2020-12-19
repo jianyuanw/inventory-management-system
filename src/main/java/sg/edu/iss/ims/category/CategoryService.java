@@ -26,4 +26,8 @@ public interface CategoryService {
 	public Subcategory findSubcategoryByName(String newCategory);
 	
 	public Category findCategoryById(Long id);
+	
+	public Subcategory findSubcategoryById(Long id);
+	
+	public void deleteSubcategory(Subcategory subcategory);
 }
