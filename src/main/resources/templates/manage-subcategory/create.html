@@ -9,7 +9,7 @@
 <body>
 	<div th:replace="fragments/layout.html :: header"></div>
 	
-	<form class="border border-light p-5" method="get" th:action="@{/subcategory/save}" th:object="${subcategory}">
+	<form class="border border-light p-5" method="post" th:action="@{/subcategory/save}" th:object="${subcategory}">
 		<p class="h4 mb-4">Create brand</p>
 		<div class="form-row">
 			<input type="hidden" th:field="*{id}"> 
