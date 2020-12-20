@@ -43,7 +43,7 @@ public class ManageSubcategoryController {
 		} 
 		catService.saveSubcategory(subcategory);
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated subcategory!"));
-		return "forward:/subcategory/list";
+		return "redirect:/subcategory/list";
 	}
 	
 	@GetMapping("/list")
