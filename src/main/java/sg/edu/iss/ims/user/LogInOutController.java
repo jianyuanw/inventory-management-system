@@ -30,13 +30,13 @@ public class LogInOutController {
 	@GetMapping("/login/error")
 	public String loginError(Model model, RedirectAttributes redirAttr) {
 		model.addAttribute("user", new User());
-		redirAttr.addFlashAttribute("alert", new Alert("primary", "Incorrect username/password"));
+		redirAttr.addFlashAttribute("alert", new Alert("warning", "Incorrect username/password"));
 		return "redirect:/login";
 	}
 
 	@GetMapping("/login/success")
 	public String loginSuccess(RedirectAttributes redirAttr) {
-		redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully logged in!"));
+		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully logged in!"));
 		return "redirect:/";
 	}
 
@@ -53,7 +53,7 @@ public class LogInOutController {
 
 	@GetMapping("/logout/success")
 	public String logoutSuccess(RedirectAttributes redirAttr) {
-		redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully logged out!"));
+		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully logged out!"));
 		return "redirect:/";
 	}
 	

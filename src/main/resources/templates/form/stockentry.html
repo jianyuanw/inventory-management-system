@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/layout.html :: head"/>
+    <th:block th:replace="fragments/bundle.html :: bootstrapselect" />
+    <script type="text/javascript" th:src="@{/js/form-update-stockentry.js}"></script>
+    
+    <title>Stock Entry Form</title>
+</head>
+
+<body>
+    <div th:replace="fragments/layout.html :: header"></div>
+    <form class="border border-light p-5" method="post" th:action="@{/form/stockentry/created}">
+        <p class="h4 mb-4">Stock Entry Form</p>
+        <label for="reorderNumber">Reorder Number</label>
+		<select id="reorderNumber" class="custom-select mb-4" name="reorderId" onchange="updateUnits(this)">
+		     <option th:each="r : ${reorders}" th:value="${r.id}" th:text="${r.id} + ' - ' + ${r.item.product.name}" th:attr="data-name=${r.item.product.name}, data-quantity=${r.quantity}, data-date=${r.orderDate}"></option>
+		</select>
+
+        <label for="productName">Product Name</label>
+        <input type="text" class="form-control mb-4" id="productName" placeholder="Product name" disabled>
+
+        <label for="reorderQty">Reorder Quantity</label>
+        <input type="text" class="form-control mb-4" id="reorderQty" name="reorderQty" placeholder="Reorder quantity" readonly>
+
+        <label for="reorderDate">Reorder Date</label>
+        <input type="text" class="form-control mb-4" id="reorderDate" name="reorderDate" placeholder="Reorder date" disabled>
+
+        <label for="deliveryDate">Delivery Date</label>
+        <input type="date" class="form-control mb-4" id="deliveryDate" name="deliveryDate" placeholder="Enter Date of Delivery">
+
+        <button class="btn btn-dark-green my-4 mx-0" type="submit">Submit Stock Entry</button>
+    </form>
+    <div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>

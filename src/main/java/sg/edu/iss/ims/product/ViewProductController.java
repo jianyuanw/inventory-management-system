@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import sg.edu.iss.ims.item.Item;
 
 @Controller
-@RequestMapping("/catalog")
+@RequestMapping("/")
 public class ViewProductController {
 
 	private ViewProductService viewService;

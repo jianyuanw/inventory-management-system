@@ -33,7 +33,7 @@ public class RegisterController {
 			user.setPassword(uService.encode(user.getPassword()));
 			uService.createUser(user);
 			session.setAttribute("user", user);
-			redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully registered!"));
+			redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully registered!"));
 		}
 		return "redirect:/";
 	}

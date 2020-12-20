@@ -43,7 +43,7 @@ public class UserController {
             user.setPassword(uService.encode(user.getPassword()));
             uService.createUser(user);
             redirAttr.addFlashAttribute("alert",
-                    new Alert("primary", "Successfully created user: " + user.getUsername()));
+                    new Alert("success", "Successfully created user: " + user.getUsername()));
             return "redirect:/user/modify";
         } else {
             redirAttr.addFlashAttribute("alert",
@@ -73,37 +73,18 @@ public class UserController {
         User currentUser = uService.readUser(user.getId());
         
         if (uService.noChange(user, currentUser)) {
-            redirAttr.addFlashAttribute("alert", new Alert("primary",
+            redirAttr.addFlashAttribute("alert", new Alert("info",
                     "User (" + currentUser.getUsername() + ") not updated as no changes were detected."));
             return "redirect:/user/edit/" + currentUser.getId();
+        } else if (user.getUsername() != "" && uService.readUser(user.getUsername()) != null) {
+            	redirAttr.addFlashAttribute("alert", new Alert("warning", "Username already exists: " + user.getUsername()));
+                return "redirect:/user/edit/" + user.getId();
         } else {
-        	String originalName = "";
-            if (user.getUsername() != "") {
-            	if (uService.readUser(user.getUsername()) != null) {
-                    redirAttr.addFlashAttribute("alert",
-                            new Alert("warning", "Username already exists: " + user.getUsername()));
-                    return "redirect:/user/edit/" + user.getId();            		
-            	} else {
-                	originalName = currentUser.getUsername();
-                    currentUser.setUsername(user.getUsername());            		
-            	}
-
-            }
-            if (user.getPassword() != "") {
-                currentUser.setPassword(uService.encode(user.getPassword()));
-            }
-            currentUser.setRole(user.getRole());
-            uService.updateUser(currentUser);
-
-            if (originalName != "") {
-            	uService.invalidateSessions(originalName);
-            }
-            uService.invalidateSessions(currentUser.getUsername());
-            
-
-            redirAttr.addFlashAttribute("alert",
-                    new Alert("primary", "Successfully updated user: " + currentUser.getUsername()));
-            return "redirect:/user/modify";
+            	uService.updateUser(user, currentUser);         
+	
+	            redirAttr.addFlashAttribute("alert",
+	                    new Alert("success", "Successfully updated user: " + currentUser.getUsername()));
+	            return "redirect:/user/modify";
         }
     }
 
@@ -122,7 +103,7 @@ public class UserController {
         uService.invalidateSessions(currentUser.getUsername());
 
         redirAttr.addFlashAttribute("alert",
-                new Alert("primary", "Successfully deleted user: " + currentUser.getUsername()));
+                new Alert("success", "Successfully deleted user: " + currentUser.getUsername()));
         return "redirect:/user/modify";
     }
 }

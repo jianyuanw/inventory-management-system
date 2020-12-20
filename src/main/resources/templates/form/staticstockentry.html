@@ -7,13 +7,13 @@
 
 <body>
     <div th:replace="fragments/layout.html :: header"></div>
-    <form class="border border-light p-5" method="post" th:action="@{/stockentry/created}">
+    <form class="border border-light p-5" method="post" th:action="@{/form/stockentry/created}">
         <p class="h4 mb-4">Stock Entry Form</p>
 
         <label for="productName">Product Name</label>
         <input type="text" class="form-control mb-4" id="productName" th:value="${reorder.item.product.name}" disabled>
 
-        <label for="reorderQty">Quantity Reorder</label>
+        <label for="reorderQty">Reorder Quantity</label>
         <input type="text" class="form-control mb-4" id="reorderQty" name="reorderQty" th:value="${reorder.quantity}" readonly>
 
         <label for="reorderDate">Reorder Date</label>

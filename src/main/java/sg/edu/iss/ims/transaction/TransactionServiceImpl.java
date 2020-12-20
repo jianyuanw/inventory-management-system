@@ -9,14 +9,19 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import sg.edu.iss.ims.item.Item;
+import sg.edu.iss.ims.item.ItemRepository;
+
 @Service
 @Transactional
 public class TransactionServiceImpl implements TransactionService {
 
 	private final TransactionRepository transactionRepo;
+	private final ItemRepository itemRepo;
 	
-	public TransactionServiceImpl(TransactionRepository transactionRepo) {
+	public TransactionServiceImpl(TransactionRepository transactionRepo, ItemRepository itemRepo) {
 		this.transactionRepo = transactionRepo;
+		this.itemRepo = itemRepo;
 	}
 	
 	@Override
@@ -51,14 +56,15 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public boolean save(Transaction transaction) {
-		try {
-			transactionRepo.save(transaction);
-		} catch (Exception e) {
-			return false;
-		}
-		
+	public boolean changeStock(Transaction transaction, Long itemId) {
+		this.save(transaction);
+		Item dbItem = itemRepo.findItemById(itemId);
+		dbItem.setUnits(dbItem.getUnits() + transaction.getQuantityChange());
 		return true;
-		
+	}
+	
+	@Override
+	public void save(Transaction transaction) {
+		transactionRepo.save(transaction);
 	}
 }

@@ -14,8 +14,8 @@
 
         <label for="part-number">Part Number</label>
         <div class="form-row">
-			<select class="selectpicker" data-live-search="true" name="itemId">
-	        	<option th:each="item : ${inventory}" th:value="${item.product.id}" th:text="${item.product.partNumber}"
+			<select class="selectpicker col-md-4" name="itemId" data-live-search="true" data-width="fit">
+	        	<option th:each="item : ${inventory}" th:value="${item.product.id}" th:text="${item.product.partNumber} + ' - ' + ${item.product.name}"
 	        			th:data-tokens="${item.product.description} + ' ' + ${item.product.partNumber} + ' ' + ${item.product.color} + ' ' + ${item.product.supplier.name}">
 	        			Winter Tyres
 	        	</option>	

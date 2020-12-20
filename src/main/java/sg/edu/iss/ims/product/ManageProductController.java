@@ -176,18 +176,15 @@ public class ManageProductController {
 		Item item = itemService.findItemById(itemId);
 
 		Reorder reorder = new Reorder();
+		
 		reorder.setQuantity(qtyToReorder);
-		reorder.setOrderDate(LocalDate.now());
-		reorder.setStatus(ReorderStatus.PENDING_DELIVERY);
 		reorder.setItem(item);
-		reorderService.create(reorder);
-
-		item.setState(ItemState.REORDER_PLACED);
-		itemService.update(item);
+		
+		reorderService.createDelivery(reorder);
 
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Reorder Placed!"));
 
-		return "redirect:/product/reorder/list";
+		return "redirect:/list/reorder";
 	}
 
 	@GetMapping("/reorder/list")
@@ -199,5 +196,24 @@ public class ManageProductController {
 		List<Reorder> reorders = reorderService.findAllReorders();
 		model.addAttribute("reorders", reorders);
 		return "product/reorderlist";
+	}
+	
+	@GetMapping("/reorder/cancel/{reorderId}")
+	public String cancelReorder(@PathVariable Long reorderId, RedirectAttributes redirAttr) {
+		reorderService.cancelReorder(reorderId);
+		
+		redirAttr.addFlashAttribute("alert", new Alert("success", "Reorder Cancelled!"));
+		return "redirect:/";
+	}
+	
+	@GetMapping("/reorder/getactive/{itemId}/{redirectTo}")
+	public String getActiveReorder(@PathVariable Long itemId, @PathVariable String redirectTo) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("stockentry", "/form/stockentry/add/");
+		map.put("cancel", "/product/reorder/cancel/");
+		List<Reorder> reorders = reorderService.findAllReordersByItemIdAndStatus(itemId, ReorderStatus.PENDING_DELIVERY);
+			
+		return "redirect:" + map.get(redirectTo) + reorders.get(0).getId();
+		
 	}
 }

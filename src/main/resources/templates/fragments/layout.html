@@ -47,16 +47,17 @@
 						<a class="nav-link" th:href="@{/}" th:text="#{navbar.home}">Home</a>
 					</li>
 					
-					<li class="nav-item" th:classappend="${#request.requestURI.startsWith('/catalog')  ? 'active' : ''}">
-						<a class="nav-link" th:href="@{/catalog}" th:text="#{navbar.catalog}">Browse Catalog</a>
-					</li>					
+					<li class="nav-item" th:classappend="${#request.requestURI.startsWith('/list')  ? 'active' : ''}">
+						<a class="nav-link" th:href="@{/list/reorder}" th:text="#{navbar.reorders}">Reorders</a>
+					</li>
+								
 					<li class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/form') ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
 							aria-haspopup="true" aria-expanded=false>
 							Forms
 						</a>
 						<div class="dropdown-menu dropdown-default">
-							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/stockentry}">Stock Entry</a>
+							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockentry}">Stock Entry</a>
 							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockreturn}">Stock Return</a>
 							<a class="dropdown-item" th:href="@{/form/stockusage}">Stock Usage</a>
 						</div>

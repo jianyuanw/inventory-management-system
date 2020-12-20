@@ -21,4 +21,6 @@ public interface UserService {
 	boolean noChange(User newUser, User currentUser);
 
 	void invalidateSessions(String username);
+
+	void updateUser(User newUser, User currentUser);
 }

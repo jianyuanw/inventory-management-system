@@ -39,7 +39,7 @@
             <div class="col">
                 <label for="oldRole">Current Role</label>
                 <input type="text" class="form-control" id="oldRole"
-                       th:value="${oldUser.role.name()} == 'ADMIN_CLERK' ? 'Admin Clerk' : 'Mechanic'" disabled>
+                       th:value="${oldUser.role.displayValue}" disabled>
             </div>
             <div class="col">
                 <label for="role">New Role</label>
@@ -50,6 +50,18 @@
                 </select>
             </div>
         </div>
+        
+        <div class="form-row mb-4">
+            <div class="col">
+                <label for="oldEmail">Current Email</label>
+                <input type="text" class="form-control" id="oldEmail"
+                       th:value="${oldUser.email}" disabled>
+            </div>
+            <div class="col">
+                <label for="role">New Email (Leave blank to not change)</label>
+                <input type="text" class="form-control" id="email" th:field="${newUser.email}">
+            </div>
+        </div>        
 
         <button class="btn btn-mdb-color my-4 mx-0" type="submit">Submit</button>
     </form>
