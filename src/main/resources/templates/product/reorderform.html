@@ -24,7 +24,7 @@
 
         <label for="qtyToReorder">Quantity To Reorder</label>
         <input type="number" class="form-control mb-4" id="qtyToReorder" name="qtyToReorder"
-               placeholder="Enter quantity to reorder" th:min="${item.reorderQuantity}">
+               placeholder="Enter quantity to reorder" th:min="${item.reorderQuantity}" required>
 
         <input type="hidden" name="itemId" th:value="${item.id}">
 
