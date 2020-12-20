@@ -42,7 +42,7 @@ public class ManageSupplierController {
 		} 
 		supService.saveSupplier(supplier);
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated supplier!"));
-		return "forward:/supplier/list";
+		return "redirect:/supplier/list";
 	}
 	
 	@GetMapping("/list")
