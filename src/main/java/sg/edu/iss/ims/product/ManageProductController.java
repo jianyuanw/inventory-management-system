@@ -175,6 +175,12 @@ public class ManageProductController {
 	public String reorder(@RequestParam Long itemId, @RequestParam int qtyToReorder, RedirectAttributes redirAttr) {
 		Item item = itemService.findItemById(itemId);
 
+		if (item.getState() == ItemState.REORDER_PLACED) {
+			redirAttr.addFlashAttribute("alert",
+					new Alert("info", "Active reorder exists. Only one active reorder allowed."));
+			return "redirect:/product/reorder/" + item.getProduct().getId();
+		}
+
 		Reorder reorder = new Reorder();
 		
 		reorder.setQuantity(qtyToReorder);
@@ -189,10 +195,6 @@ public class ManageProductController {
 
 	@GetMapping("/reorder/list")
 	public String reorderList(Model model) {
-//		List<Reorder> undeliveredReorders = reorderService.findUndeliveredReorders();
-//		List<Reorder> deliveredReorders = reorderService.findDeliveredOrders();
-//		model.addAttribute("undeliveredReorders", undeliveredReorders);
-//		model.addAttribute("deliveredReorders", deliveredReorders);
 		List<Reorder> reorders = reorderService.findAllReorders();
 		model.addAttribute("reorders", reorders);
 		return "product/reorderlist";
