@@ -42,7 +42,7 @@ public class ManageCategoryController {
 		} 
 		catService.saveCategory(category);
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated category!"));
-		return "forward:/category/list";
+		return "redirect:/category/list";
 	}
 	
 	@GetMapping("/list")
