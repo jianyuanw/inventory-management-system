@@ -74,17 +74,49 @@
 						</div>
 					</li>					
 					
-					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/product') ? 'active' : ''}">
+					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${(#request.requestURI.startsWith('/product') ? 'active' : '')+(#request.requestURI.startsWith('/supplier') ? 'active' : '')+(#request.requestURI.startsWith('/brand') ? 'active' : '')+(#request.requestURI.startsWith('/category') ? 'active' : '')+(#request.requestURI.startsWith('/subcategory') ? 'active' : '')}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
 							aria-haspopup="true" aria-expanded=false>
-							Manage Products
+							Manage
 						</a>
-						<div class="dropdown-menu dropdown-default">
-							<a class="dropdown-item" th:href="@{/product/add}">Create Product</a>
-							<a class="dropdown-item" th:href="@{/product/list}">Edit / Delete Product</a>
-						</div>
-					</li>
-
+						<ul class="dropdown-menu">
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item">Products ➤</a>
+									 <ul class="dropdown-menu">
+                    					<li class="dropdown-item"><a th:href="@{/product/add}">Create Product</a></li>
+                    					<li class="dropdown-item"><a th:href="@{/product/list}">Edit / Delete Product</a></li>				
+									</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item">Suppliers ➤</a>
+									 <ul class="dropdown-menu">
+                    					<li class="dropdown-item"><a th:href="@{/supplier/add}">Create Supplier</a></li>
+                    					<li class="dropdown-item"><a th:href="@{/supplier/list}">Edit / Delete Supplier</a></li>				
+									</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item">Brands ➤</a>
+									 <ul class="dropdown-menu">
+                    					<li class="dropdown-item"><a th:href="@{/brand/add}">Create Brand</a></li>
+                    					<li class="dropdown-item"><a th:href="@{/brand/list}">Edit / Delete Brand</a></li>				
+									</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item">Categories ➤</a>
+									 <ul class="dropdown-menu">
+                    					<li class="dropdown-item"><a th:href="@{/category/add}">Create Category</a></li>
+                    					<li class="dropdown-item"><a th:href="@{/category/list}">Edit / Delete Category</a></li>				
+									</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item">Subcategories ➤</a>
+									 <ul class="dropdown-menu">
+                    					<li class="dropdown-item"><a th:href="@{/subcategory/add}">Create Subcategory</a></li>
+                    					<li class="dropdown-item"><a th:href="@{/subcategory/list}">Edit / Delete Subcategory</a></li>				
+									</ul>
+							</li>
+						</ul>
+					<!--  
 					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/supplier') ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
 							aria-haspopup="true" aria-expanded=false>
@@ -95,11 +127,11 @@
 							<a class="dropdown-item" th:href="@{/supplier/list}">Edit / Delete Supplier</a>
 						</div>
 					</li>
-					
+					-->
 					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/user') ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
 							aria-haspopup="true" aria-expanded=false>
-							Manage Users
+							User Administration
 						</a>
 						<div class="dropdown-menu dropdown-default">
 							<a class="dropdown-item" th:href="@{/user/create}">Create User</a>
