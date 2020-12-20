@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -30,12 +31,16 @@ public class User {
 	
 	@NotNull(message = "Role must not be null")
 	private Role role;
+	
+	@Email(message = "Email must be valid")
+	private String email;
 
-	public User(String username, String password, Role role) {
+	public User(String username, String password, Role role, String email) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.role = role;
+		this.email = email;
 	}
 
 }

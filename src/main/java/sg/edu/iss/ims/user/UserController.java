@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.edu.iss.ims.model.Alert;
+import sg.edu.iss.ims.security.MyUserDetails;
 
 @Controller
 @RequestMapping("/user")
@@ -40,7 +44,7 @@ public class UserController {
             uService.createUser(user);
             redirAttr.addFlashAttribute("alert",
                     new Alert("primary", "Successfully created user: " + user.getUsername()));
-            return "redirect:/user/view";
+            return "redirect:/user/modify";
         } else {
             redirAttr.addFlashAttribute("alert",
                     new Alert("warning", "Username already exists: " + user.getUsername()));
@@ -67,22 +71,39 @@ public class UserController {
     @PostMapping("/edit")
     public String editUser(User user, RedirectAttributes redirAttr) {
         User currentUser = uService.readUser(user.getId());
+        
         if (uService.noChange(user, currentUser)) {
             redirAttr.addFlashAttribute("alert", new Alert("primary",
                     "User (" + currentUser.getUsername() + ") not updated as no changes were detected."));
             return "redirect:/user/edit/" + currentUser.getId();
         } else {
+        	String originalName = "";
             if (user.getUsername() != "") {
-                currentUser.setUsername(user.getUsername());
+            	if (uService.readUser(user.getUsername()) != null) {
+                    redirAttr.addFlashAttribute("alert",
+                            new Alert("warning", "Username already exists: " + user.getUsername()));
+                    return "redirect:/user/edit/" + user.getId();            		
+            	} else {
+                	originalName = currentUser.getUsername();
+                    currentUser.setUsername(user.getUsername());            		
+            	}
+
             }
             if (user.getPassword() != "") {
                 currentUser.setPassword(uService.encode(user.getPassword()));
             }
             currentUser.setRole(user.getRole());
             uService.updateUser(currentUser);
+
+            if (originalName != "") {
+            	uService.invalidateSessions(originalName);
+            }
+            uService.invalidateSessions(currentUser.getUsername());
+            
+
             redirAttr.addFlashAttribute("alert",
                     new Alert("primary", "Successfully updated user: " + currentUser.getUsername()));
-            return "redirect:/user/view";
+            return "redirect:/user/modify";
         }
     }
 
@@ -97,15 +118,11 @@ public class UserController {
     public String deleteUser(User user, RedirectAttributes redirAttr) {
         User currentUser = uService.readUser(user.getId());
         uService.deleteUser(currentUser);
+
+        uService.invalidateSessions(currentUser.getUsername());
+
         redirAttr.addFlashAttribute("alert",
                 new Alert("primary", "Successfully deleted user: " + currentUser.getUsername()));
-        return "redirect:/user/view";
-    }
-
-    @GetMapping("/view")
-    public String viewUsers(Model model) {
-        List<User> users = uService.getAllUsers();
-        model.addAttribute("users", users);
-        return "manage-user/view";
+        return "redirect:/user/modify";
     }
 }

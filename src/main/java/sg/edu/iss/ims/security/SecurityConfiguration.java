@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -27,6 +29,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
@@ -39,13 +46,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/security/user/**").hasAnyAuthority("ADMIN_CLERK", "MECHANIC")
                 .antMatchers("/**").permitAll()
                 .and()
-                .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/login/success")
-                    .failureUrl("/login/error")
+                    .formLogin()
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/login/success")
+                        .failureUrl("/login/error")
                 .and()
-                .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/logout/success");
+                    .logout()
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/logout/success")
+                .and()
+                    .sessionManagement()
+                        .maximumSessions(-1)
+                        .expiredUrl("/login/expired")
+                        .sessionRegistry(sessionRegistry());
+        				
     }
 }

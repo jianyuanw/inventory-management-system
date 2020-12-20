@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="fragments/layout.html :: head"/>
+	<script type="text/javascript" th:src="@{/js/form-update-generic.js}"></script>
+<meta charset="ISO-8859-1">
+<title>Stock Return Form</title>
+</head>
+<body>
+	<div th:replace="fragments/layout.html :: header"></div>
+	
+	<form class="border border-light p-5" method="post" th:action="@{/form/stockreturn}">
+		<div class="form-row">
+			<p class="h4 mb-4">Stock Return Form</p>
+		</div>
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Item to return</label>
+				<select id="returnItem" class="custom-select mb-4" th:field="${item.id}" onchange="updateUnits(this)">
+				     <option th:each="item : ${inventory}" th:value="${item.id}" th:text="${item.product.name}" th:attr="data-units=${item.units}"></option>
+				</select>
+			</div>			
+		</div>
+		
+		<div class="form-row">
+			<div class="col">
+				<label class="control-label">Quantity</label>
+				<input type="number" id="quantity" min="0" th:max="${inventory[0].units}" class="form-control mb-4" th:field="${item.units}" required>
+			</div>
+		</div>
+		
+		<button class="btn btn-info my-4 mx-0" type="submit">Submit</button>
+
+	</form>	
+
+	<div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>

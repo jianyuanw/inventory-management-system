@@ -24,7 +24,6 @@ public class LogInOutController {
 	@GetMapping("/login")
 	public String login(Model model) {
 		model.addAttribute("user", new User());
-		model.addAttribute("imglink", "img/mitsubishi_air_filter.jpg");
 		return "login";
 	}
 
@@ -41,24 +40,12 @@ public class LogInOutController {
 		return "redirect:/";
 	}
 
-//	@PostMapping("/login")
-//	public String loginAccount(Model model, User user, HttpServletRequest request, RedirectAttributes redirAttr) {
-//		// Note, user is not currently being passed to this action properly
-//		HttpSession session = request.getSession();
-//		if (session.getAttribute("user") == null && uService.authenticate(user)) {
-//			session.setAttribute("user", user);
-//			redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully logged in!"));
-//		}
-//		return "redirect:/";
-//	}
-
-//	@GetMapping("/logout")
-//	public String logoutAccount(HttpSession session, RedirectAttributes redirAttr) {
-//		session.invalidate();
-//		redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully logged out!"));
-//		return "redirect:/";
-//	}
-
+	@GetMapping("/login/expired")
+	public String loginExpired(RedirectAttributes redirAttr) {
+		redirAttr.addFlashAttribute("alert", new Alert("warning", "Login has expired, please log in again to continue"));
+		return "redirect:/login";
+	}
+	
 	@GetMapping("/logout")
 	public String logout() {
 		return "logout";
@@ -69,4 +56,6 @@ public class LogInOutController {
 		redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully logged out!"));
 		return "redirect:/";
 	}
+	
+	
 }

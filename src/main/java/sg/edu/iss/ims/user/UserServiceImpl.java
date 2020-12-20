@@ -5,9 +5,12 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import sg.edu.iss.ims.security.MyUserDetails;
 
 @Service
 @Transactional
@@ -18,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder encoder;
+
+	@Autowired
+	private SessionRegistry sessionRegistry;
 
 	@Override
 	public void createUser(User user) {
@@ -59,4 +65,20 @@ public class UserServiceImpl implements UserService {
 				newUser.getRole() == currentUser.getRole();
 	}
 
+	// Invalidate session if deleted user was logged in at the point of edit/deletion
+	@Override
+	public void invalidateSessions(String username) {
+		List<Object> principals = sessionRegistry.getAllPrincipals();
+		for (Object principal : principals) {
+			if (principal instanceof MyUserDetails) {
+				MyUserDetails loggedInUser = (MyUserDetails) principal;
+				if (username.equals(loggedInUser.getUsername())) {
+					List<SessionInformation> sessionsInfo = sessionRegistry.getAllSessions(principal, false );
+					for (SessionInformation sessionInfo : sessionsInfo) {
+						sessionInfo.expireNow();
+					}
+				}
+			}
+		}
+	}
 }
