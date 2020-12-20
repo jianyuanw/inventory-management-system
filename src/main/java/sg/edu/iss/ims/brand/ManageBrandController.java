@@ -42,7 +42,7 @@ public class ManageBrandController {
 		} 
 		brandService.createBrand(brand.getName());
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated brand!"));
-		return "forward:/brand/list";
+		return "redirect:/brand/list";
 	}
 	
 	@GetMapping("/list")
