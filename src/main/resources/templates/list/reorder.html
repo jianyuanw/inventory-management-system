@@ -17,6 +17,7 @@
                     <th class="th-sm">Product Name</th>
                     <th class="th-sm">Quantity Reordered</th>
                     <th class="th-sm">Reorder Date</th>
+                    <th class="th-sm">Received Date</th>
                     <th class="th-sm">Status</th>
                     <th class="th-sm">For Stock Entry</th>
                 </tr>
@@ -27,9 +28,10 @@
                     <td class="align-middle" th:text="${reorder.item.product.name}"></td>
                     <td class="align-middle" th:text="${reorder.quantity}"></td>
                     <td class="align-middle" th:text="${reorder.orderDate}"></td>
-                    <td class="align-middle" th:text="${reorder.status.name()} == 'PENDING_DELIVERY' ? 'Pending Delivery' : 'Delivered'"></td>
+                    <td class="align-middle" th:text="${reorder.receivedDate}"></td>
+                    <td class="align-middle" th:text="${reorder.status.displayValue}"></td>
                     <td>
-                        <a th:if="${reorder.status.name()} == 'PENDING_DELIVERY'" th:href="|/stockentry/add/${reorder.id}|">
+                        <a th:if="${reorder.status.name()} == 'PENDING_DELIVERY'" th:href="|/form/stockentry/add/${reorder.id}|">
                             <button type="button" class="btn btn-dark-green btn-sm m-0">Create Stock Entry</button>
                         </a>
                     </td>

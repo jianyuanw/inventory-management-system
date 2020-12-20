@@ -18,4 +18,9 @@ public interface ReorderService {
 	void updateItemQty(Item item, int reorderQty);
 	void updateItemState(Item item);
 	String generateReport(List<Reorder> reorders, Supplier supplier, double totalPrice);
+	void receiveDelivery(Long reorderId, LocalDate receivedDate);
+	List<Reorder> findAllReordersByItemId(Long itemId);
+	List<Reorder> findAllReordersByItemIdAndStatus(Long itemId, ReorderStatus status);
+	void createDelivery(Reorder reorder);
+	void cancelReorder(Long reorderId);
 }

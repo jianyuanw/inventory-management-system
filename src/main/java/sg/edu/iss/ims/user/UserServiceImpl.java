@@ -10,6 +10,8 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import sg.edu.iss.ims.model.Alert;
 import sg.edu.iss.ims.security.MyUserDetails;
 
 @Service
@@ -61,8 +63,32 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean noChange(User newUser, User currentUser) {
-		return newUser.getUsername() == "" && newUser.getPassword() == "" &&
-				newUser.getRole() == currentUser.getRole();
+		return (newUser.getUsername().equals("") || newUser.getUsername().equals(currentUser.getUsername())) && 
+			   (newUser.getPassword().equals("")) &&
+			   (newUser.getRole().equals(null) || newUser.getRole().equals(currentUser.getRole())) &&
+			   (newUser.getEmail().equals("") || newUser.getEmail().equals(currentUser.getEmail()));		   
+	}
+	
+	@Override
+	public void updateUser(User newUser, User currentUser) {
+		this.invalidateSessions(currentUser.getUsername());
+		
+		if (newUser.getUsername() != "") {
+			currentUser.setUsername(newUser.getUsername());
+		}
+		
+        if (newUser.getPassword() != "") {
+            currentUser.setPassword(this.encode(newUser.getPassword()));
+        }
+        
+        if (newUser.getEmail() != "") {
+        	currentUser.setEmail(newUser.getEmail());
+        }
+        
+        if (newUser.getRole() != null) {
+        	currentUser.setRole(newUser.getRole());
+        }
+        		
 	}
 
 	// Invalidate session if deleted user was logged in at the point of edit/deletion

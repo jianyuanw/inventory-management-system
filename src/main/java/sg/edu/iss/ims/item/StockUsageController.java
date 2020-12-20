@@ -48,7 +48,7 @@ public class StockUsageController {
 			return "redirect:/form/stockusage";
 		} else {
 			jobService.createJob(job, itemList);
-			redirAttr.addFlashAttribute("alert", new Alert("primary", "Job successfully added!"));			
+			redirAttr.addFlashAttribute("alert", new Alert("success", "Job successfully added!"));			
 		}
 
 		

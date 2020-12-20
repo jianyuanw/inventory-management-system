@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	document.getElementsByClassName("custom-select").forEach(updateUnits)
+	document.getElementsByClassName("selectpicker").forEach(updateUnits)
 });
 
 function updateUnits(element) {

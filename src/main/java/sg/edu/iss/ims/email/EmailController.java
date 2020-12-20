@@ -28,7 +28,7 @@ public class EmailController {
 	public String loginAccount(Model model, Email email, RedirectAttributes redirAttr) {
 		try {
 			eService.sendSimpleMessage(email.getRecipient(), email.getSubject(), email.getMessage());
-			redirAttr.addFlashAttribute("alert", new Alert("primary", "Successfully emailed to " + email.getRecipient()));
+			redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully emailed to " + email.getRecipient()));
 		} catch (MailException exception) {
 			redirAttr.addFlashAttribute("alert", new Alert("danger", "MailException raised, email failed."));
         } 
