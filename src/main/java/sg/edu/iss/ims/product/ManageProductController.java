@@ -110,8 +110,9 @@ public class ManageProductController {
 	}
 
 	@GetMapping("/delete/{prodid}")
-	public String deleteProdList(Model model, @PathVariable("prodid") Long id) {
+	public String deleteProdList(Model model, @PathVariable("prodid") Long id, RedirectAttributes redirAttr) {
 		prodService.deleteProduct(id);
+		redirAttr.addFlashAttribute("alert", new Alert("success", "Product successfully deleted!"));
 		return "redirect:/product/list";
 	}
 
@@ -144,13 +145,6 @@ public class ManageProductController {
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Reorder Placed!"));
 
 		return "redirect:/list/reorder";
-	}
-
-	@GetMapping("/reorder/list")
-	public String reorderList(Model model) {
-		List<Reorder> reorders = reorderService.findAllReorders();
-		model.addAttribute("reorders", reorders);
-		return "product/reorderlist";
 	}
 	
 	@GetMapping("/reorder/cancel/{reorderId}")

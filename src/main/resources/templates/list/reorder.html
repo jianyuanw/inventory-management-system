@@ -19,7 +19,7 @@
                     <th class="th-sm">Reorder Date</th>
                     <th class="th-sm">Received Date</th>
                     <th class="th-sm">Status</th>
-                    <th class="th-sm">For Stock Entry</th>
+                    <th class="th-sm">Follow up</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,6 +34,9 @@
                         <a th:if="${reorder.status.name()} == 'PENDING_DELIVERY'" th:href="|/form/stockentry/add/${reorder.id}|">
                             <button type="button" class="btn btn-dark-green btn-sm m-0">Create Stock Entry</button>
                         </a>
+                        <a th:if="${reorder.status.name()} == 'PENDING_DELIVERY'" th:href="|/product/reorder/cancel/${reorder.id}|">
+                            <button type="button" class="btn btn-danger btn-sm m-0">Cancel Reorder</button>
+                        </a>                                                      
                     </td>
                 </tr>
             </tbody>
