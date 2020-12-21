@@ -1,6 +1,5 @@
 package sg.edu.iss.ims.product;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,13 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import sg.edu.iss.ims.brand.Brand;
 import sg.edu.iss.ims.brand.BrandService;
 import sg.edu.iss.ims.brand.BrandServiceImpl;
-import sg.edu.iss.ims.category.Category;
 import sg.edu.iss.ims.category.CategoryService;
 import sg.edu.iss.ims.category.CategoryServiceImpl;
-import sg.edu.iss.ims.category.Subcategory;
 import sg.edu.iss.ims.item.Item;
 import sg.edu.iss.ims.item.ItemService;
 import sg.edu.iss.ims.item.ItemServiceImpl;
@@ -33,7 +29,6 @@ import sg.edu.iss.ims.item.ReorderService;
 import sg.edu.iss.ims.item.ReorderServiceImpl;
 import sg.edu.iss.ims.item.ReorderStatus;
 import sg.edu.iss.ims.model.Alert;
-import sg.edu.iss.ims.supplier.Supplier;
 import sg.edu.iss.ims.supplier.SupplierService;
 import sg.edu.iss.ims.supplier.SupplierServiceImpl;
 
@@ -68,7 +63,7 @@ public class ManageProductController {
 		model.addAttribute("brands", brandService.list());
 		model.addAttribute("categories", catService.getCategories());
 		model.addAttribute("subcategories", catService.getSubcategories());
-		return "productform";
+		return "manage-product/create";
 	}
 	
 	@PostMapping("/save")
@@ -85,7 +80,7 @@ public class ManageProductController {
 		
 		if (productBinding.hasErrors() || itemBinding.hasErrors() || ! errors.isEmpty())
 		{
-			return "productform";
+			return "manage-product/create";
 		} else {
 			prodService.createDynamicProduct(product, item, newSupplier, newBrand, newCategory, newSubcategory);
 			
@@ -99,7 +94,7 @@ public class ManageProductController {
 	public String showProdList(Model model) {
 		List<Product> prodlist = prodService.list();
 		model.addAttribute("prodlist", prodlist);
-		return "productlist";
+		return "manage-product/modify";
 	}
 	
 	@GetMapping("/edit/{prodid}")
@@ -111,7 +106,7 @@ public class ManageProductController {
 		model.addAttribute("subcategories", catService.getSubcategories());
 		model.addAttribute("suppliers", supplierService.list());
 		model.addAttribute("errors", new HashMap<String, String>());
-		return "productform";
+		return "manage-product/create";
 	}
 
 	@GetMapping("/delete/{prodid}")
