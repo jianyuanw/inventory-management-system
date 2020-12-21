@@ -1,7 +1,9 @@
 package sg.edu.iss.ims.product;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
@@ -44,6 +46,38 @@ public class ProductServiceImpl implements ProductService {
 	
 	public List<Product> list(){
 		return productRepo.findAll();
+	}
+
+	@Override
+	public HashMap<String, String> validate(String newSupplier, String newBrand, String newCategory, String newSubcategory) {
+		HashMap<String, String> errors = new HashMap<String, String>();
+		
+		if (newSupplier == "") {
+			errors.put("newSupplier", "Supplier name must not be empty");
+		} else if (!Pattern.matches("[a-zA-Z0-9 ]+", newSupplier)) {
+			errors.put("newSupplier", "Supplier name can only consist of spaces and alphanumerical characters");
+		}
+		
+		if (newBrand == "") {
+			errors.put("newBrand", "Brand name must not be empty");
+		} else if (!Pattern.matches("[a-zA-Z0-9 ]+", newBrand)) {
+			errors.put("newBrand", "Brand name can only consist of spaces and alphanumerical characters");
+		}
+		
+		if (newCategory== "") {
+			errors.put("newCategory", "Category name must not be empty");
+		} else if (!Pattern.matches("[a-zA-Z0-9 ]+", newCategory)) {
+			errors.put("newCategory", "Category name can only consist of spaces and alphanumerical characters");
+		}
+		
+		if (newSubcategory == "") {
+			errors.put("newSubcategory", "Subcategory name must not be empty");
+		} else if (!Pattern.matches("[a-zA-Z0-9 ]+", newSubcategory)) {
+			errors.put("newSubcategory", "Subcategory name can only consist of spaces and alphanumerical characters");
+		}
+		
+		return errors;
+		
 	}
 
 }

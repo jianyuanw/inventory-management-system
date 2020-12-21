@@ -24,7 +24,7 @@ public class Category {
 	private Long id;
 	
 	@NotEmpty(message = "Category name must not be empty")
-	@Pattern(regexp = "[A-Za-z ]+", message="Category name can only consist of spaces and alphabetical characters")
+	@Pattern(regexp = "[A-Za-z0-9 ]+", message="Category name can only consist of spaces and alphanumerical characters")
 	private String name;
 
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)

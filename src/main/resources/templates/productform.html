@@ -68,14 +68,14 @@
 			<div class="col">
 				<label class="control-label">Product Supplier</label>
 				<select id="supplierSelect" th:field="${product.supplier}" class="custom-select mb-4" onchange="createSelect(this)">
-				     <option th:each="supplier : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.name}"></option>
-				     <option th:value="0">Create New</option>
+					 <option th:value="0">Create New</option>
+				     <option th:each="supplier : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.name}"></option>				     
 				</select>		
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
 				<input type="text" class="form-control mb-4 mt-2 d-none" id="supplierNew" name="newSupplier" placeholder="New supplier name" data-type="required">
-				<span class="text-danger" th:if="${errors.containsKey('newSupplier')}" th:text="${errors.get('newSupplier')}"></span>				
+				<span class="text-danger" id="supplierNewError" th:if="${errors.containsKey('newSupplier')}" th:text="${errors.get('newSupplier')}"></span>				
 			</div>				
 		</div>
 		<div class="form-row">
@@ -98,40 +98,42 @@
 			<div class="col">
 				<label class="control-label">Product Brand</label>
 				<select id="brandSelect" th:field="${product.brand}" class="custom-select mb-4" onchange="createSelect(this)">
+				     <option th:value="0">Create New</option>				     
 				     <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.Name}"></option>
-				     <option th:value="0">Create New</option>
 				</select>
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
 				<input type="text" class="form-control mb-4 mt-2 d-none" id="brandNew" name="newBrand" placeholder="New brand name" onchange="" data-type="required">
-				<span class="text-danger" th:if="${errors.containsKey('newBrand')}" th:text="${errors.get('newBrand')}"></span>				
+				<span class="text-danger" id="brandNewError" th:if="${errors.containsKey('newBrand')}" th:text="${errors.get('newBrand')}"></span>				
 			</div>					
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Product Category</label>
 				<select id="categorySelect" th:field="${product.category}" class="custom-select mb-4" onchange="createSelect(this)">
-				     <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.Name}"></option>
 				     <option th:value="0">Create New</option>
+				     <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.Name}"></option>
+
 				</select>				
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
 				<input type="text" class="form-control mb-4 mt-2 d-none" id="categoryNew" name="newCategory" placeholder="New category name" data-type="required">
-				<span class="text-danger" th:if="${errors.containsKey('newCategory')}" th:text="${errors.get('newCategory')}"></span>			
+				<span class="text-danger" id="categoryNewError" th:if="${errors.containsKey('newCategory')}" th:text="${errors.get('newCategory')}"></span>			
 			</div>					
 			<div class="col">
 				<label class="control-label">Product Subcategory</label>
 				<select id="subcategorySelect" th:field="${product.subcategory}" class="custom-select mb-4" onchange="createSelect(this)">
+					 <option th:value="0">Create New</option>
 				     <option th:each="subcategory : ${subcategories}" th:value="${subcategory.id}" th:text="${subcategory.Name}"></option>
-				     <option th:value="0">Create New</option>
+
 				</select>
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
 				<input type="text" class="form-control mb-4 mt-2 d-none" id="subcategoryNew" name="newSubcategory" placeholder="New subcategory name" data-type="required">
-				<span class="text-danger" th:if="${errors.containsKey('newSubcategory')}" th:text="${errors.get('newSubcategory')}"></span>				
+				<span class="text-danger" id="subcategoryNewError" th:if="${errors.containsKey('newSubcategory')}" th:text="${errors.get('newSubcategory')}"></span>				
 			</div>							
 		</div>
 		<div class="form-row">

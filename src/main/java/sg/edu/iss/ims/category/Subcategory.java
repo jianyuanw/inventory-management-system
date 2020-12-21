@@ -25,7 +25,7 @@ public class Subcategory {
 	private Category category;
 	
 	@NotEmpty(message = "Subcategory name must not be empty")
-	@Pattern(regexp = "[A-Za-z ]+", message="Subcategory name can only consist of spaces and alphabetical characters")
+	@Pattern(regexp = "[A-Za-z0-9 ]+", message="Subcategory name can only consist of spaces and alphanumerical characters")
 	private String name;
 
 	public Subcategory(Category category, String name) {

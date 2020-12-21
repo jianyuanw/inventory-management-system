@@ -26,10 +26,12 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotEmpty(message = "Part number must not be empty")
 	private String partNumber;
 	
 	@NotEmpty(message = "Product name must not be empty")
-	@Pattern(regexp = "[A-Za-z ]+", message="Product name can only consist of spaces and alphabetical characters")
+	@Pattern(regexp = "[A-Za-z0-9 ]+", message="Product name can only consist of spaces and alphanumerical characters")
 	private String name;
 	
 	@NotEmpty(message = "Description must not be empty")

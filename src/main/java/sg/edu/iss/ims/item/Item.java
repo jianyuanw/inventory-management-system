@@ -34,7 +34,7 @@ public class Item {
 	private int units;
 
 	@NotNull(message = "Units must not be null")
-	@Min(value = 0, message = "Reorder at value must not be negative")
+	@Min(value = 1, message = "Reorder at value must be more than 0")
 	private int reorderAt;
 
 	@NotNull(message = "Units must not be null")
