@@ -15,10 +15,10 @@ public class ErrorController {
 	        Integer statusCode = Integer.valueOf(status.toString());
 	    
 	        if(statusCode == HttpStatus.NOT_FOUND.value()) {
-	            return "error";
+	            return "error/error-404";
 	        }
 	    }
-	    return "error";
+	    return "error/error-general";
 	}
 
 }
