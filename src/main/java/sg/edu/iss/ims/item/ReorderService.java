@@ -23,4 +23,5 @@ public interface ReorderService {
 	List<Reorder> findAllReordersByItemIdAndStatus(Long itemId, ReorderStatus status);
 	void createDelivery(Reorder reorder);
 	void cancelReorder(Long reorderId);
+	List<Reorder> findAllByStatus(ReorderStatus pendingDelivery);
 }

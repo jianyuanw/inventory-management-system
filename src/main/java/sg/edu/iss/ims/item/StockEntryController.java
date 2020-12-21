@@ -31,7 +31,7 @@ public class StockEntryController {
 
     @GetMapping("/stockentry")
     public String stockEntry(Model model, RedirectAttributes redirAttr) {
-    	List<Reorder> reorders = reorderService.findAllReorders();
+    	List<Reorder> reorders = reorderService.findAllByStatus(ReorderStatus.PENDING_DELIVERY);
     	if (reorders.size() == 0) {
     		redirAttr.addFlashAttribute("alert", new Alert("info", "No ongoing reorders to enter stock, please create a reorder first"));
     		return "redirect:/";

@@ -10,6 +10,8 @@ import sg.edu.iss.ims.item.ItemRepository;
 import sg.edu.iss.ims.product.ProductRepository;
 import sg.edu.iss.ims.transaction.Transaction;
 import sg.edu.iss.ims.transaction.TransactionRepository;
+import sg.edu.iss.ims.transaction.TransactionService;
+import sg.edu.iss.ims.transaction.TransactionServiceImpl;
 import sg.edu.iss.ims.transaction.TransactionType;
 
 @Service
@@ -20,12 +22,15 @@ public class JobServiceImpl implements JobService {
 	private final TransactionRepository transactionRepo;
 	private final JobTransactionRepository jobTransactionRepo;
 	private final ItemRepository itemRepo;
+	private final TransactionService transactionService;
 	
-	public JobServiceImpl(JobRepository jobRepo, TransactionRepository transactionRepo, ProductRepository productRepo, JobTransactionRepository jobTransactionRepo, ItemRepository itemRepo) {
+	public JobServiceImpl(JobRepository jobRepo, TransactionRepository transactionRepo, ProductRepository productRepo,
+			              JobTransactionRepository jobTransactionRepo, ItemRepository itemRepo, TransactionServiceImpl transactionServiceImpl) {
 		this.jobRepo = jobRepo;
 		this.transactionRepo = transactionRepo;
 		this.jobTransactionRepo = jobTransactionRepo;
 		this.itemRepo = itemRepo;
+		this.transactionService = transactionServiceImpl;
 	}
 	
 	@Override
@@ -34,9 +39,8 @@ public class JobServiceImpl implements JobService {
 		
 		for (Item item : itemList.getList()) {
 			Item dbItem = itemRepo.findItemById(item.getId());
-			dbItem.setUnits(dbItem.getUnits() - item.getUnits());
 			Transaction transaction = new Transaction(dbItem, -(item.getUnits()), TransactionType.SELL_STOCK);
-			transactionRepo.save(transaction);
+			transactionService.changeStock(transaction, dbItem);
 			JobTransaction jobTransaction = new JobTransaction();
 			jobTransaction.setJob(job);
 			jobTransaction.setTransaction(transaction);

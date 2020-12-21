@@ -9,19 +9,25 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import sg.edu.iss.ims.email.EmailService;
 import sg.edu.iss.ims.item.Item;
 import sg.edu.iss.ims.item.ItemRepository;
+import sg.edu.iss.ims.item.ItemState;
+import sg.edu.iss.ims.item.ReorderRepository;
 
 @Service
-@Transactional
 public class TransactionServiceImpl implements TransactionService {
 
 	private final TransactionRepository transactionRepo;
 	private final ItemRepository itemRepo;
+	private final ReorderRepository reorderRepo;
+	private final EmailService emailService;
 	
-	public TransactionServiceImpl(TransactionRepository transactionRepo, ItemRepository itemRepo) {
+	public TransactionServiceImpl(TransactionRepository transactionRepo, ItemRepository itemRepo, ReorderRepository reorderRepo, EmailService emailService) {
 		this.transactionRepo = transactionRepo;
 		this.itemRepo = itemRepo;
+		this.reorderRepo = reorderRepo;
+		this.emailService = emailService;
 	}
 	
 	@Override
@@ -56,10 +62,23 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public boolean changeStock(Transaction transaction, Long itemId) {
+	public boolean changeStock(Transaction transaction, Item dbItem) {
 		this.save(transaction);
-		Item dbItem = itemRepo.findItemById(itemId);
+		if (transaction.getTransactionType() == TransactionType.RECEIVE_STOCK) {
+			if ((dbItem.getUnits() + transaction.getQuantityChange()) >= dbItem.getReorderAt()) {
+				dbItem.setState(ItemState.IN_STOCK);
+			} else {
+				dbItem.setState(ItemState.BELOW_REORDER_LEVEL);
+			}
+		} else {
+			if ((dbItem.getUnits() + transaction.getQuantityChange()) < dbItem.getReorderAt()) {
+				dbItem.setState(ItemState.BELOW_REORDER_LEVEL);
+				emailService.sendStockNotification(dbItem, transaction);
+			}
+		}
 		dbItem.setUnits(dbItem.getUnits() + transaction.getQuantityChange());
+		transactionRepo.save(transaction);
+		
 		return true;
 	}
 	

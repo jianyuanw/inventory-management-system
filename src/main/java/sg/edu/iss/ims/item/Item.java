@@ -44,7 +44,7 @@ public class Item {
 	@NotEmpty(message = "Shelf location must not be empty")
 	private String shelfLocation;
 	
-	@OneToMany
+	@OneToMany(mappedBy="item", cascade=CascadeType.ALL)
 	private List<Transaction> transactions;
 
 	private ItemState state;
