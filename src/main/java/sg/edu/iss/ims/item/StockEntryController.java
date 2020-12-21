@@ -61,13 +61,6 @@ public class StockEntryController {
 
         redirAttr.addFlashAttribute("alert", new Alert("success", "Stock entry form submitted!"));
 
-        return "redirect:/form/stockentry/list";
-    }
-
-    @GetMapping("/stockentry/list")
-    public String stockEntryList(Model model) {
-        List<Reorder> deliveredReorders = reorderService.findDeliveredOrders();
-        model.addAttribute("stockEntries", deliveredReorders);
-	    return "product/StockList";
+        return "redirect:/list/reorder";
     }
 }
