@@ -1,6 +1,7 @@
 package sg.edu.iss.ims.item;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ItemList {
@@ -26,5 +27,27 @@ public class ItemList {
 		list.remove(index);
 	}
 	
+	public void compactList() {
+		List<Item> compactList = new ArrayList<Item>();
+		
+		HashMap<Long, Integer> map = new HashMap<Long, Integer>();
+		
+		for (Item item : list) {
+			if (!map.containsKey(item.getId())) {
+				map.put(item.getId(), item.getUnits());
+			} else {
+				map.put(item.getId(), map.get(item.getId()) + item.getUnits());
+			}
+		}
+		
+		for (Long id : map.keySet()) {
+			Item item = new Item();
+			item.setId(id);
+			item.setUnits(map.get(id));
+			compactList.add(item);
+		}
+		
+		this.setList(compactList);
+	}	
 	
 }

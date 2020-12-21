@@ -19,7 +19,7 @@ public class Brand {
 	private Long id;
 	
 	@NotEmpty(message = "Brand name must not be empty")
-	@Pattern(regexp = "[A-Za-z ]+", message="Brand name can only consist of spaces and alphanumerical characters")
+	@Pattern(regexp = "[A-Za-z0-9 ]+", message="Brand name can only consist of spaces and alphanumerical characters")
 	private String name;
 
 	public Brand(String name) {

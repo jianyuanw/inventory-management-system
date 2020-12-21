@@ -87,49 +87,8 @@ public class ManageProductController {
 		{
 			return "productform";
 		} else {
-			if (product.getSupplier() == null) {
-				if (newSupplier == "") {
-					errors.put("newSupplier", "New supplier name must not be empty");
-				} else if (supplierService.findSupplierByName(newSupplier) != null) {
-					errors.put("newSupplier", "New supplier name already exists");
-				} else {
-					Supplier supplier = supplierService.createSupplier(newSupplier);
-					product.setSupplier(supplier);
-				}
-			}
-			if (product.getBrand() == null) {
-				if (newBrand == "") {
-					errors.put("newBrand", "New brand name must not be empty");
-				} else if (brandService.findBrandByName(newBrand) != null) {
-					errors.put("newBrand", "New brand name already exists");
-				} else {
-					Brand brand = brandService.createBrand(newBrand);
-					product.setBrand(brand);
-				}
-			}
-			if (product.getCategory() == null) {
-				if (newCategory == "") {
-					errors.put("newCategory", "New category name must not be empty");
-				} else if (catService.findCategoryByName(newCategory) != null) {
-					errors.put("newCategory", "New category name already exists");
-				} else {
-					Category category = catService.createCategory(newCategory);
-					product.setCategory(category);
-				}
-			}
-			if (product.getSubcategory() == null) {
-				if (newSubcategory == "") {
-					errors.put("newSubcategory", "New subcategory name must not be empty");
-				} else if (catService.findSubcategoryByName(newSubcategory) != null) {
-					errors.put("newSubcategory", "New subcategory name already exists");
-				} else if (product.getCategory() != null){
-					Subcategory subcategory = catService.createSubcategory(product.getCategory(), newSubcategory);
-					product.setSubcategory(subcategory);
-				}			
-			}
+			prodService.createDynamicProduct(product, item, newSupplier, newBrand, newCategory, newSubcategory);
 			
-			prodService.saveProduct(product);
-			itemService.createItem(product, item);			
 			redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully updated product!"));
 			return "redirect:/product/list";
 		}

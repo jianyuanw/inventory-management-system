@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import sg.edu.iss.ims.item.Item;
+
 public interface ProductService {
 	
 	public void saveProduct(Product product);
@@ -18,5 +20,8 @@ public interface ProductService {
 
 	public HashMap<String, String> validate(String newSupplier, String newBrand, String newCategory,
 			String newSubcategory);
+
+	public void createDynamicProduct(Product product, Item item, String newSupplier, String newBrand,
+			String newCategory, String newSubcategory);
 
 }

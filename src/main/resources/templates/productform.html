@@ -19,6 +19,7 @@
 		<form class="form-horizontal" method="post" th:action="@{/product/save}">
 	
 		<div class="form-row">
+			<input type="text" class="d-none" th:field="${product.id}" readonly>
 			<div class="col">
 				<label class="control-label">Product Name</label>
 				<input type="text" class="form-control mb-4" th:field="${product.name}" name="prodname" id="prodname" title="Product Name" value="" data-type="required">
@@ -137,6 +138,7 @@
 			</div>							
 		</div>
 		<div class="form-row">
+			<input type="text" class="d-none" th:field="${item.id}" readonly>
 			<div class="col">
 				<label class="control-label">Item Units</label>
 				<input type="number" class="form-control mb-4" th:field="${item.units}" name="itemunits" id="itemunits" title="Item Units" value="0" data-type="required">
