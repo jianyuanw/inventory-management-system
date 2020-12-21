@@ -19,7 +19,7 @@ public class Supplier {
 	private Long id;
 	
 	@NotEmpty(message = "Supplier name must not be empty")
-	@Pattern(regexp = "[A-Za-z ]+", message="Supplier name can only consist of spaces and alphabetical characters")
+	@Pattern(regexp = "[A-Za-z0-9 ]+", message="Supplier name can only consist of spaces and alphanumerical characters")
 	private String name;
 
 	public Supplier(String name) {

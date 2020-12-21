@@ -39,6 +39,7 @@ public class StockUsageController {
 	
 	@PostMapping("/form/stockusage")
 	public String saveSupplierForm(Model model, @Valid @ModelAttribute("job") Job job, BindingResult bindingResult, ItemList itemList, RedirectAttributes redirAttr) {
+		itemList.compactList();
 		List<Integer> errors = itemService.checkInventory(itemList.getList());
 		model.addAttribute("inventory", itemService.listAvailable());
 		if (bindingResult.hasErrors()) {
