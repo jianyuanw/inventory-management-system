@@ -5,7 +5,9 @@
 <title>General Error Page</title>
 </head>
 <body>
-	<table>
+	<div th:replace="fragments/layout.html :: header"></div>
+
+	<table class="table-bordered">
 		<tr>
 			<td>Date</td>
 			<td th:text="${timestamp}" />
@@ -32,7 +34,7 @@
 		</tr>
 		<tr>
 			<td>Trace</td>
-			<td><pre th:text="${trace}"></pre></td>
+			<td><pre th:text="${trace}" /></pre></td>
 		</tr>
 	</table>
 

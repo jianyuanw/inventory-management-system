@@ -55,90 +55,79 @@
 								
 					<li class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/form') ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
-							aria-haspopup="true" aria-expanded=false>
+							aria-haspopup="true" aria-expanded=false th:text="#{navbar.forms}">
 							Forms
 						</a>
 						<div class="dropdown-menu dropdown-default">
-							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockentry}">Stock Entry</a>
-							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockreturn}">Stock Return</a>
-							<a class="dropdown-item" th:href="@{/form/stockusage}">Stock Usage</a>
+							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockentry}" th:text="#{navbar.stockentry}"></a>
+							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockreturn}" th:text="#{navbar.stockreturn}"></a>
+							<a class="dropdown-item" th:href="@{/form/stockusage}" th:text="#{navbar.stockusage}"></a>
 						</div>
 					</li>
 					
 					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/report') ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
-							aria-haspopup="true" aria-expanded=false>
+							aria-haspopup="true" aria-expanded=false th:text="#{navbar.reports}">
 							Reports
 						</a>
 						<div class="dropdown-menu dropdown-default">
-							<a class="dropdown-item" th:href="@{/report/usage/query}">Usage Report</a>
-							<a class="dropdown-item" th:href="@{/report/reorder/query}">Reorder Report</a>
+							<a class="dropdown-item" th:href="@{/report/usage/query}" th:text="#{navbar.usagereport}"></a>
+							<a class="dropdown-item" th:href="@{/report/reorder/query}" th:text="#{navbar.reorderreport}"></a>
 						</div>
 					</li>					
 					
 					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown"
 					    th:classappend="${(#request.requestURI.startsWith('/product') || #request.requestURI.startsWith('/supplier') || #request.requestURI.startsWith('/brand') || #request.requestURI.startsWith('/category') || #request.requestURI.startsWith('/subcategory')) ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
-							aria-haspopup="true" aria-expanded=false>
+							aria-haspopup="true" aria-expanded=false th:text="#{navbar.manage}">
 							Manage
 						</a>
 						<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
 							<li class="dropdown-submenu">
-								<a  class="dropdown-item arrow-r">Products</a>
+								<a class="dropdown-item arrow-r" th:text="#{navbar.products}">Products</a>
 									 <ul class="dropdown-menu">
-                    					<li class="dropdown-item"><a th:href="@{/product/add}">Create Product</a></li>
-                    					<li class="dropdown-item"><a th:href="@{/product/list}">Edit / Delete Product</a></li>				
+                    					<li class="dropdown-item"><a th:href="@{/product/add}" th:text="#{navbar.createproduct}"></a></li>
+                    					<li class="dropdown-item"><a th:href="@{/product/list}" th:text="#{navbar.edproduct}"></a></li>				
 									</ul>
 							</li>
 							<li class="dropdown-submenu">
-								<a  class="dropdown-item">Suppliers</a>
+								<a class="dropdown-item" th:text="#{navbar.suppliers}">Suppliers</a>
 									 <ul class="dropdown-menu">
-                    					<li class="dropdown-item"><a th:href="@{/supplier/add}">Create Supplier</a></li>
-                    					<li class="dropdown-item"><a th:href="@{/supplier/list}">Edit / Delete Supplier</a></li>				
+                    					<li class="dropdown-item"><a th:href="@{/supplier/add}" th:text="#{navbar.createsupplier}"></a></li>
+                    					<li class="dropdown-item"><a th:href="@{/supplier/list}" th:text="#{navbar.edsupplier}"></a></li>				
 									</ul>
 							</li>
 							<li class="dropdown-submenu">
-								<a  class="dropdown-item">Brands</a>
+								<a  class="dropdown-item" th:text="#{navbar.brands}">Brands</a>
 									 <ul class="dropdown-menu">
-                    					<li class="dropdown-item"><a th:href="@{/brand/add}">Create Brand</a></li>
-                    					<li class="dropdown-item"><a th:href="@{/brand/list}">Edit / Delete Brand</a></li>				
+                    					<li class="dropdown-item"><a th:href="@{/brand/add}" th:text="#{navbar.createbrand}"></a></li>
+                    					<li class="dropdown-item"><a th:href="@{/brand/list}" th:text="#{navbar.edbrand}"></a></li>				
 									</ul>
 							</li>
 							<li class="dropdown-submenu">
-								<a  class="dropdown-item">Categories</a>
+								<a  class="dropdown-item" th:text="#{navbar.categories}">Categories</a>
 									 <ul class="dropdown-menu">
-                    					<li class="dropdown-item"><a th:href="@{/category/add}">Create Category</a></li>
-                    					<li class="dropdown-item"><a th:href="@{/category/list}">Edit / Delete Category</a></li>				
+                    					<li class="dropdown-item"><a th:href="@{/category/add}" th:text="#{navbar.createcategory}"></a></li>
+                    					<li class="dropdown-item"><a th:href="@{/category/list}" th:text="#{navbar.edcategory}"></a></li>				
 									</ul>
 							</li>
 							<li class="dropdown-submenu">
-								<a  class="dropdown-item">Subcategories</a>
+								<a  class="dropdown-item" th:text="#{navbar.subcategories}">Subcategories</a>
 									 <ul class="dropdown-menu">
-                    					<li class="dropdown-item"><a th:href="@{/subcategory/add}">Create Subcategory</a></li>
-                    					<li class="dropdown-item"><a th:href="@{/subcategory/list}">Edit / Delete Subcategory</a></li>				
+                    					<li class="dropdown-item"><a th:href="@{/subcategory/add}" th:text="#{navbar.createsubcategory}"></a></li>
+                    					<li class="dropdown-item"><a th:href="@{/subcategory/list}" th:text="#{navbar.edsubcategory}"></a></li>				
 									</ul>
 							</li>
 						</ul>
-					<!--  
-					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/supplier') ? 'active' : ''}">
-						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
-							aria-haspopup="true" aria-expanded=false>
-							Manage Suppliers
-						</a>
-						<div class="dropdown-menu dropdown-default">
-							<a class="dropdown-item" th:href="@{/supplier/add}">Create Supplier</a>
-							<a class="dropdown-item" th:href="@{/supplier/list}">Edit / Delete Supplier</a>
-						</div>
-					</li>
-					-->
+						
 					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/user') ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
-							aria-haspopup="true" aria-expanded=false>
+							aria-haspopup="true" aria-expanded=false th:text="#{navbar.manageusers}">
 							User Administration
 						</a>
 						<div class="dropdown-menu dropdown-default">
-							<a class="dropdown-item" th:href="@{/user/create}">Create User</a>
-							<a class="dropdown-item" th:href="@{/user/modify}">Edit / Delete User</a>
+							<a class="dropdown-item" th:href="@{/user/create}" th:text="#{navbar.createuser}"></a>
+							<a class="dropdown-item" th:href="@{/user/modify}" th:text="#{navbar.eduser}"></a>
 						</div>
 					</li>
 
