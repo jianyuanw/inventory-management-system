@@ -23,7 +23,7 @@ public class User {
 	private Long id;
 
 	@NotEmpty(message = "Username must not be empty")
-	@Pattern(regexp = "[A-Za-z0-9.]+", message = "Username must only contain alphanumeric characters and .")
+	@Pattern(regexp = "[A-Za-z0-9.]+", message = "Username must only contain alphanumeric characters and period")
 	private String username;
 	
 	@NotEmpty(message = "Password must not be empty")
@@ -33,6 +33,7 @@ public class User {
 	private Role role;
 	
 	@Email(message = "Email must be valid")
+	@NotEmpty(message = "Email must not be empty")
 	private String email;
 
 	public User(String username, String password, Role role, String email) {

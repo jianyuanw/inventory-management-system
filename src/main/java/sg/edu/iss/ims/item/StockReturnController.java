@@ -39,7 +39,8 @@ public class StockReturnController {
 			redirAttr.addFlashAttribute("alert", new Alert("warning", "Insufficient units of items requested"));	
 			return "redirect:/form/stockreturn";
 		} else {
-			transactionService.changeStock(new Transaction(item, -(item.getUnits()), TransactionType.RETURN_STOCK), item.getId());
+			Item dbItem = itemService.findItemById(item.getId());
+			transactionService.changeStock(new Transaction(item, -(item.getUnits()), TransactionType.RETURN_STOCK), dbItem);
 			redirAttr.addFlashAttribute("alert", new Alert("success", "Item return successful!"));
 			return "redirect:/";
 		}

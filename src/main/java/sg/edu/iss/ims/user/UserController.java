@@ -4,9 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.security.core.session.SessionInformation;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sg.edu.iss.ims.model.Alert;
-import sg.edu.iss.ims.security.MyUserDetails;
 
 @Controller
 @RequestMapping("/user")
@@ -37,18 +33,16 @@ public class UserController {
 
     @PostMapping("/create")
     public String createUser(@Valid User user, BindingResult bindingResult, RedirectAttributes redirAttr) {
+    	if (uService.readUser(user.getUsername()) != null) {
+    		bindingResult.rejectValue("username", "error.user", "Username " + user.getUsername() + " already exists");
+    	}
     	if (bindingResult.hasErrors()) {
     		return "manage-user/create";
-    	} else if (uService.readUser(user.getUsername()) == null) {
+    	} else {
             user.setPassword(uService.encode(user.getPassword()));
             uService.createUser(user);
-            redirAttr.addFlashAttribute("alert",
-                    new Alert("success", "Successfully created user: " + user.getUsername()));
+            redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully created user: " + user.getUsername()));
             return "redirect:/user/modify";
-        } else {
-            redirAttr.addFlashAttribute("alert",
-                    new Alert("warning", "Username already exists: " + user.getUsername()));
-            return "redirect:/user/create";
         }
     }
 
@@ -64,27 +58,30 @@ public class UserController {
         User oldUser = uService.readUser(id);
         User newUser = new User();
         model.addAttribute("oldUser", oldUser);
-        model.addAttribute("newUser", newUser);
+        model.addAttribute("user", newUser);
         return "manage-user/edit";
     }
 
     @PostMapping("/edit")
-    public String editUser(User user, RedirectAttributes redirAttr) {
+    public String editUser(Model model, User user, BindingResult bindingResult, RedirectAttributes redirAttr) {
         User currentUser = uService.readUser(user.getId());
         
         if (uService.noChange(user, currentUser)) {
             redirAttr.addFlashAttribute("alert", new Alert("info",
                     "User (" + currentUser.getUsername() + ") not updated as no changes were detected."));
             return "redirect:/user/edit/" + currentUser.getId();
-        } else if (user.getUsername() != "" && uService.readUser(user.getUsername()) != null) {
-            	redirAttr.addFlashAttribute("alert", new Alert("warning", "Username already exists: " + user.getUsername()));
-                return "redirect:/user/edit/" + user.getId();
         } else {
-            	uService.updateUser(user, currentUser);         
-	
-	            redirAttr.addFlashAttribute("alert",
-	                    new Alert("success", "Successfully updated user: " + currentUser.getUsername()));
-	            return "redirect:/user/modify";
+        	uService.validateUser(user, currentUser, bindingResult);
+        }
+        
+        if (bindingResult.hasErrors()) {
+        	model.addAttribute("oldUser", currentUser);
+        	return "manage-user/edit";
+        } else {
+        	uService.updateUser(user, currentUser);
+            redirAttr.addFlashAttribute("alert",
+                    new Alert("success", "Successfully updated user: " + currentUser.getUsername()));
+            return "redirect:/user/modify";        	
         }
     }
 

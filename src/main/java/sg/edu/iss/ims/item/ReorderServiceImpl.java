@@ -196,4 +196,9 @@ public class ReorderServiceImpl implements ReorderService {
 		
 		rRepo.delete(reorder);
 	}
+
+	@Override
+	public List<Reorder> findAllByStatus(ReorderStatus status) {
+		return rRepo.findAllByStatus(status);
+	}
 }

@@ -2,6 +2,8 @@ package sg.edu.iss.ims.user;
 
 import java.util.List;
 
+import org.springframework.validation.BindingResult;
+
 public interface UserService {
 
 	void createUser(User user);
@@ -23,4 +25,6 @@ public interface UserService {
 	void invalidateSessions(String username);
 
 	void updateUser(User newUser, User currentUser);
+
+	void validateUser(User newUser, User currentUser, BindingResult results);
 }

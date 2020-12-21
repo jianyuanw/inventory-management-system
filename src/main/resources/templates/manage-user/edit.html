@@ -20,7 +20,8 @@
             </div>
             <div class="col">
                 <label for="username">New Username (Leave blank to not change)</label>
-                <input type="text" class="form-control" id="username" th:field="${newUser.username}">
+                <input type="text" class="form-control" id="username" th:field="${user.username}">
+                <span class="text-danger" th:if="${#fields.hasErrors('${user.username}')}" th:errors="${user.username}"></span>
             </div>
         </div>
 
@@ -31,7 +32,7 @@
             </div>
             <div class="col">
                 <label for="password">New Password (Leave blank to not change)</label>
-                <input type="password" class="form-control" id="password" th:field="${newUser.password}">
+                <input type="password" class="form-control" id="password" th:field="${user.password}">
             </div>
         </div>
 
@@ -43,11 +44,12 @@
             </div>
             <div class="col">
                 <label for="role">New Role</label>
-                <select class="custom-select" id="role" th:field="${newUser.role}">
+                <select class="custom-select" id="role" th:field="${user.role}">
                     <option th:value="${oldUser.role}">No change</option>
                     <option value="ADMIN_CLERK">Admin Clerk</option>
                     <option value="MECHANIC">Mechanic</option>
                 </select>
+                <span class="text-danger" th:if="${#fields.hasErrors('${user.role}')}" th:errors="${user.role}"></span>
             </div>
         </div>
         
@@ -59,7 +61,8 @@
             </div>
             <div class="col">
                 <label for="role">New Email (Leave blank to not change)</label>
-                <input type="text" class="form-control" id="email" th:field="${newUser.email}">
+                <input type="text" class="form-control" id="email" th:field="${user.email}">
+                <span class="text-danger" th:if="${#fields.hasErrors('${user.email}')}" th:errors="${user.email}"></span>
             </div>
         </div>        
 
