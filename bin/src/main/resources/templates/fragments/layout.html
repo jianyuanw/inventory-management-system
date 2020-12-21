@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+<th:block th:fragment="head">
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- JQuery -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/js/mdb.min.js"></script>
+	
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+	<!-- Google Fonts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+	<!-- Material Design Bootstrap -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/css/mdb.min.css">
+</th:block>
+
+</head>
+<body>
+	<div th:fragment="header">
+		<!--Navbar -->
+		<nav class="mb-1 navbar navbar-expand-lg navbar-dark indigo">
+			<a class="navbar-brand" th:href="@{/}">IMS</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent-333"
+				aria-controls="navbarSupportedContent-333" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+				<ul sec:authorize="isAuthenticated()" class="navbar-nav mr-auto">
+					<li class="nav-item" th:classappend="${#request.requestURI == '/' ? 'active' : ''}">
+						<a class="nav-link" th:href="@{/}" th:text="#{navbar.home}">Home</a>
+					</li>
+					
+					<li class="nav-item" th:classappend="${#request.requestURI.startsWith('/list')  ? 'active' : ''}">
+						<a class="nav-link" th:href="@{/list/reorder}" th:text="#{navbar.reorders}">Reorders</a>
+					</li>
+								
+					<li class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/form') ? 'active' : ''}">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
+							aria-haspopup="true" aria-expanded=false>
+							Forms
+						</a>
+						<div class="dropdown-menu dropdown-default">
+							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockentry}">Stock Entry</a>
+							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockreturn}">Stock Return</a>
+							<a class="dropdown-item" th:href="@{/form/stockusage}">Stock Usage</a>
+						</div>
+					</li>
+					
+					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/report') ? 'active' : ''}">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
+							aria-haspopup="true" aria-expanded=false>
+							Reports
+						</a>
+						<div class="dropdown-menu dropdown-default">
+							<a class="dropdown-item" th:href="@{/report/usage/query}">Usage Report</a>
+							<a class="dropdown-item" th:href="@{/report/reorder/query}">Reorder Report</a>
+						</div>
+					</li>					
+					
+					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${(#request.requestURI.startsWith('/product') ? 'active' : '')+(#request.requestURI.startsWith('/supplier') ? 'active' : '')+(#request.requestURI.startsWith('/brand') ? 'active' : '')+(#request.requestURI.startsWith('/category') ? 'active' : '')+(#request.requestURI.startsWith('/subcategory') ? 'active' : '')}">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
+							aria-haspopup="true" aria-expanded=false>
+							Manage
+						</a>
+						<ul class="dropdown-menu">
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item">Products ➤</a>
+									 <ul class="dropdown-menu">
+                    					<li class="dropdown-item"><a th:href="@{/product/add}">Create Product</a></li>
+                    					<li class="dropdown-item"><a th:href="@{/product/list}">Edit / Delete Product</a></li>				
+									</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item">Suppliers ➤</a>
+									 <ul class="dropdown-menu">
+                    					<li class="dropdown-item"><a th:href="@{/supplier/add}">Create Supplier</a></li>
+                    					<li class="dropdown-item"><a th:href="@{/supplier/list}">Edit / Delete Supplier</a></li>				
+									</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item">Brands ➤</a>
+									 <ul class="dropdown-menu">
+                    					<li class="dropdown-item"><a th:href="@{/brand/add}">Create Brand</a></li>
+                    					<li class="dropdown-item"><a th:href="@{/brand/list}">Edit / Delete Brand</a></li>				
+									</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item">Categories ➤</a>
+									 <ul class="dropdown-menu">
+                    					<li class="dropdown-item"><a th:href="@{/category/add}">Create Category</a></li>
+                    					<li class="dropdown-item"><a th:href="@{/category/list}">Edit / Delete Category</a></li>				
+									</ul>
+							</li>
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item">Subcategories ➤</a>
+									 <ul class="dropdown-menu">
+                    					<li class="dropdown-item"><a th:href="@{/subcategory/add}">Create Subcategory</a></li>
+                    					<li class="dropdown-item"><a th:href="@{/subcategory/list}">Edit / Delete Subcategory</a></li>				
+									</ul>
+							</li>
+						</ul>
+					<!--  
+					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/supplier') ? 'active' : ''}">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
+							aria-haspopup="true" aria-expanded=false>
+							Manage Suppliers
+						</a>
+						<div class="dropdown-menu dropdown-default">
+							<a class="dropdown-item" th:href="@{/supplier/add}">Create Supplier</a>
+							<a class="dropdown-item" th:href="@{/supplier/list}">Edit / Delete Supplier</a>
+						</div>
+					</li>
+					-->
+					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/user') ? 'active' : ''}">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
+							aria-haspopup="true" aria-expanded=false>
+							User Administration
+						</a>
+						<div class="dropdown-menu dropdown-default">
+							<a class="dropdown-item" th:href="@{/user/create}">Create User</a>
+							<a class="dropdown-item" th:href="@{/user/modify}">Edit / Delete User</a>
+						</div>
+					</li>
+
+				</ul>
+				
+				<ul class="navbar-nav ml-auto nav-flex-icons">
+						<li th:if="${#request.remoteUser} != null" class="nav-item"><span th:text="'Welcome, ' + ${#request.remoteUser}" class="nav-link py-0 px-3 m-2 border-right"></span></li>						
+						<li th:if="${#request.remoteUser} == null" class="nav-item"><a th:href="@{/login}" th:text="#{navbar.login}" class="nav-link waves-effect waves-light">Login</a></li>
+						<li th:if="${#request.remoteUser} != null" class="nav-item"><a th:href="@{/logout}" th:text="#{navbar.logout}" class="nav-link waves-effect waves-light">Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+		<!--/.Navbar -->
+		<div th:if="${alert} != null" th:class="'alert alert-' + ${alert.type} + ' alert-dismissible fade show'" role="alert" th:inline="text">
+		  [[${alert.message}]]
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+	</div>
+
+	<div class="bg-light text-center" th:fragment="footer">
+		<small class="align-items-center" th:text="'2020 Inventory Management System | Time: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}"></small>
+	</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="fragments/layout.html :: head"/>
+	<th:block th:replace="fragments/bundle.html :: mdtable"/>
+	<Title>Category List</Title>
+</head>
+<body>
+	<div th:replace="fragments/layout.html :: header"></div>
+
+	<div class="px-5 py-4">
+		<table id="dataTable"
+			class="table table-striped table-bordered table-sm">
+			<thead>
+				<tr>
+					<th class="th-sm">ID</th>
+					<th class="th-sm">Name</th>
+					<th class="th-sm">Edit</th>
+					<th class="th-sm">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="category:${catlist}">
+					<td th:text="${category.id}">ID</td>
+					<td th:text="${category.name}">ID</td>
+					<td>
+						<a th:href="@{/category/edit/} + ${category.id}">
+							<button type="button" class="btn btn-mdb-color btn-sm m-0">Edit</button>
+						</a>
+					</td>
+		      		<td>
+		      			<a th:href="@{/category/delete/}+${category.id}">
+		      				<button type="button" class="btn btn-danger btn-sm m-0">Delete</button>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>

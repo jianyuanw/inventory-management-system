@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="fragments/layout.html :: head"/>
+	<th:block th:replace="fragments/bundle.html :: bootstrapselect" />	
+	<script type="text/javascript" th:src="@{/js/form.js}"></script>
+<title>Usage Report Query</title>
+</head>
+<body>
+	<div th:replace="fragments/layout.html :: header"></div>
+	
+    <form class="border border-light p-5" method="get" th:action="@{/report/usage/output}">
+        <p class="h4 mb-4">Usage Report Query</p>
+
+        <label for="part-number">Part Number</label>
+        <div class="form-row">
+			<select class="selectpicker col-md-4" name="itemId" data-live-search="true" data-width="fit">
+	        	<option th:each="item : ${inventory}" th:value="${item.product.id}" th:text="${item.product.partNumber} + ' - ' + ${item.product.name}"
+	        			th:data-tokens="${item.product.description} + ' ' + ${item.product.partNumber} + ' ' + ${item.product.color} + ' ' + ${item.product.supplier.name}">
+	        			Winter Tyres
+	        	</option>	
+	       	</select>
+       	</div>
+
+        <div class="form-row">
+            <div class="col">
+                <label for="from-date">Date (From):</label>
+                <input type="date" class="form-control mb-4" id="from-date" name="fromDate" placeholder="ANY">
+            </div>
+            <div class="col">
+                <label for="to-date">Date (To):</label>
+                <input type="date" class="form-control mb-4" id="to-date" name="toDate" placeholder="ANY">
+            </div>
+        </div>
+
+        <button class="btn btn-success mx-0" type="submit">Submit</button>
+    </form>	
+
+	<div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>

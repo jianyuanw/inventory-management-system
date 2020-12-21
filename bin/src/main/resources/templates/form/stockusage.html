@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments/layout.html :: head" />
+<th:block th:replace="fragments/bundle.html :: bootstrapselect" />
+<script type="text/javascript" th:src="@{/js/form-update.js}"></script>
+<script type="text/javascript" th:src="@{/js/form-transaction.js}"></script>
+
+<meta charset="ISO-8859-1">
+<title>Stock Usage Form</title>
+</head>
+<body>
+	<div th:replace="fragments/layout.html :: header"></div>
+
+	<form class="border border-light p-5" method="post"
+		th:action="@{/form/stockusage}">
+		<p class="h4 mb-4">Stock Usage Form</p>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="customerName">Customer Name</label> 
+				<input type="text" th:field="${job.customerName}" class="form-control mb-4"	id="customerName" name="customerName">
+				<span class="text-danger" th:if="${#fields.hasErrors('${job.customerName}')}" th:errors="${job.customerName}"></span>
+			</div>
+			<div class="col">
+				<label for="carLicense">Car License Plate</label> <input type="text"
+					th:field="${job.carLicensePlate}" class="form-control mb-4"
+					id="carLicense" name="carLicense">
+				<span class="text-danger" th:if="${#fields.hasErrors('${job.carLicensePlate}')}" th:errors="${job.carLicensePlate}"></span>
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="col">
+				<label for="description">Job Description</label> <input type="text"
+					th:field="${job.description}" class="form-control mb-4"
+					id="description" name="description">
+				<span class="text-danger" th:if="${#fields.hasErrors('${job.description}')}" th:errors="${job.description}"></span>
+			</div>
+		</div>
+
+		<label class="control-label">Parts used</label>
+
+		<div class="form-row" th:each="row,rowStat : ${itemList.list}">
+			<div class="col-2 mt-1">
+				<input class="form-control-lg mb-1 w-50" th:id="'units' + ${rowStat.index}" type="number" th:field="${itemList.list[__${rowStat.index}__].units}" min="0">	
+			</div>
+			<div class="col-md-5">
+				<select th:field="${itemList.list[__${rowStat.index}__].id}" class="selectpicker" data-live-search="true" data-width="fit"
+					onchange="updateUnits(this)" th:id="'select' + ${rowStat.index}">
+						<option th:each="item : ${inventory}" th:value="${item.product.id}"
+							th:text="${item.product.partNumber} + ' - ' + ${item.product.name}" th:attr="data-units=${item.units}"
+							th:data-tokens="${item.product.description} + ' ' + ${item.product.partNumber} + ' ' + ${item.product.color} + ' ' + ${item.product.supplier.name}">
+							Winter Tyres
+						</option>
+				</select>
+			</div>
+			<div class="col">
+				<button class="btn" type="submit" name="addRow" onclick="$('form').attr('target', '');">Add part</button>
+			</div>
+			<div class="col">
+				<button th:if="${rowStat.index > 0}" class="btn" type="submit" name="removeRow" th:value="${rowStat.index}" onclick="$('form').attr('target', '');">Remove part</button>
+			</div>
+			<div class="col">
+				<button th:id="'transaction' + ${rowStat.index}" class="btn" type="submit" name="getTransaction" onclick="$('form').attr('target', '_blank');">Retrieve transactions</button>
+			</div>
+		</div>
+		<button class="btn btn-success mx-0" type="submit" onclick="$('form').attr('target', '');">Submit</button>
+	</form>
+
+	<div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>

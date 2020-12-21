@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments/layout.html :: head" />
+<title>Display Product Details</title>
+</head>
+<body>
+	<div th:replace="fragments/layout.html :: header"></div>
+
+	<div class="container" id="product-section">
+		<div class="row">
+			<div class="col-md-6">
+				<img class="img-thumbnail" th:src="@{${product.image}}" />
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 th:text="${product.name}"></h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<span class="badge badge-primary"
+							th:text="${product.category.name}"></span> <span
+							class="badge badge-secondary"
+							th:text="${product.subcategory.name}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 mt-1 mb-1">
+						<span class="monospaced" th:text="'PN: ' + ${product.partNumber}"></span>
+					</div>
+				</div>
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-desc-tab" data-toggle="tab" href="#nav-description" role="tab"
+							aria-controls="nav-description" aria-selected="true">
+							Description
+						</a> 
+						<a class="nav-item nav-link" id="nav-spec-tab" data-toggle="tab"	href="#nav-specifications" role="tab" aria-controls="nav-specifications"
+							aria-selected="false">
+							Specifications
+						</a>
+						<a class="nav-item nav-link" id="nav-price-tab" data-toggle="tab" href="#nav-price" role="tab" aria-controls="nav-price" aria-selected="false">
+							Prices
+						</a>
+					</div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
+						<span th:text="${product.description}"></span>						
+					</div>
+					<div class="tab-pane fade" id="nav-specifications" role="tabpanel" aria-labelledby="nav-specifications-tab">
+						<dl class="row">
+							<dt class="col-sm-4" th:text="${product.measurementType}"></dt>
+							<dd class="col-sm-8" th:text="${product.measurement}"></dd>
+	  					</dl>						
+					</div>
+					<div class="tab-pane fade" id="nav-price" role="tabpanel" aria-labelledby="nav-price-tab">
+						<dl class="row">
+							<dt class="col-sm-4">Original Price</dt>
+							<dd class="col-sm-8" th:text="'$ ' + ${product.originalPrice}"></dd>
+	  					</dl>
+						<dl class="row">
+							<dt class="col-sm-4">Partner Price</dt>
+							<dd class="col-sm-8" th:text="'$ ' + ${product.partnerPrice}"></dd>
+	  					</dl>
+						<dl class="row">
+							<dt class="col-sm-4">Wholesale Price</dt>
+							<dd class="col-sm-8" th:text="'$ ' + ${product.wholesalePrice}"></dd>
+	  					</dl>
+						<dl class="row">
+							<dt class="col-sm-4">Retail Price</dt>
+							<dd class="col-sm-8" th:text="'$ ' + ${product.retailPrice}"></dd>
+	  					</dl>	  			  						  			  									  				
+					</div>
+				</div>
+			</div>
+			</div>
+	</div>
+	
+	<div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>

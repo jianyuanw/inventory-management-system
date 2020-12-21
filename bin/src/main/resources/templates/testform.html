@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments/layout.html :: head" />
+<th:block th:replace="fragments/bundle.html :: mdtable" />
+<Title>Test Form</Title>
+</head>
+<body>
+	<p th:text="${itemId}"></p>
+	<p th:text="${dateStart}"></p>
+	<p th:text="${dateEnd}"></p>
+</body>
+</html>

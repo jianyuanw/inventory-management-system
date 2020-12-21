@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:replace="fragments/layout.html :: head" />
+<title>Create User</title>
+</head>
+<body>
+	<div th:replace="fragments/layout.html :: header"></div>
+
+	<form class="border border-light p-5" method="post" th:action="@{/user/create}" th:object="${user}">
+		<div class="form-row">
+			<p class="h4 mb-4">Create User</p>
+		</div>
+		<div class="form-row">
+			<label>Username</label>
+			<input type="text" class="form-control mb-4" placeholder="Username"	th:field="*{username}" required>
+			<span class="text-danger" th:if="${#fields.hasErrors('*{username}')}" th:errors="*{username}"></span>
+		</div>
+		<div class="form-row">
+			<label>Password</label>
+			<input type="password" class="form-control mb-4" placeholder="Password" th:field="*{password}" required>
+			<span class="text-danger" th:if="${#fields.hasErrors('*{password}')}" th:errors="*{password}"></span>
+		</div>
+		<div class="form-row">
+			<label>Role</label> 
+			<select class="custom-select mb-4" th:field="*{role}">
+				<option value="ADMIN_CLERK">Admin Clerk</option>
+				<option value="MECHANIC">Mechanic</option>
+			</select>
+			<span class="text-danger" th:if="${#fields.hasErrors('*{role}')}"	th:errors="*{role}"></span>
+		</div>
+		<div class="form-row">
+			<label>Email Address</label>
+			<input type="text" class="form-control" placeholder="Email Address"	th:field="*{email}" required>
+			<span class="text-danger" th:if="${#fields.hasErrors('*{email}')}" th:errors="*{email}"></span>
+		</div>
+		<button class="btn btn-info my-4 mx-0" type="submit">Submit</button>
+	</form>
+
+	<div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>

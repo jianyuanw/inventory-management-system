@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/layout.html :: head"/>
+    <title>Product Reorder Form</title>
+</head>
+<body>
+    <div th:replace="fragments/layout.html :: header"></div>
+
+    <form class="border border-light p-5" method="post" th:action="@{/product/reorder}">
+        <p class="h4 mb-4">Product Reorder Form</p>
+
+        <label for="productName">Product Name</label>
+        <input type="text" class="form-control mb-4" id="productName" th:value="${product.name}" disabled>
+
+        <label for="qtyOnHand">Quantity On Hand</label>
+        <input type="text" class="form-control mb-4" id="qtyOnHand" th:value="${item.units}" disabled>
+
+        <label for="reorderLevel">Reorder Level</label>
+        <input type="text" class="form-control mb-4" id="reorderLevel" th:value="${item.reorderAt}" disabled>
+
+        <label for="minReorderQty">Minimum Reorder Quantity</label>
+        <input type="text" class="form-control mb-4" id="minReorderQty" th:value="${item.reorderQuantity}" disabled>
+
+        <label for="qtyToReorder">Quantity To Reorder</label>
+        <input type="number" class="form-control mb-4" id="qtyToReorder" name="qtyToReorder"
+               placeholder="Enter quantity to reorder" th:min="${item.reorderQuantity}" required>
+
+        <input type="hidden" name="itemId" th:value="${item.id}">
+
+        <button class="btn btn-dark-green my-4 mx-0" type="submit">Submit Reorder</button>
+    </form>
+
+    <div th:replace="fragments/layout.html :: footer"></div>
+</body>
+</html>
