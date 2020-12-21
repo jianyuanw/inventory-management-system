@@ -4,13 +4,13 @@
 	<th:block th:replace="fragments/layout.html :: head"/>
 	<script type="text/javascript" th:src="@{/js/form.js}"></script>
 <meta charset="ISO-8859-1">
-<title>Add Subcategory</title>
+<title>Create Subcategory</title>
 </head>
 <body>
 	<div th:replace="fragments/layout.html :: header"></div>
 	
 	<form class="border border-light p-5" method="post" th:action="@{/subcategory/save}" th:object="${subcategory}">
-		<p class="h4 mb-4">Create brand</p>
+		<p class="h4 mb-4">Create Subcategory</p>
 		<div class="form-row">
 			<input type="hidden" th:field="*{id}"> 
 			<label class="control-label">Product Category</label>

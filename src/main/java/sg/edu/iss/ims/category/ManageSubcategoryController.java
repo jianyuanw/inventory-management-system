@@ -36,7 +36,9 @@ public class ManageSubcategoryController {
 	
 
 	@PostMapping("/save")
-	public String add(@Valid @ModelAttribute("subcategory") Subcategory subcategory, BindingResult bindingResult, RedirectAttributes redirAttr) {
+	public String add(@Valid @ModelAttribute("subcategory") Subcategory subcategory, BindingResult bindingResult, RedirectAttributes redirAttr, Model model) {
+		
+		model.addAttribute("categories", catService.getCategories());
 		if (bindingResult.hasErrors()) 
 		{
 			return "manage-subcategory/create";
