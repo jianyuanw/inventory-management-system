@@ -45,8 +45,8 @@ public class EmailServiceImpl implements EmailService{
 		
 		StringBuilder email = new StringBuilder("Dear admin clerks,\n\n");
 		
-		email.append("After a " + transaction.getTransactionType() + ", the following item has fallen under reorder units of " + dbItem.getReorderAt() + "\n");
-		email.append(dbItem.getProduct().getPartNumber() + " - " + dbItem.getProduct().getName() + "\n");
+		email.append("After a " + transaction.getTransactionType() + ": the following item has dropped below the reorder unit level of " + dbItem.getReorderAt() + "\n");
+		email.append(dbItem.getProduct().getPartNumber() + " - " + dbItem.getProduct().getName() + "\n\n");
 		email.append("Kindly take note of this situation.\n\n");
 		
 		email.append("AUTOMATED: PLEASE DO NOT RESPOND\n\n");
