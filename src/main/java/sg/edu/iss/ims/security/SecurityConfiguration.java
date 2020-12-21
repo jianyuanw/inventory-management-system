@@ -42,8 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/security/admin/**").hasAuthority("ADMIN_CLERK")
-                .antMatchers("/security/user/**").hasAnyAuthority("ADMIN_CLERK", "MECHANIC")
+                .antMatchers(ADMIN_URLS).hasAuthority("ADMIN_CLERK")
+                .antMatchers(ADMIN_MECHANIC_URLS).hasAnyAuthority("ADMIN_CLERK", "MECHANIC")
                 .antMatchers("/**").permitAll()
                 .and()
                     .formLogin()
@@ -61,4 +61,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .sessionRegistry(sessionRegistry());
         				
     }
+
+    private final String[] ADMIN_URLS = {
+            "/brand/**",
+            "/category/**",
+            "/subcategory/**",
+            "/supplier/**",
+            "/report/reorder/**",
+            "/form/stockentry/**",
+            "/form/stockreturn/**",
+            "/product/**",
+            "/user/**"
+    };
+
+    private final String[] ADMIN_MECHANIC_URLS = {
+            "/list/**",
+            "/form/stockusage/**",
+            "/report/usage/**"
+    };
 }
