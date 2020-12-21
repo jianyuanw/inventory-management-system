@@ -27,6 +27,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
 	<!-- Material Design Bootstrap -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.0/css/mdb.min.css">
+	<!-- Customised css -->
+	<link rel="stylesheet" th:href="@{/css/navbar-added.css}"></link>
 </th:block>
 
 </head>
@@ -79,37 +81,37 @@
 							aria-haspopup="true" aria-expanded=false>
 							Manage
 						</a>
-						<ul class="dropdown-menu">
+						<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
 							<li class="dropdown-submenu">
-								<a  class="dropdown-item">Products ➤</a>
+								<a  class="dropdown-item arrow-r">Products</a>
 									 <ul class="dropdown-menu">
                     					<li class="dropdown-item"><a th:href="@{/product/add}">Create Product</a></li>
                     					<li class="dropdown-item"><a th:href="@{/product/list}">Edit / Delete Product</a></li>				
 									</ul>
 							</li>
 							<li class="dropdown-submenu">
-								<a  class="dropdown-item">Suppliers ➤</a>
+								<a  class="dropdown-item">Suppliers</a>
 									 <ul class="dropdown-menu">
                     					<li class="dropdown-item"><a th:href="@{/supplier/add}">Create Supplier</a></li>
                     					<li class="dropdown-item"><a th:href="@{/supplier/list}">Edit / Delete Supplier</a></li>				
 									</ul>
 							</li>
 							<li class="dropdown-submenu">
-								<a  class="dropdown-item">Brands ➤</a>
+								<a  class="dropdown-item">Brands</a>
 									 <ul class="dropdown-menu">
                     					<li class="dropdown-item"><a th:href="@{/brand/add}">Create Brand</a></li>
                     					<li class="dropdown-item"><a th:href="@{/brand/list}">Edit / Delete Brand</a></li>				
 									</ul>
 							</li>
 							<li class="dropdown-submenu">
-								<a  class="dropdown-item">Categories ➤</a>
+								<a  class="dropdown-item">Categories</a>
 									 <ul class="dropdown-menu">
                     					<li class="dropdown-item"><a th:href="@{/category/add}">Create Category</a></li>
                     					<li class="dropdown-item"><a th:href="@{/category/list}">Edit / Delete Category</a></li>				
 									</ul>
 							</li>
 							<li class="dropdown-submenu">
-								<a  class="dropdown-item">Subcategories ➤</a>
+								<a  class="dropdown-item">Subcategories</a>
 									 <ul class="dropdown-menu">
                     					<li class="dropdown-item"><a th:href="@{/subcategory/add}">Create Subcategory</a></li>
                     					<li class="dropdown-item"><a th:href="@{/subcategory/list}">Edit / Delete Subcategory</a></li>				
