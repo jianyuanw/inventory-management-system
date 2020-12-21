@@ -75,13 +75,15 @@ public class ManageProductController {
 	public String saveProduct(@ModelAttribute @Valid Product product, BindingResult productBinding, @ModelAttribute @Valid Item item, BindingResult itemBinding,
 							  String newSupplier, String newBrand, String newCategory, String newSubcategory, 
 							  Model model, RedirectAttributes redirAttr) {
-		HashMap<String, String> errors = new HashMap<String, String>();
+		HashMap<String, String> errors = prodService.validate(newSupplier, newBrand, newCategory, newSubcategory);
+		
 		model.addAttribute("errors", errors);
 		model.addAttribute("suppliers", supplierService.list());
 		model.addAttribute("brands", brandService.list());
 		model.addAttribute("categories", catService.getCategories());
-		model.addAttribute("subcategories", catService.getSubcategories());		
-		if (productBinding.hasErrors() || itemBinding.hasErrors())
+		model.addAttribute("subcategories", catService.getSubcategories());
+		
+		if (productBinding.hasErrors() || itemBinding.hasErrors() || ! errors.isEmpty())
 		{
 			return "productform";
 		} else {
@@ -125,10 +127,6 @@ public class ManageProductController {
 					product.setSubcategory(subcategory);
 				}			
 			}
-			if (!errors.isEmpty()) {
-				model.addAttribute("errors", errors);
-				return "productform";				
-			}
 			
 			prodService.saveProduct(product);
 			itemService.createItem(product, item);			
@@ -153,6 +151,7 @@ public class ManageProductController {
 		model.addAttribute("categories", catService.getCategories());
 		model.addAttribute("subcategories", catService.getSubcategories());
 		model.addAttribute("suppliers", supplierService.list());
+		model.addAttribute("errors", new HashMap<String, String>());
 		return "productform";
 	}
 

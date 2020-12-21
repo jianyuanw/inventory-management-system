@@ -76,7 +76,8 @@
 						</div>
 					</li>					
 					
-					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${(#request.requestURI.startsWith('/product') ? 'active' : '')+(#request.requestURI.startsWith('/supplier') ? 'active' : '')+(#request.requestURI.startsWith('/brand') ? 'active' : '')+(#request.requestURI.startsWith('/category') ? 'active' : '')+(#request.requestURI.startsWith('/subcategory') ? 'active' : '')}">
+					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown"
+					    th:classappend="${(#request.requestURI.startsWith('/product') || #request.requestURI.startsWith('/supplier') || #request.requestURI.startsWith('/brand') || #request.requestURI.startsWith('/category') || #request.requestURI.startsWith('/subcategory')) ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
 							aria-haspopup="true" aria-expanded=false>
 							Manage
