@@ -122,7 +122,7 @@ public class ManageProductController {
 		Item item = itemService.findItemByProduct(product);
 		model.addAttribute("product", product);
 		model.addAttribute("item", item);
-		return "product/reorderform";
+		return "form/staticstockreorder";
 	}
 
 	@PostMapping("/reorder")

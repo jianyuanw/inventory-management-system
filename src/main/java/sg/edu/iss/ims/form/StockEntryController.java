@@ -1,10 +1,16 @@
-package sg.edu.iss.ims.item;
+package sg.edu.iss.ims.form;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import sg.edu.iss.ims.item.ItemService;
+import sg.edu.iss.ims.item.ItemServiceImpl;
+import sg.edu.iss.ims.item.Reorder;
+import sg.edu.iss.ims.item.ReorderService;
+import sg.edu.iss.ims.item.ReorderServiceImpl;
+import sg.edu.iss.ims.item.ReorderStatus;
 import sg.edu.iss.ims.model.Alert;
 import sg.edu.iss.ims.transaction.Transaction;
 import sg.edu.iss.ims.transaction.TransactionService;
@@ -15,7 +21,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequestMapping("/form")
+@RequestMapping("/form/stockentry")
 public class StockEntryController {
 
     private final ReorderService reorderService;
@@ -29,25 +35,25 @@ public class StockEntryController {
         transactionService = transactionImpl;
     }
 
-    @GetMapping("/stockentry")
+    @GetMapping
     public String stockEntry(Model model, RedirectAttributes redirAttr) {
     	List<Reorder> reorders = reorderService.findAllByStatus(ReorderStatus.PENDING_DELIVERY);
     	if (reorders.size() == 0) {
     		redirAttr.addFlashAttribute("alert", new Alert("info", "No ongoing reorders to enter stock, please create a reorder first"));
-    		return "redirect:/";
+    		return "redirect:/form/stockreorder";
     	}
 	    model.addAttribute("reorders", reorders);	    
 	    return "form/stockentry";
     }
 
-    @GetMapping("stockentry/add/{reorderId}")
+    @GetMapping("/add/{reorderId}")
     public String createStock (Model model, @PathVariable Long reorderId){
         Reorder reorder = reorderService.findReorderById(reorderId);
         model.addAttribute("reorder", reorder);
         return "form/staticstockentry";
     }
 
-    @PostMapping("/stockentry/created")
+    @PostMapping("/created")
     public String restock (@RequestParam Long reorderId, @RequestParam String deliveryDate,
                            RedirectAttributes redirAttr) {
         Reorder reorder = reorderService.findReorderById(reorderId);

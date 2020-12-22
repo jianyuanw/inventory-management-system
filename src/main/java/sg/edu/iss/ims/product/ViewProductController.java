@@ -27,7 +27,7 @@ public class ViewProductController {
 		return "catalog/catalog";
 	}
 
-	@RequestMapping("/{id}")
+	@GetMapping("/product/details/{id}")
 	public String showdetail(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("product", viewService.findProductById(id));
 		return "catalog/productdetails";

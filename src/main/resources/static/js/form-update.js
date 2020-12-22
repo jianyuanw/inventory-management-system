@@ -10,10 +10,10 @@ function updateUnits(element) {
 	let units = element.options[element.selectedIndex].getAttribute("data-units");
 	let index = element.id.substring(6);
 	let unitElement = document.getElementById("units" + index);
-	if (unitElement.value == 0) {
+	unitElement.max = units;
+	if (unitElement.value == 0 || Number(unitElement.value) > Number(unitElement.max) ) {
 		unitElement.value = units;
 	}
-	unitElement.max = units;
 	let transactionElement = document.getElementById("transaction" + index);
 	transactionElement.value = element.options[element.selectedIndex].getAttribute("value");
 }
