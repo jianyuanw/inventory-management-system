@@ -27,8 +27,12 @@ public class ManageTransactionController {
 	
 	@GetMapping("/reverse/{transactionId}")
 	public String reverseTransaction(@PathVariable Long transactionId, RedirectAttributes redirAttr) {
-		transactionService.reverse(transactionId);
-		redirAttr.addFlashAttribute("alert", new Alert("success", "Transaction successfully reversed"));
+		if (transactionService.findById(transactionId).getTransactionType() == TransactionType.RECEIVE_STOCK) {
+			redirAttr.addFlashAttribute("alert", new Alert("warning", "Receive stock transactions cannot be reversed"));
+		} else {
+			transactionService.reverse(transactionId);
+			redirAttr.addFlashAttribute("alert", new Alert("success", "Transaction successfully reversed"));			
+		}
 		return "redirect:/transaction/list";
 	}
 }

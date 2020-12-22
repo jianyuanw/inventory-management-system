@@ -2,18 +2,16 @@ package sg.edu.iss.ims.transaction;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sg.edu.iss.ims.item.Item;
-import sg.edu.iss.ims.job.JobTransaction;
 
 @Entity
 @Data
@@ -27,8 +25,9 @@ public class Transaction {
 	@ManyToOne
 	private Item item;
 	
+	@NotNull(message = "Transaction Type cannot be null")
 	private TransactionType transactionType;
-	
+		
 	private Integer quantityChange;
 	
 	private LocalDateTime transactionTime;

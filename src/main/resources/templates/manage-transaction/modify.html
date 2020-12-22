@@ -28,7 +28,7 @@
 					<td th:text="${transaction.transactionType}"></td>
 					<td th:text="${#temporals.format(transaction.transactionTime, 'dd-MM-yyyy HH:mm')}"></td>					
 		      		<td>
-		      			<a th:href="@{|/transaction/reverse/${transaction.id}|}">
+		      			<a th:if="${transaction.transactionType.name() != 'RECEIVE_STOCK'}"th:href="@{|/transaction/reverse/${transaction.id}|}">
 		      				<button type="button" class="btn btn-danger btn-sm m-0">Reverse</button>
 						</a>
 					</td>
