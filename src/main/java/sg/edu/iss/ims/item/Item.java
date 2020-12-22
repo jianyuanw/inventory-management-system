@@ -49,7 +49,7 @@ public class Item {
 
 	private ItemState state;
 	@OneToMany(mappedBy="item", cascade=CascadeType.ALL)
-	private List<Reorder> reorder;
+	private List<Reorder> reorders;
 	
 
 	public Item(Product product, int units, int reorderAt, int reorderQuantity, String shelfLocation,

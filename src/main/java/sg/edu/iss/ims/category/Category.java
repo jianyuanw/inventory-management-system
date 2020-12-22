@@ -14,6 +14,7 @@ import javax.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString.Exclude;
+import sg.edu.iss.ims.product.Product;
 
 @Entity
 @Data
@@ -30,6 +31,9 @@ public class Category {
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Exclude
 	private List<Subcategory> subcategories;
+	
+	@OneToMany(mappedBy="category", cascade=CascadeType.ALL)
+	private List<Product> products;	
 
 	public Category(String name) {
 		super();
