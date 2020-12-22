@@ -54,7 +54,7 @@ public class LogInOutController {
 	@GetMapping("/logout/success")
 	public String logoutSuccess(RedirectAttributes redirAttr) {
 		redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully logged out!"));
-		return "redirect:/";
+		return "redirect:/login";
 	}
 	
 	

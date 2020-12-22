@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(ADMIN_URLS).hasAuthority("ADMIN_CLERK")
                 .antMatchers(ADMIN_MECHANIC_URLS).hasAnyAuthority("ADMIN_CLERK", "MECHANIC")
-                .antMatchers("/**").permitAll()
+                .antMatchers(LOGIN_LOGOUT_URLS).permitAll()
                 .and()
                     .formLogin()
                         .loginPage("/login")
@@ -83,6 +83,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/list/**",
             "/form/stockusage/**",
             "/report/usage/**",
-            "/product/details/**"
+            "/product/details/**",
+            "/"
+    };
+
+    private final String[] LOGIN_LOGOUT_URLS = {
+            "/login/**",
+            "/logout/**"
     };
 }
