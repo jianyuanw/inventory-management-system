@@ -17,7 +17,7 @@ public class ItemRepositoryTest {
 	
 	@Test
 	void findAllByUnits( ) {
-		List<Item> i = irepo.findAllByUnits(0);
+		List<Item> i = irepo.findAll();
 		i.stream().forEach(System.out::println);
 	}
 }

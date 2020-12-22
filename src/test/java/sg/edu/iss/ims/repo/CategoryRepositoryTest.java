@@ -14,7 +14,7 @@ public class CategoryRepositoryTest {
 	
 	@Test
 	void findByName() {
-		String[] categories = {"Tyres", "Brake System", "Engine", "Filters"};
+		String[] categories = {"A", "B", "C", "D"};
 		for (String cate: categories) {
 			Category c = crepo.findByName(cate);
 			System.out.println(c);

@@ -55,7 +55,7 @@
 						<a class="nav-link" th:href="@{/list/reorder}" th:text="#{navbar.reorders}">Reorders</a>
 					</li>
 								
-					<li class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/form') ? 'active' : ''}">
+					<li class="nav-item dropdown" th:classappend="${(#request.requestURI.startsWith('/form')  || #request.requestURI.startsWith('/product/reorder')) ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
 							aria-haspopup="true" aria-expanded=false th:text="#{navbar.forms}">
 							Forms
@@ -80,7 +80,7 @@
 					</li>					
 					
 					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown"
-					    th:classappend="${(#request.requestURI.startsWith('/product') || #request.requestURI.startsWith('/supplier') || #request.requestURI.startsWith('/brand') || #request.requestURI.startsWith('/category') || #request.requestURI.startsWith('/subcategory')) ? 'active' : ''}">
+					    th:classappend="${((#request.requestURI.startsWith('/product') && ! #request.requestURI.startsWith('/product/reorder')) || #request.requestURI.startsWith('/supplier') || #request.requestURI.startsWith('/brand') || #request.requestURI.startsWith('/category') || #request.requestURI.startsWith('/subcategory')) ? 'active' : ''}">
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" 
 							aria-haspopup="true" aria-expanded=false th:text="#{navbar.manage}">
 							Manage
@@ -121,6 +121,12 @@
                     					<li class="dropdown-item"><a th:href="@{/subcategory/list}" th:text="#{navbar.edsubcategory}"></a></li>				
 									</ul>
 							</li>
+							<li class="dropdown-submenu">
+								<a  class="dropdown-item" th:text="#{navbar.transactions}">Transactions</a>
+									 <ul class="dropdown-menu">                    					
+                    					<li class="dropdown-item"><a th:href="@{/transaction/list}" th:text="#{navbar.edtransaction}"></a></li>				
+									</ul>
+							</li>							
 						</ul>
 						
 					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item dropdown" th:classappend="${#request.requestURI.startsWith('/user') ? 'active' : ''}">

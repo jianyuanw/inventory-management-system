@@ -13,21 +13,23 @@ import sg.edu.iss.ims.email.EmailService;
 import sg.edu.iss.ims.item.Item;
 import sg.edu.iss.ims.item.ItemRepository;
 import sg.edu.iss.ims.item.ItemState;
-import sg.edu.iss.ims.item.ReorderRepository;
+import sg.edu.iss.ims.job.JobTransaction;
+import sg.edu.iss.ims.job.JobTransactionRepository;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
 	private final TransactionRepository transactionRepo;
-	private final ItemRepository itemRepo;
-	private final ReorderRepository reorderRepo;
 	private final EmailService emailService;
+	private final ItemRepository itemRepo;
+	private final JobTransactionRepository jobTransactionRepo;
 	
-	public TransactionServiceImpl(TransactionRepository transactionRepo, ItemRepository itemRepo, ReorderRepository reorderRepo, EmailService emailService) {
+	public TransactionServiceImpl(TransactionRepository transactionRepo, ItemRepository itemRepo, 
+								  EmailService emailService, JobTransactionRepository jobTransactionRepo) {
 		this.transactionRepo = transactionRepo;
-		this.itemRepo = itemRepo;
-		this.reorderRepo = reorderRepo;
 		this.emailService = emailService;
+		this.itemRepo = itemRepo;
+		this.jobTransactionRepo = jobTransactionRepo;
 	}
 	
 	@Override
@@ -63,7 +65,6 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public boolean changeStock(Transaction transaction, Item dbItem) {
-		this.save(transaction);
 		if (transaction.getTransactionType() == TransactionType.RECEIVE_STOCK) {
 			if ((dbItem.getUnits() + transaction.getQuantityChange()) >= dbItem.getReorderAt()) {
 				dbItem.setState(ItemState.IN_STOCK);
@@ -77,7 +78,7 @@ public class TransactionServiceImpl implements TransactionService {
 			}
 		}
 		dbItem.setUnits(dbItem.getUnits() + transaction.getQuantityChange());
-		transactionRepo.save(transaction);
+		this.save(transaction);
 		
 		return true;
 	}
@@ -85,5 +86,25 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public void save(Transaction transaction) {
 		transactionRepo.save(transaction);
+	}
+
+	@Override
+	public List<Transaction> findAll() {
+		return transactionRepo.findAll();		
+	}
+
+	@Override
+	public void reverse(Long transactionId) {
+		Transaction transaction = transactionRepo.findById(transactionId).get();
+		JobTransaction jobTransaction = jobTransactionRepo.findByTransaction_Id(transactionId);
+		if (jobTransaction != null) {
+			jobTransactionRepo.delete(jobTransaction);			
+		}		
+		
+		Item item = transaction.getItem();
+		item.setUnits(item.getUnits() + -(transaction.getQuantityChange()));		
+		
+		transactionRepo.delete(transaction);
+		
 	}
 }
