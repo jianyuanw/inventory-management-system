@@ -37,10 +37,10 @@
                     	<img class="img-thumbnail" th:src="@{${item.product.image}}"  />
                     </td>
                     <td class="align-middle" th:text="${item.product.description}"></td>
-                    <td class="align-middle" sec:authorize="hasAuthority('ADMIN_CLERK')" th:text="${item.originalPrice}">
-                    <td class="align-middle" th:text="${item.retailPrice"></td>
+                    <td class="align-middle" sec:authorize="hasAuthority('ADMIN_CLERK')" th:text="${item.product.originalPrice}">
+                    <td class="align-middle" th:text="${item.product.retailPrice}"></td>
                     <td class="align-middle" th:text="${item.units}"></td>
-                    <td sec:authorize="hasAuthority('ADMIN_CLERK')" th:text="${item.reorderAt}"> 
+                    <td class="align-middle" sec:authorize="hasAuthority('ADMIN_CLERK')" th:text="${item.reorderAt}"> 
                     <td class="align-middle" th:text="${item.state.displayValue}"></td>
                     <td class="align-middle">
                         <a th:href="@{|/${item.product.id}|}">
