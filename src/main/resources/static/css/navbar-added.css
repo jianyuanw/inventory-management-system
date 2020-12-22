@@ -13,10 +13,3 @@
     margin-top: 5px;
     margin-right: 10px;
 }
-
-.sticky-top{
-	position:sticky;
-	left:0;
-	top:0;
-	width:100%;
-}
