@@ -98,11 +98,12 @@ public class TransactionServiceImpl implements TransactionService {
 		Transaction transaction = transactionRepo.findById(transactionId).get();
 		JobTransaction jobTransaction = jobTransactionRepo.findByTransaction_Id(transactionId);
 		if (jobTransaction != null) {
+			jobTransaction.setTransaction(null);
 			jobTransactionRepo.delete(jobTransaction);			
 		}		
 		
 		Item item = transaction.getItem();
-		item.setUnits(item.getUnits() + -(transaction.getQuantityChange()));		
+		item.setUnits(item.getUnits() + -(transaction.getQuantityChange()));
 		
 		transactionRepo.delete(transaction);
 		
