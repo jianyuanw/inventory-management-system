@@ -11,7 +11,6 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.SmartValidator;
 
 import sg.edu.iss.ims.security.MyUserDetails;
 

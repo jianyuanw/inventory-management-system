@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import sg.edu.iss.ims.item.Item;
+import sg.edu.iss.ims.job.Job;
 
 @Entity
 @Data
@@ -27,7 +28,10 @@ public class Transaction {
 	
 	@NotNull(message = "Transaction Type cannot be null")
 	private TransactionType transactionType;
-		
+	
+	@ManyToOne
+	private Job job;
+	
 	private Integer quantityChange;
 	
 	private LocalDateTime transactionTime;

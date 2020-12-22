@@ -12,20 +12,16 @@ import org.springframework.stereotype.Service;
 import sg.edu.iss.ims.email.EmailService;
 import sg.edu.iss.ims.item.Item;
 import sg.edu.iss.ims.item.ItemState;
-import sg.edu.iss.ims.job.JobTransaction;
-import sg.edu.iss.ims.job.JobTransactionRepository;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
 	private final TransactionRepository transactionRepo;
 	private final EmailService emailService;
-	private final JobTransactionRepository jobTransactionRepo;
 	
-	public TransactionServiceImpl(TransactionRepository transactionRepo, EmailService emailService, JobTransactionRepository jobTransactionRepo) {
+	public TransactionServiceImpl(TransactionRepository transactionRepo, EmailService emailService) {
 		this.transactionRepo = transactionRepo;
 		this.emailService = emailService;
-		this.jobTransactionRepo = jobTransactionRepo;
 	}
 	
 	@Override
@@ -93,11 +89,6 @@ public class TransactionServiceImpl implements TransactionService {
 	@Transactional
 	public void reverse(Long transactionId) {
 		Transaction transaction = transactionRepo.findById(transactionId).get();
-		JobTransaction jobTransaction = jobTransactionRepo.findByTransaction_Id(transactionId);
-		if (jobTransaction != null) {
-			jobTransaction.setTransaction(null);
-			jobTransactionRepo.delete(jobTransaction);			
-		}		
 		
 		Item item = transaction.getItem();
 		item.setUnits(item.getUnits() + -(transaction.getQuantityChange()));

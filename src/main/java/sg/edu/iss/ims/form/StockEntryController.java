@@ -1,38 +1,31 @@
 package sg.edu.iss.ims.form;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import sg.edu.iss.ims.item.ItemService;
-import sg.edu.iss.ims.item.ItemServiceImpl;
 import sg.edu.iss.ims.item.Reorder;
 import sg.edu.iss.ims.item.ReorderService;
 import sg.edu.iss.ims.item.ReorderServiceImpl;
 import sg.edu.iss.ims.item.ReorderStatus;
 import sg.edu.iss.ims.model.Alert;
-import sg.edu.iss.ims.transaction.Transaction;
-import sg.edu.iss.ims.transaction.TransactionService;
-import sg.edu.iss.ims.transaction.TransactionServiceImpl;
-import sg.edu.iss.ims.transaction.TransactionType;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Controller
 @RequestMapping("/form/stockentry")
 public class StockEntryController {
 
     private final ReorderService reorderService;
-    private final ItemService itemService;
-    private final TransactionService transactionService;
 
-	public StockEntryController(ReorderServiceImpl reorderImpl, ItemServiceImpl itemImpl,
-                                TransactionServiceImpl transactionImpl) {
+	public StockEntryController(ReorderServiceImpl reorderImpl) {
         reorderService = reorderImpl;
-        itemService = itemImpl;
-        transactionService = transactionImpl;
     }
 
     @GetMapping

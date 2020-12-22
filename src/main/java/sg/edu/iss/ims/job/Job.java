@@ -2,7 +2,6 @@ package sg.edu.iss.ims.job;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +13,7 @@ import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sg.edu.iss.ims.transaction.Transaction;
 
 @Entity
 @Data
@@ -35,6 +35,6 @@ public class Job {
 	@Pattern(regexp = "[A-Za-z0-9, ]+", message="Description can only consist of spaces, commas and alphanumerical characters")
 	private String description;	
 	
-	@OneToMany(mappedBy = "job", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<JobTransaction> jobTransactions;
+	@OneToMany(mappedBy = "job", fetch = FetchType.EAGER)
+	private List<Transaction> transactions;
 }

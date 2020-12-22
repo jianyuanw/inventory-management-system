@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,8 +32,6 @@ import sg.edu.iss.ims.job.Job;
 import sg.edu.iss.ims.job.JobRepository;
 import sg.edu.iss.ims.job.JobService;
 import sg.edu.iss.ims.job.JobServiceImpl;
-import sg.edu.iss.ims.job.JobTransaction;
-import sg.edu.iss.ims.job.JobTransactionRepository;
 import sg.edu.iss.ims.product.Product;
 import sg.edu.iss.ims.product.ProductRepository;
 import sg.edu.iss.ims.supplier.Supplier;
@@ -55,7 +52,6 @@ class DatabaseSeeder implements InitializingBean {
 	private final ItemRepository itemRepo;
 	private final TransactionRepository transactionRepo;
 	private final JobRepository jobRepo;
-	private final JobTransactionRepository jobTransactionRepo;
 	private final ReorderRepository reorderRepo;
 	private final UserRepository userRepo;
 	private final JobService jobService;
@@ -63,7 +59,7 @@ class DatabaseSeeder implements InitializingBean {
 	
 	public DatabaseSeeder(SubcategoryRepository subcatRepo, CategoryRepository catRepo, BrandRepository brandRepo,
 						  SupplierRepository supplierRepo, ProductRepository productRepo, ItemRepository itemRepo,
-						  TransactionRepository transactionRepo, JobRepository jobRepo, JobTransactionRepository jobTransactionRepo,
+						  TransactionRepository transactionRepo, JobRepository jobRepo,
 						  ReorderRepository reorderRepo, UserRepository userRepo, PasswordEncoder encoder, JobServiceImpl jobServiceImpl) {
 		this.subcatRepo = subcatRepo;
 		this.catRepo = catRepo;
@@ -73,7 +69,6 @@ class DatabaseSeeder implements InitializingBean {
 		this.itemRepo = itemRepo;
 		this.transactionRepo = transactionRepo;
 		this.jobRepo = jobRepo;
-		this.jobTransactionRepo = jobTransactionRepo;
 		this.reorderRepo = reorderRepo;
 		this.userRepo = userRepo;
 		this.encoder = encoder;
@@ -233,11 +228,10 @@ class DatabaseSeeder implements InitializingBean {
 		  List<Job> jobs = jobRepo.findAll();
 		  
 		  for (Job job : jobs) {
-			  List<JobTransaction> jobTransactions = job.getJobTransactions();
+			  List<Transaction> jobTransactions = job.getTransactions();
 			  int randomDays = ThreadLocalRandom.current().nextInt(1, 8);
-			  for (JobTransaction jt : jobTransactions) {
-				  // For randomizing of time of pre-generated data
-				  Transaction t = jt.getTransaction();
+			  for (Transaction t : jobTransactions) {
+				  // For randomizing of time of pre-generated data				  
 				  t.setTransactionTime(t.getTransactionTime().minusDays(randomDays));
 				  transactionRepo.save(t);
 			  }

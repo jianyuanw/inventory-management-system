@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import sg.edu.iss.ims.job.Job;
 import sg.edu.iss.ims.job.JobRepository;
 
 @SpringBootTest
@@ -15,7 +14,7 @@ public class JobRepositoryTest {
 	
 	@Test
 	void findJobById() {
-		Job j = jrepo.findJobById(null);
+		jrepo.findAll();
 	}
 
 }
