@@ -30,7 +30,7 @@
                     <td th:text="${reorder.item.reorderAt}"></td>
                     <td th:text="${reorder.item.reorderQuantity}"></td>
                     <td th:text="${reorder.quantity}"></td>
-                    <td th:text="${reorder.item.product.originalPrice} * ${reorder.quantity}"></td>
+                    <td th:text="${#numbers.formatDecimal(reorder.item.product.originalPrice * reorder.quantity, 0, 2)}"></td>
                 </tr>
                 <tr>
                     <td class="text-right" colspan="6">TOTAL</td>

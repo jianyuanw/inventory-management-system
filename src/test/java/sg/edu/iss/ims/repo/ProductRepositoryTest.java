@@ -29,10 +29,4 @@ class ProductRepositoryTest {
 
         }
     }
-
-    @Test
-    void findByShelfLocation(String shelflocation)
-    {
-
-    }
 }

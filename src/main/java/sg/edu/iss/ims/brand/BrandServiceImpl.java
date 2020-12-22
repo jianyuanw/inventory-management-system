@@ -16,7 +16,7 @@ public class BrandServiceImpl implements BrandService {
 
 	@Override
 	public Brand findBrandByName(String brandName) {
-		return brandRepo.findBrandByName(brandName);
+		return brandRepo.findByName(brandName);
 	}
 
 	@Override

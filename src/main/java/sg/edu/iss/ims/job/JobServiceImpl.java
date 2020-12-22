@@ -51,20 +51,17 @@ public class JobServiceImpl implements JobService {
 
 	@Override
 	public Job readJob(Long id) {
-		// TODO Auto-generated method stub
 		return jobRepo.findJobById(id);
 	}
 
 	@Override
 	public void updateJob(Job job) {
-		// TODO Auto-generated method stub
 		jobRepo.save(job);
 		
 	}
 
 	@Override
 	public void deleteJob(Job job) {
-		// TODO Auto-generated method stub
 		jobRepo.delete(job);
 		
 	}

@@ -13,10 +13,10 @@ public class CategoryRepositoryTest {
 	CategoryRepository crepo;
 	
 	@Test
-	void findCategoryByNameEager() {
+	void findByName() {
 		String[] categories = {"Tyres", "Brake System", "Engine", "Filters"};
 		for (String cate: categories) {
-			Category c = crepo.findCategoryByNameEager(cate);
+			Category c = crepo.findByName(cate);
 			System.out.println(c);
 		}
 		

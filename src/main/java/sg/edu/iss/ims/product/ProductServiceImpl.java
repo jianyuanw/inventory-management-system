@@ -93,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
 			if (!Pattern.matches("[a-zA-Z0-9 ]+", newBrand)) {
 				errors.put("newBrand", "Brand name can only consist of spaces and alphanumerical characters\n");
 			}
-			if (brandRepo.findBrandByName(newBrand) != null) {
+			if (brandRepo.findByName(newBrand) != null) {
 				errors.put("newBrand", errors.get("newBrand") + "Brand name " + newBrand + " already exists\n");
 			}
 		}
@@ -104,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
 			if (!Pattern.matches("[a-zA-Z0-9 ]+", newCategory)) {
 				errors.put("newCategory", "Category name can only consist of spaces and alphanumerical characters\n");
 			}
-			if (categoryRepo.findCategoryByName(newCategory) != null) {
+			if (categoryRepo.findByName(newCategory) != null) {
 				errors.put("newCategory",
 						errors.get("newCategory") + "Category name " + newCategory + " already exists\n");
 			}

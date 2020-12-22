@@ -35,7 +35,7 @@ public class SubcategoryRepositoryTest {
 	void findSubcategoriesByCategory() {
 		String[] categories = {"Tyres", "Brake System", "Engine", "Filters"};
 		for(String cate: categories) {
-			Category c = crepo.findCategoryByName(cate);
+			Category c = crepo.findByName(cate);
 			List<Subcategory> sclist = subrepo.findSubcategoriesByCategory(c);
 			sclist.stream().forEach(System.out::println);
 		}	

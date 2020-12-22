@@ -17,7 +17,7 @@ public class BrandRepositoryTest {
 	void findBrandByName() {
 		String[] brands = {"Volkswagen", "Toyota", "Renault", "Nissan", "Mitsubishi"};
 		for(String b: brands) {
-			Brand brand = brepo.findBrandByName(b);
+			Brand brand = brepo.findByName(b);
 			System.out.println(brand);
 		}
 		

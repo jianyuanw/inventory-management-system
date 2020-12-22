@@ -27,6 +27,10 @@ public class ItemList {
 		list.remove(index);
 	}
 	
+	public void addToList(Item item) {
+		list.add(item);
+	}
+	
 	public void compactList() {
 		List<Item> compactList = new ArrayList<Item>();
 		
