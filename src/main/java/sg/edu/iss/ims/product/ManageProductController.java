@@ -133,6 +133,10 @@ public class ManageProductController {
 			redirAttr.addFlashAttribute("alert",
 					new Alert("info", "Active reorder exists. Only one active reorder allowed."));
 			return "redirect:/product/reorder/" + item.getProduct().getId();
+		} else if (qtyToReorder < item.getReorderQuantity()) {
+			redirAttr.addFlashAttribute("alert",
+					new Alert("warning", "Need to order at least the reorder quantity amount of " + item.getReorderQuantity()));
+			return "redirect:/product/reorder/" + item.getProduct().getId();
 		}
 
 		Reorder reorder = new Reorder();

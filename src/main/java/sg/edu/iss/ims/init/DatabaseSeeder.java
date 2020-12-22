@@ -1,6 +1,7 @@
 package sg.edu.iss.ims.init;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -193,9 +194,15 @@ class DatabaseSeeder implements InitializingBean {
 	  public void generateRandomData(int reorders, int transactions) {
 		  String[] names = {"Derek Cai", "Jian Yuan", "Zi Feng", "Angelia", "Suriya", "Yu Bo", "Yi Tong", "Si Te", "Jia Wei"};
 		  
+		  List<Long> usedItems = new ArrayList<Long>();
+		  
 		  List<Item> items = itemRepo.findAll();
 		  for (int i = 0; i < reorders; i++) {
-			 Item item = items.get(ThreadLocalRandom.current().nextInt(0, items.size())); 
+			 Item item = items.get(ThreadLocalRandom.current().nextInt(0, items.size()));
+			 while (usedItems.contains(item.getId())) {
+				 item = items.get(ThreadLocalRandom.current().nextInt(0, items.size()));
+			 }					 
+					  
 			 long minDay = LocalDate.of(2020, 12, 18).toEpochDay();
 			 long maxDay = LocalDate.of(2020, 12, 20).toEpochDay();
 			 long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
@@ -205,6 +212,8 @@ class DatabaseSeeder implements InitializingBean {
 			 reorder.setQuantity(item.getReorderQuantity());
 			 reorder.setOrderDate(randomDate);
 			 reorder.setStatus(ReorderStatus.PENDING_DELIVERY);
+			 item.setState(ItemState.REORDER_PLACED);
+			 itemRepo.save(item);
 			 reorderRepo.save(reorder);
 		  }
 		  
