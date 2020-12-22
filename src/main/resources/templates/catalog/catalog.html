@@ -16,10 +16,14 @@
                class="table table-striped table-bordered table-sm">
             <thead>
                 <tr>
+                	<th>Part Number>
                     <th>Name</th>
                     <th>Image</th>
                     <th>Description</th>
+                    <th sec:authorize="hasAuthority('ADMIN_CLERK')">Original Price</th>
+                    <th>Retail Price</th>
                     <th>Stock Quantity</th>
+                    <th>Reorder At</th>
                     <th>Stock Status</th>
                     <th>View</th>
                     <th sec:authorize="hasAuthority('ADMIN_CLERK')">Follow up</th>
@@ -27,13 +31,16 @@
             </thead>
             <tbody>
                 <tr th:each="item : ${items}">
-                    <td class="align-middle" th:text="${item.product.name}">
-                    </td>
+                	<td class="align-middle" th:text="${item.product.partNumber}"></td>
+                    <td class="align-middle" th:text="${item.product.name}"></td>
                     <td class="align-middle">
                     	<img class="img-thumbnail" th:src="@{${item.product.image}}"  />
                     </td>
                     <td class="align-middle" th:text="${item.product.description}"></td>
+                    <td class="align-middle" sec:authorize="hasAuthority('ADMIN_CLERK')" th:text="${item.originalPrice}">
+                    <td class="align-middle" th:text="${item.retailPrice"></td>
                     <td class="align-middle" th:text="${item.units}"></td>
+                    <td sec:authorize="hasAuthority('ADMIN_CLERK')" th:text="${item.reorderAt}"> 
                     <td class="align-middle" th:text="${item.state.displayValue}"></td>
                     <td class="align-middle">
                         <a th:href="@{|/${item.product.id}|}">

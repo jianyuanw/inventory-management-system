@@ -1,4 +1,4 @@
-package sg.edu.iss.ims.item;
+package sg.edu.iss.ims.form;
 
 import java.util.List;
 
@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import sg.edu.iss.ims.item.ItemList;
+import sg.edu.iss.ims.item.ItemService;
+import sg.edu.iss.ims.item.ItemServiceImpl;
 import sg.edu.iss.ims.job.Job;
 import sg.edu.iss.ims.job.JobService;
 import sg.edu.iss.ims.job.JobServiceImpl;
 import sg.edu.iss.ims.model.Alert;
 
 @Controller
+@RequestMapping("/form/stockusage")
 public class StockUsageController {
 	private JobService jobService;
 	private ItemService itemService;
@@ -29,7 +33,7 @@ public class StockUsageController {
 		itemService = itemServiceImpl;
 	}
 
-	@GetMapping("/form/stockusage")
+	@GetMapping
 	public String generateSupplierForm(Model model, @ModelAttribute Job job, ItemList itemList) {
 		itemList.addProduct();
 		model.addAttribute("itemList", itemList);
@@ -37,7 +41,7 @@ public class StockUsageController {
 		return "form/stockusage";
 	}
 	
-	@PostMapping("/form/stockusage")
+	@PostMapping
 	public String saveSupplierForm(Model model, @Valid @ModelAttribute("job") Job job, BindingResult bindingResult, ItemList itemList, RedirectAttributes redirAttr) {
 		itemList.compactList();
 		List<Integer> errors = itemService.checkInventory(itemList.getList());
@@ -55,14 +59,14 @@ public class StockUsageController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="/form/stockusage", params={"addRow"})
+	@RequestMapping(params={"addRow"})
 	public String addRow(Model model, Job job, ItemList itemList) {
 	    itemList.addProduct();
 	    model.addAttribute("inventory", itemService.listAvailable());
 	    return "form/stockusage";
 	}
 
-	@RequestMapping(value="/form/stockusage", params={"removeRow"})
+	@RequestMapping(params={"removeRow"})
 	public String removeRow(Model model, Job job, ItemList itemList, HttpServletRequest req) {
 	    Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
 	    itemList.removeProduct(rowId);
@@ -70,7 +74,7 @@ public class StockUsageController {
 	    return "form/stockusage";
 	}	
 	
-	@RequestMapping(value="/form/stockusage", params={"getTransaction"})
+	@RequestMapping(params={"getTransaction"})
 	public String  getTransaction(Model model, Job job, ItemList itemList, HttpServletRequest req, RedirectAttributes redirAttr) {
 		Long itemId = Long.valueOf(req.getParameter("getTransaction"));
 	    redirAttr.addAttribute("itemId", itemId);

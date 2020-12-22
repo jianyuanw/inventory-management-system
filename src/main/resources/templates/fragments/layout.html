@@ -59,6 +59,7 @@
 							Forms
 						</a>
 						<div class="dropdown-menu dropdown-default">
+							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockreorder}" th:text="#{navbar.stockreorder}"></a>
 							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockentry}" th:text="#{navbar.stockentry}"></a>
 							<a sec:authorize="hasAuthority('ADMIN_CLERK')" class="dropdown-item" th:href="@{/form/stockreturn}" th:text="#{navbar.stockreturn}"></a>
 							<a class="dropdown-item" th:href="@{/form/stockusage}" th:text="#{navbar.stockusage}"></a>
