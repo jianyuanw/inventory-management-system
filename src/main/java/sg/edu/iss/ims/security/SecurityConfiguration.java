@@ -76,7 +76,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/product/edit/**",
             "/product/delete/**",
             "/product/reorder/**",
-            "/user/**"
+            "/user/**",
+            "/transaction/**"
     };
 
     private final String[] ADMIN_MECHANIC_URLS = {

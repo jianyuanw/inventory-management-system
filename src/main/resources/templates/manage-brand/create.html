@@ -10,7 +10,7 @@
 	<div th:replace="fragments/layout.html :: header"></div>
 	
 	<form class="border border-light p-5" method="post" th:action="@{/brand/save}" th:object="${brand}">
-		<p class="h4 mb-4">Create brand</p>
+		<p class="h4 mb-4">Create Brand</p>
 		<div class="form-row">
 			<input type="hidden" th:field="*{id}"> 
 			<label>Brand Name</label>
