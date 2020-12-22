@@ -8,6 +8,7 @@
 </head>
 <body>
 	<div th:replace="fragments/layout.html :: header"></div>
+	<div th:replace = "fragments/layout.html :: spacer"></div>
 	
     <form class="border border-light p-5" method="get" th:action="@{/report/usage/output}">
         <p class="h4 mb-4">Usage Report Query</p>
