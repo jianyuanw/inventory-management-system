@@ -19,7 +19,7 @@
                 	<th>Part Number</th>
                     <th>Name</th>
                     <th>Image</th>
-                    <th>Description</th>
+                    <th>Shelf Location</th>
                     <th sec:authorize="hasAuthority('ADMIN_CLERK')">Original Price</th>
                     <th>Retail Price</th>
                     <th>Stock Quantity</th>
@@ -36,7 +36,7 @@
                     <td class="align-middle">
                     	<img class="img-thumbnail" width="200" height="200" th:src="@{${item.product.image}}"  />
                     </td>
-                    <td class="align-middle" th:text="${item.product.description}"></td>
+                    <td class="align-middle" th:text="${item.shelfLocation}"></td>
                     <td class="align-middle" sec:authorize="hasAuthority('ADMIN_CLERK')" th:text="${item.product.originalPrice}">
                     <td class="align-middle" th:text="${item.product.retailPrice}"></td>
                     <td class="align-middle" th:text="${item.units}"></td>

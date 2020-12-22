@@ -1,5 +1,6 @@
 package sg.edu.iss.ims.init;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,6 +88,7 @@ class DatabaseSeeder implements InitializingBean {
 		  List<User> users = userRepo.findAll();
 		  users.sort(Comparator.comparing(User::getId));
 		  
+		  // Not a foolproof state detector, please drop and reseed if needed
 		  if (users.size() < 3) {
 			  recreateData = true;
 		  } else if (users.get(0).getUsername() == "admin" && users.get(1).getUsername() == "mechanic" &&
@@ -144,8 +146,9 @@ class DatabaseSeeder implements InitializingBean {
 			  for (String category : categories) {
 				  var c = catRepo.findByName(category);
 				  for (Subcategory sc : subcatRepo.findSubcategoriesByCategory(c)) {
-					  double price = ThreadLocalRandom.current().nextInt(6000, 9000) / 100.0;
-					  price = (double) ((int) (price * 100) / 100.0); 
+					  double price = ThreadLocalRandom.current().nextInt(6000, 9999) / 100.0;
+					  DecimalFormat rounder = new DecimalFormat("0.00");
+					  price = Double.parseDouble(rounder.format(price));
 					  double measurement = ThreadLocalRandom.current().nextInt(15, 20);
 					  var partNumber = c.getName().substring(0, 2).toUpperCase() + "_" + sc.getName().substring(0, 2).toUpperCase() + "-" + brand.getName().substring(0, 2).toUpperCase() + "_" + supplier.getName().substring(0, 2).toUpperCase();
 					  if (usedCategories.containsKey(partNumber)) {
