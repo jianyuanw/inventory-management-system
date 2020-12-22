@@ -23,48 +23,48 @@
 			<input type="text" class="d-none" th:field="${product.id}" readonly>
 			<div class="col">
 				<label class="control-label">Product Name</label>
-				<input type="text" class="form-control mb-4" th:field="${product.name}" name="prodname" id="prodname" title="Product Name" value="" data-type="required">
+				<input type="text" class="form-control mb-4" th:field="${product.name}" name="prodname" id="prodname" title="Product Name" value="" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${product.name}')}" th:errors="${product.name}"></span> 
 			</div>
 			<div class="col">
 				<label class="control-label">Part Number</label>
-				<input type="text" class="form-control mb-4" th:field="${product.partNumber}" name="prodpn" id="prodpn" title="Product Part Number" value="" data-type="required">
+				<input type="text" class="form-control mb-4" th:field="${product.partNumber}" name="prodpn" id="prodpn" title="Product Part Number" value="" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${product.partNumber}')}" th:errors="${product.partNumber}"></span>
 			</div>			
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Product Description</label>
-				<input type="text" class="form-control mb-4" th:field="${product.description}" name="proddesc" id="proddesc" title="Product Description" value="" data-type="required">
+				<input type="text" class="form-control mb-4" th:field="${product.description}" name="proddesc" id="proddesc" title="Product Description" value="" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${product.description}')}" th:errors="${product.description}"></span>
 			</div>		
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Original Price</label>
-				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.originalPrice}" name="prodop" id="prodop" title="Product Original Price"  data-type="required">
+				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.originalPrice}" name="prodop" id="prodop" title="Product Original Price"  required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${product.originalPrice}')}" th:errors="${product.originalPrice}"></span>
 			</div>	
 			<div class="col">
 				<label class="control-label">Partner Price</label>
-				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.partnerPrice}" name="prodpp" id="prodpp" title="Product Partner Price" data-type="required">
+				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.partnerPrice}" name="prodpp" id="prodpp" title="Product Partner Price" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${product.partnerPrice}')}" th:errors="${product.partnerPrice}"></span>
 			</div>					
 			<div class="col">
 				<label class="control-label">Wholesale Price</label>
-				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.wholesalePrice}" name="prodwp" id="prodwp" title="Product Wholesale Price"data-type="required">
+				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.wholesalePrice}" name="prodwp" id="prodwp" title="Product Wholesale Price"required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${product.wholesalePrice}')}" th:errors="${product.wholesalePrice}"></span>
 			</div>
 			<div class="col">
 				<label class="control-label">Retail Price</label>
-				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.retailPrice}" name="prodrp" id="prodrp" title="Product Retail Price" data-type="required">
+				<input type="number" min="0" step="0.01" value="0.00" class="form-control mb-4" th:field="${product.retailPrice}" name="prodrp" id="prodrp" title="Product Retail Price" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${product.retailPrice}')}" th:errors="${product.retailPrice}"></span>
 			</div>											
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Product Color</label>
-				<input type="text" class="form-control mb-4" th:field="${product.color}" name="prodcolor" id="prodcolor" title="Product Color" value="" data-type="required">
+				<input type="text" class="form-control mb-4" th:field="${product.color}" name="prodcolor" id="prodcolor" title="Product Color" value="" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${product.color}')}" th:errors="${product.color}"></span>
 			</div>
 			<div class="col">
@@ -76,26 +76,26 @@
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="supplierNew" name="newSupplier" placeholder="New supplier name" data-type="required">
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="supplierNew" name="newSupplier" placeholder="New supplier name" required>
 				<span class="text-danger" id="supplierNewError" th:if="${errors.containsKey('newSupplier')}" th:text="${errors.get('newSupplier')}"></span>				
 			</div>				
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Product Measurement</label>
-				<input type="text" class="form-control mb-4" th:field="${product.measurement}" name="prodmeasurement" id="prodmeasurement" title="Product Measurement"data-type="required">
+				<input type="text" class="form-control mb-4" th:field="${product.measurement}" name="prodmeasurement" id="prodmeasurement" title="Product Measurement"required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${product.measurement}')}" th:errors="${product.measurement}"></span>								
 			</div>
 			<div class="col">
 				<label class="control-label">Product Measurement Type</label>
-				<input type="text" class="form-control mb-4" th:field="${product.measurementType}" name="prodmt" id="prodmt" title="Product Measurement Type" data-type="required">
+				<input type="text" class="form-control mb-4" th:field="${product.measurementType}" name="prodmt" id="prodmt" title="Product Measurement Type" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${product.measurementType}')}" th:errors="${product.measurementType}"></span>		
 			</div>				
 		</div>		
 		<div class="form-row">			
 			<div class="col">
 				<label class="control-label">Product Image</label>
-				<input type="text" class="form-control mb-4" th:field="${product.image}" name="prodimage" id="prodimage" title="Product Image" data-type="required">		
+				<input type="text" class="form-control mb-4" th:field="${product.image}" name="prodimage" id="prodimage" title="Product Image" required>		
 			</div>
 			<div class="col">
 				<label class="control-label">Product Brand</label>
@@ -106,7 +106,7 @@
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="brandNew" name="newBrand" placeholder="New brand name" onchange="" data-type="required">
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="brandNew" name="newBrand" placeholder="New brand name" onchange="" required>
 				<span class="text-danger" id="brandNewError" th:if="${errors.containsKey('newBrand')}" th:text="${errors.get('newBrand')}"></span>				
 			</div>					
 		</div>
@@ -121,7 +121,7 @@
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="categoryNew" name="newCategory" placeholder="New category name" data-type="required">
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="categoryNew" name="newCategory" placeholder="New category name" required>
 				<span class="text-danger" id="categoryNewError" th:if="${errors.containsKey('newCategory')}" th:text="${errors.get('newCategory')}"></span>			
 			</div>					
 			<div class="col">
@@ -134,7 +134,7 @@
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="subcategoryNew" name="newSubcategory" placeholder="New subcategory name" data-type="required">
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="subcategoryNew" name="newSubcategory" placeholder="New subcategory name" required>
 				<span class="text-danger" id="subcategoryNewError" th:if="${errors.containsKey('newSubcategory')}" th:text="${errors.get('newSubcategory')}"></span>				
 			</div>							
 		</div>
@@ -142,24 +142,24 @@
 			<input type="text" class="d-none" th:field="${item.id}" readonly>
 			<div class="col">
 				<label class="control-label">Item Units</label>
-				<input type="number" class="form-control mb-4" th:field="${item.units}" name="itemunits" id="itemunits" title="Item Units" value="0" data-type="required">
+				<input type="number" class="form-control mb-4" th:field="${item.units}" name="itemunits" id="itemunits" title="Item Units" value="0" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${item.units}')}" th:errors="${item.units}"></span>
 			</div>		
 			<div class="col">
 				<label class="control-label">Item Shelf Location</label>
-				<input type="text" class="form-control mb-4" th:field="${item.shelfLocation}" name="itemsl" id="itemsl" title="Item Shelf Location" value="" data-type="required">
+				<input type="text" class="form-control mb-4" th:field="${item.shelfLocation}" name="itemsl" id="itemsl" title="Item Shelf Location" value="" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${item.shelfLocation}')}" th:errors="${item.shelfLocation}"></span>							
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="col">
 				<label class="control-label">Item Reorder At</label>
-				<input type="number" class="form-control mb-4" th:field="${item.reorderAt}" name="itemra" id="itemra" title="Item Reorder At" value="" data-type="required">
+				<input type="number" class="form-control mb-4" th:field="${item.reorderAt}" name="itemra" id="itemra" title="Item Reorder At" value="" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${item.reorderAt}')}" th:errors="${item.reorderAt}"></span>
 			</div>		
 			<div class="col">
 				<label class="control-label">Minimum Reorder Quantity</label>
-				<input type="number" class="form-control mb-4" th:field="${item.reorderQuantity}" name="itemrq" id="itemrq" title="Item Reorder Quantity" value="" data-type="required">
+				<input type="number" class="form-control mb-4" th:field="${item.reorderQuantity}" name="itemrq" id="itemrq" title="Item Reorder Quantity" value="" required>
 				<span class="text-danger" th:if="${#fields.hasErrors('${item.reorderQuantity}')}" th:errors="${item.reorderQuantity}"></span>								
 			</div>
 		</div>			
@@ -170,62 +170,6 @@
 		</div>
 		</form>
 	</div>
-		<!--  
-			<div class="span12">
-				<fieldset>
-					<form class="form-horizontal" action= "" method="get" th:action="@{/product/save}">
-						<div class="control-group">
-							<input type="hidden" th:field="${product.id}"> 
-							<div class="controls">
-								<label class="control-label">Product Color</label>
-								<input type="text" th:field="${product.color}" name="prodcolor" id="prodcolor data-type="required"" title="Product Color" value="" data-type="required">
-								<label class="control-label">Product Supplier</label>
-								<input type="text" th:field="${product.supplier}" list ="suppliers">
-									<datalist id="suppliers">
-								    	<option th:each="sup : ${suppliers}" th:value="${sup.id}" th:text="${sup.name}"></option>
-									</datalist>
-								<label class="control-label">Product Measurement</label>
-								<input type="text" th:field="${product.measurement}" name="prodmeasurement" id="prodmeasurement data-type="required"" title="Product Measurement" value="" data-type="required">
-								<label class="control-label">Product Measurement Type</label>
-								<input type="text" th:field="${product.measurementType}" name="prodmt" id="prodmt data-type="required"" title="Product Measurement Type" value="" data-type="required">
-								<label class="control-label">Product Image</label>
-								<input type="text" th:field="${product.image}" name="prodimage" id="prodimage data-type="required"" title="Product Image" value="" data-type="required">
-								<label class="control-label">Product Category</label>
-								<input type="text" th:field="${product.category}" list ="categories">
-									<datalist id="categories">
-								    	<option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
-									</datalist>
-								<label class="control-label">Product Subcategory</label>
-								<input type="text" th:field="${product.subcategory}" list ="subcategories">
-									<datalist id="subcategories">
-								    	<option th:each="subcat : ${subcategories}" th:value="${subcat.id}" th:text="${subcat.name}"></option>
-									</datalist>
-								<label class="control-label">Product Brand</label>
-								<input type="text" th:field="${product.brand}" list ="brands">
-									<datalist id="brands">
-								    	<option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
-									</datalist>
-								<input type="hidden" th:field="${item.id}">
-								<label class="control-label">Item Reorder At</label>
-								<input type="text" th:field="${item.reorderAt}" name="itemra" id="itemra data-type="required"" title="Item Reorder At" value="" data-type="required">
-								<label class="control-label">Item Reorder At</label>
-								<input type="text" th:field="${item.reorderQuantity}" name="itemrq" id="itemrq data-type="required"" title="Item Reorder Quantity" value="" data-type="required">
-								<label class="control-label">Item Shelf Location</label>
-								<input type="text" th:field="${item.shelfLocation}" name="itemsl" id="itemsl data-type="required"" title="Item Shelf Location" value="" data-type="required">
-								<label class="control-label">Item Units</label>
-								<input type="text" th:field="${item.units}" name="itemunits" id="itemunits data-type="required"" title="Item Units" value="0" data-type="required">
-							</div>
-						</div>
-						<br />
-						<div class="form-actions">
-							<button type="submit" class="btn btn-success">Save</button>
-							<button type="button" class="btn" onclick="cancel()">Cancel</button>
-						</div>
-					</form>
-				</fieldset>
-				</div>
-			</div>
-		</div>-->
 
 	<div th:replace="fragments/layout.html :: footer"></div>
 </body>
