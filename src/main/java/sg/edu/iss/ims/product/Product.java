@@ -12,6 +12,7 @@ import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString.Exclude;
 import sg.edu.iss.ims.brand.Brand;
 import sg.edu.iss.ims.category.Category;
 import sg.edu.iss.ims.category.Subcategory;
@@ -60,14 +61,19 @@ public class Product {
 	private String image;
 
 	@OneToOne
+	@Exclude
 	private Category category;
 	@OneToOne
+	@Exclude
 	private Supplier supplier;
 	@OneToOne
+	@Exclude
 	private Brand brand;
 	@OneToOne
+	@Exclude
 	private Subcategory subcategory;
 	@OneToOne(mappedBy="product",cascade=CascadeType.ALL)
+	@Exclude
 	private Item item;
 
 	

@@ -28,7 +28,7 @@ public class Category {
 	@Pattern(regexp = "[A-Za-z0-9 ]+", message="Category name can only consist of spaces and alphanumerical characters")
 	private String name;
 
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	@Exclude
 	private List<Subcategory> subcategories;
 	
