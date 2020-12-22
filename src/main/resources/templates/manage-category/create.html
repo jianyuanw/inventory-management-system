@@ -10,7 +10,7 @@
 	<div th:replace="fragments/layout.html :: header"></div>
 	
 	<form class="border border-light p-5" method="post" th:action="@{/category/save}" th:object="${category}">
-		<p class="h4 mb-4">Create category</p>
+		<p class="h4 mb-4">Create Category</p>
 		<div class="form-row">
 			<input type="hidden" th:field="*{id}"> 
 			<label>Category Name</label>
