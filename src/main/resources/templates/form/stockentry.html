@@ -10,7 +10,6 @@
 
 <body>
     <div th:replace="fragments/layout.html :: header"></div>
-    <div th:replace = "fragments/layout.html :: spacer"></div>
     <form class="border border-light p-5" method="post" th:action="@{/form/stockentry/created}">
         <p class="h4 mb-4">Stock Entry Form</p>
         <label for="reorderNumber">Reorder Number</label>
