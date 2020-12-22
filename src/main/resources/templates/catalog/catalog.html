@@ -43,7 +43,7 @@
                     <td class="align-middle" sec:authorize="hasAuthority('ADMIN_CLERK')" th:text="${item.reorderAt}"> 
                     <td class="align-middle" th:text="${item.state.displayValue}"></td>
                     <td class="align-middle">
-                        <a th:href="@{|/${item.product.id}|}">
+                        <a th:href="@{|/product/details/${item.product.id}|}">
                             <button class="btn btn-primary btn-sm m-0">Details</button>
                         </a>                    	
                     </td>
