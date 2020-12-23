@@ -75,7 +75,7 @@
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="supplierNew" name="newSupplier" placeholder="New supplier name" required>
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="supplierNew" name="newSupplier" placeholder="New supplier name">
 				<span class="text-danger" id="supplierNewError" th:if="${errors.containsKey('newSupplier')}" th:text="${errors.get('newSupplier')}"></span>				
 			</div>				
 		</div>
@@ -105,7 +105,7 @@
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="brandNew" name="newBrand" placeholder="New brand name" onchange="" required>
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="brandNew" name="newBrand" placeholder="New brand name" onchange="">
 				<span class="text-danger" id="brandNewError" th:if="${errors.containsKey('newBrand')}" th:text="${errors.get('newBrand')}"></span>				
 			</div>					
 		</div>
@@ -120,7 +120,7 @@
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="categoryNew" name="newCategory" placeholder="New category name" required>
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="categoryNew" name="newCategory" placeholder="New category name">
 				<span class="text-danger" id="categoryNewError" th:if="${errors.containsKey('newCategory')}" th:text="${errors.get('newCategory')}"></span>			
 			</div>					
 			<div class="col">
@@ -133,7 +133,7 @@
 			</div>
 			<div class="col">
 				<label class="control-label"></label>
-				<input type="text" class="form-control mb-4 mt-2 d-none" id="subcategoryNew" name="newSubcategory" placeholder="New subcategory name" required>
+				<input type="text" class="form-control mb-4 mt-2 d-none" id="subcategoryNew" name="newSubcategory" placeholder="New subcategory name">
 				<span class="text-danger" id="subcategoryNewError" th:if="${errors.containsKey('newSubcategory')}" th:text="${errors.get('newSubcategory')}"></span>				
 			</div>							
 		</div>
