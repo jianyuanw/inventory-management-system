@@ -94,4 +94,9 @@ public class CategoryServiceImpl implements CategoryService {
 	public void deleteSubcategory(Subcategory subcategory) {
 		subcatRepo.delete(subcategory);
 	}
+	
+	@Override
+	public Subcategory findSubcategoryByNameAndCategory_Id(String subcategoryName, Long categoryId) {
+		return subcatRepo.findByNameAndCategory_Id(subcategoryName, categoryId);
+	}
 }

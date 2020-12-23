@@ -30,4 +30,6 @@ public interface CategoryService {
 	public Subcategory findSubcategoryById(Long id);
 	
 	public void deleteSubcategory(Subcategory subcategory);
+
+	public Subcategory findSubcategoryByNameAndCategory_Id(String subcategoryName, Long categoryId);
 }

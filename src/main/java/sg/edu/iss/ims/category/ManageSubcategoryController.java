@@ -37,7 +37,7 @@ public class ManageSubcategoryController {
 
 	@PostMapping("/save")
 	public String add(@Valid @ModelAttribute("subcategory") Subcategory subcategory, BindingResult bindingResult, RedirectAttributes redirAttr, Model model) {
-		if (catService.findSubcategoryByName(subcategory.getName()) != null) {
+		if (catService.findSubcategoryByNameAndCategory_Id(subcategory.getName(), subcategory.getCategory().getId()) != null) {
 			bindingResult.rejectValue("name", "error.subcategory", "Subcategory name already exists");
 		}
 		model.addAttribute("categories", catService.getCategories());
