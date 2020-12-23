@@ -16,6 +16,9 @@ function createSelect(element) {
 		if (errorElement != null) {
 		    errorElement.classList.remove("d-none");	
 		}
+		if (element.id == "categorySelect") {
+			updateSubcategories(element.value);
+		}
 		
 	} else {
 		newElement.classList.add("d-none");		
@@ -23,10 +26,26 @@ function createSelect(element) {
 		if (errorElement != null) {
 			errorElement.classList.add("d-none");
 		}
+		if (element.id == "categorySelect") {
+			updateSubcategories(element.value);
+		}		
+		
 	}
 
 }
 
 function roundData(element) {
 	element.value = Number(element.value).toFixed(2);
+}
+
+function updateSubcategories(categoryId) {
+	let subcategory = document.getElementById("subcategorySelect");
+	for (let i = 1; i < subcategory.length; i++) {
+		if (subcategory.options[i].getAttribute("data-category") != categoryId) {
+			subcategory.options[i].classList.add("d-none");
+		} else {
+			subcategory.options[i].classList.remove("d-none");
+		}
+	}
+	
 }
