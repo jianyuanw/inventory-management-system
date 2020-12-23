@@ -36,6 +36,9 @@ public class ManageSupplierController {
 
 	@PostMapping("/save")
 	public String add(@Valid @ModelAttribute("supplier") Supplier supplier, BindingResult bindingResult, RedirectAttributes redirAttr) {
+		if (supService.findSupplierByName(supplier.getName()) != null) {
+			bindingResult.rejectValue("name", "error.supplier", "Supplier name already exists");
+		}
 		if (bindingResult.hasErrors()) 
 		{
 			return "manage-supplier/create";

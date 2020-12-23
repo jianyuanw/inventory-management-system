@@ -36,6 +36,9 @@ public class ManageBrandController {
 
 	@PostMapping("/save")
 	public String add(@Valid @ModelAttribute("brand") Brand brand, BindingResult bindingResult, RedirectAttributes redirAttr) {
+		if (brandService.findBrandByName(brand.getName()) != null) {
+			bindingResult.rejectValue("name", "error.brand", "Brand name already exists");
+		}		
 		if (bindingResult.hasErrors()) 
 		{
 			return "manage-brand/create";

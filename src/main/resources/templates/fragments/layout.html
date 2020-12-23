@@ -51,7 +51,7 @@
 						<a class="nav-link" th:href="@{/}" th:text="#{navbar.home}">Home</a>
 					</li>
 					
-					<li class="nav-item" th:classappend="${#request.requestURI.startsWith('/list')  ? 'active' : ''}">
+					<li sec:authorize="hasAuthority('ADMIN_CLERK')" class="nav-item" th:classappend="${#request.requestURI.startsWith('/list')  ? 'active' : ''}">
 						<a class="nav-link" th:href="@{/list/reorder}" th:text="#{navbar.reorders}">Reorders</a>
 					</li>
 								

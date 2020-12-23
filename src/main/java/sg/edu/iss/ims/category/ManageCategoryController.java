@@ -36,6 +36,9 @@ public class ManageCategoryController {
 
 	@PostMapping("/save")
 	public String add(@Valid @ModelAttribute("category") Category category, BindingResult bindingResult, RedirectAttributes redirAttr) {
+		if (catService.findCategoryByName(category.getName()) != null) {
+			bindingResult.rejectValue("name", "error.category", "Category name already exists");
+		}
 		if (bindingResult.hasErrors()) 
 		{
 			return "manage-category/create";
