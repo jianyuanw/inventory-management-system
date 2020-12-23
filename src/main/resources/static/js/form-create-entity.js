@@ -40,6 +40,8 @@ function roundData(element) {
 
 function updateSubcategories(categoryId) {
 	let subcategory = document.getElementById("subcategorySelect");
+	subcategory.selectedIndex = 0;
+	createSelect(subcategory);
 	for (let i = 1; i < subcategory.length; i++) {
 		if (subcategory.options[i].getAttribute("data-category") != categoryId) {
 			subcategory.options[i].classList.add("d-none");
