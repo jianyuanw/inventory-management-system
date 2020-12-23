@@ -78,49 +78,62 @@ public class ProductServiceImpl implements ProductService {
 		if (newSupplier == "") {
 			errors.put("newSupplier", "Supplier name must not be empty");
 		} else {
+			String error = "";
 			if (!Pattern.matches("[a-zA-Z0-9 ]+", newSupplier)) {
-				errors.put("newSupplier", "Supplier name can only consist of spaces and alphanumerical characters\n");
+				error += "Supplier name can only consist of spaces and alphanumerical characters\n";
 			}
 			if (supplierRepo.findSupplierByName(newSupplier) != null) {
-				errors.put("newSupplier",
-						errors.get("newSupplier") + "Supplier name " + newSupplier + " already exists\n");
+				error += "Supplier name " + newSupplier + " already exists\n";
+			}
+			
+			if (error != "") {
+				errors.put("newSupplier", error);
 			}
 		}
 
 		if (newBrand == "") {
 			errors.put("newBrand", "Brand name must not be empty");
 		} else {
+			String error = "";
 			if (!Pattern.matches("[a-zA-Z0-9 ]+", newBrand)) {
-				errors.put("newBrand", "Brand name can only consist of spaces and alphanumerical characters\n");
+				error += "Brand name can only consist of spaces and alphanumerical characters\n";
 			}
 			if (brandRepo.findByName(newBrand) != null) {
-				errors.put("newBrand", errors.get("newBrand") + "Brand name " + newBrand + " already exists\n");
+				error += "Brand name " + newBrand + " already exists\n";
+			}
+			
+			if (error != "") {
+				errors.put("newBrand", error);
 			}
 		}
 
 		if (newCategory == "") {
 			errors.put("newCategory", "Category name must not be empty");
 		} else {
+			String error = "";
 			if (!Pattern.matches("[a-zA-Z0-9 ]+", newCategory)) {
-				errors.put("newCategory", "Category name can only consist of spaces and alphanumerical characters\n");
+				error += "Category name can only consist of spaces and alphanumerical characters\n";
 			}
 			if (categoryRepo.findByName(newCategory) != null) {
-				errors.put("newCategory",
-						errors.get("newCategory") + "Category name " + newCategory + " already exists\n");
+				error += "Category name " + newCategory + " already exists\n";
+			}
+			
+			if (error != "") {
+				errors.put("newCategory",  error);
 			}
 		}
 
 		if (newSubcategory == "") {
 			errors.put("newSubcategory", "Subcategory name must not be empty");
 		} else {
+			String error = "";
 			if (!Pattern.matches("[a-zA-Z0-9 ]+", newSubcategory)) {
-				errors.put("newSubcategory",
-						"Subcategory name can only consist of spaces and alphanumerical characters\n");
+				error += "Subcategory name can only consist of spaces and alphanumerical characters\n";
 			}
 			if (subcategoryRepo.findSubcategoryByName(newSubcategory) != null) {
-				errors.put("newSubcategory",
-						errors.get("newSubcategory") + "Subcategory name " + newSubcategory + " already exists\n");
+				error += "Subcategory name " + newSubcategory + " already exists\n";
 			}
+			errors.put(newSubcategory, error);
 		}
 
 		return errors;
