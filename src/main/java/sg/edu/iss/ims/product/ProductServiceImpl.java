@@ -133,7 +133,10 @@ public class ProductServiceImpl implements ProductService {
 			if (subcategoryRepo.findSubcategoryByName(newSubcategory) != null) {
 				error += "Subcategory name " + newSubcategory + " already exists\n";
 			}
-			errors.put(newSubcategory, error);
+			if (error != "") {
+				errors.put("newSubcategory", error);
+			}
+			
 		}
 
 		return errors;
