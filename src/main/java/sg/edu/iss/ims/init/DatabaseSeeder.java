@@ -92,7 +92,7 @@ class DatabaseSeeder implements InitializingBean {
 		  if (users.size() < 3) {
 			  recreateData = true;
 		  } else if (users.get(0).getUsername() == "admin" && users.get(1).getUsername() == "mechanic" &&
-				     users.get(2).getUsername() == "derek") {
+				     users.get(2).getUsername() == "user") {
 			  recreateData = false;
 		  }
 		  
@@ -175,8 +175,8 @@ class DatabaseSeeder implements InitializingBean {
 			  }
 		  }
 		  
-		  userRepo.save(new User("admin", encoder.encode("admin"), Role.ADMIN_CLERK, "caiylderek@gmail.com"));
-		  userRepo.save(new User("mechanic", encoder.encode("mechanic"), Role.MECHANIC, "caiylderek@gmail.com"));			  			  
+		  userRepo.save(new User("admin", encoder.encode("admin"), Role.ADMIN_CLERK, "admin@gmail.com"));
+		  userRepo.save(new User("mechanic", encoder.encode("mechanic"), Role.MECHANIC, "mechanic@gmail.com"));			  			  
 		  
 		  Map<String, String> userEmail = Map.of(
               "user1", "user1@gmail.com",
