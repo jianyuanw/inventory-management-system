@@ -27,7 +27,7 @@ public class EmailController {
 	@PostMapping("/email")
 	public String loginAccount(Model model, Email email, RedirectAttributes redirAttr) {
 		try {
-			eService.sendSimpleMessage(new String[] {"caiylderek@gmail.com"}, email.getSubject(), email.getMessage());
+			eService.sendSimpleMessage(new String[] {"test@gmail.com"}, email.getSubject(), email.getMessage());
 			redirAttr.addFlashAttribute("alert", new Alert("success", "Successfully emailed to " + email.getRecipient()));
 		} catch (MailException exception) {
 			redirAttr.addFlashAttribute("alert", new Alert("danger", "MailException raised, email failed."));
