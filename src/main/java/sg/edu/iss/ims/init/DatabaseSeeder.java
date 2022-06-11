@@ -179,14 +179,14 @@ class DatabaseSeeder implements InitializingBean {
 		  userRepo.save(new User("mechanic", encoder.encode("mechanic"), Role.MECHANIC, "caiylderek@gmail.com"));			  			  
 		  
 		  Map<String, String> userEmail = Map.of(
-              "derek", "derek.cai@u.nus.edu",
-              "jianyuan", "jywong@u.nus.edu",
-              "angelia", "e0641592@u.nus.edu",
-              "site", "e0576054@u.nus.edu",
-              "yubo", "yu.bo@u.nus.edu",
-              "zifeng", "zfmok@u.nus.edu",
-              "yitong", "yitongyu@u.nus.edu",
-              "jiawei", "e0641586@u.nus.edu"
+              "user1", "user1@gmail.com",
+              "user2", "user2@gmail.com",
+              "user3", "user3@gmail.com",
+              "user4", "user4@gmail.com",
+              "user5", "user5@gmail.com",
+              "user6", "user6@gmail.com",
+              "user7", "user7@gmail.com",
+              "user8", "user8@gmail.com"
 		  );
 		  
 		  for (String username : userEmail.keySet()) {
@@ -195,7 +195,7 @@ class DatabaseSeeder implements InitializingBean {
 	  }		  
 	  
 	  public void generateRandomData(int reorders, int transactions) {
-		  String[] names = {"Derek Cai", "Jian Yuan", "Zi Feng", "Angelia", "Suriya", "Yu Bo", "Yi Tong", "Si Te", "Jia Wei"};
+		  String[] names = {"User 1", "User 2", "User 3", "User 4", "User 5", "User 6", "User 7", "User 8", "User 9"};
 		  
 		  List<Long> usedItems = new ArrayList<Long>();
 		  
